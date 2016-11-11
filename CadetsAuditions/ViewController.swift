@@ -7,13 +7,16 @@
 //
 
 import Cocoa
+import Parse
 
 class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let testObject = PFObject(className: "TestObject")
+        testObject["foo"] = "Daniel Fish"
+        testObject.saveInBackground()
     }
 
     override var representedObject: Any? {

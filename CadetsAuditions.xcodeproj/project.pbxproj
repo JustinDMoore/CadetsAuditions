@@ -7,19 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE146E721DD41C8D0026E1F6 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE61DD418540077A85B /* Bolts.framework */; };
+		AE146E731DD41C8D0026E1F6 /* Bolts.framework.dSYM in Frameworks */ = {isa = PBXBuildFile; fileRef = AE146E6E1DD41A070026E1F6 /* Bolts.framework.dSYM */; };
+		AE146E741DD41C8D0026E1F6 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE81DD418570077A85B /* Parse.framework */; };
+		AE146E751DD41C8D0026E1F6 /* Parse.framework.dSYM in Frameworks */ = {isa = PBXBuildFile; fileRef = AE146E701DD41A0A0026E1F6 /* Parse.framework.dSYM */; };
+		AE146E761DD41D160026E1F6 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE81DD418570077A85B /* Parse.framework */; };
+		AE146E771DD41D160026E1F6 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE81DD418570077A85B /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AE146E781DD41D160026E1F6 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE61DD418540077A85B /* Bolts.framework */; };
+		AE146E791DD41D160026E1F6 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE61DD418540077A85B /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AEA49ED71DD415D90077A85B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA49ED61DD415D90077A85B /* AppDelegate.swift */; };
 		AEA49ED91DD415D90077A85B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA49ED81DD415D90077A85B /* ViewController.swift */; };
 		AEA49EDB1DD415D90077A85B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEA49EDA1DD415D90077A85B /* Assets.xcassets */; };
 		AEA49EDE1DD415D90077A85B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEA49EDC1DD415D90077A85B /* Main.storyboard */; };
+		AEE5AC8A1DD629DD00E07A39 /* CAParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE5AC891DD629DD00E07A39 /* CAParse.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AE146E7A1DD41D160026E1F6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AE146E771DD41D160026E1F6 /* Parse.framework in Embed Frameworks */,
+				AE146E791DD41D160026E1F6 /* Bolts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		AE146E6E1DD41A070026E1F6 /* Bolts.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Bolts.framework.dSYM; path = Carthage/Build/Mac/Bolts.framework.dSYM; sourceTree = "<group>"; };
+		AE146E701DD41A0A0026E1F6 /* Parse.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Parse.framework.dSYM; path = Carthage/Build/Mac/Parse.framework.dSYM; sourceTree = "<group>"; };
 		AEA49ED31DD415D90077A85B /* CadetsAuditions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CadetsAuditions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA49ED61DD415D90077A85B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEA49ED81DD415D90077A85B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AEA49EDA1DD415D90077A85B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEA49EDD1DD415D90077A85B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AEA49EDF1DD415D90077A85B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AEA49EE61DD418540077A85B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Carthage/Build/Mac/Bolts.framework; sourceTree = "<group>"; };
+		AEA49EE81DD418570077A85B /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Carthage/Build/Mac/Parse.framework; sourceTree = "<group>"; };
+		AEE5AC891DD629DD00E07A39 /* CAParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAParse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +56,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE146E721DD41C8D0026E1F6 /* Bolts.framework in Frameworks */,
+				AE146E731DD41C8D0026E1F6 /* Bolts.framework.dSYM in Frameworks */,
+				AE146E741DD41C8D0026E1F6 /* Parse.framework in Frameworks */,
+				AE146E781DD41D160026E1F6 /* Bolts.framework in Frameworks */,
+				AE146E751DD41C8D0026E1F6 /* Parse.framework.dSYM in Frameworks */,
+				AE146E761DD41D160026E1F6 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +73,7 @@
 			children = (
 				AEA49ED51DD415D90077A85B /* CadetsAuditions */,
 				AEA49ED41DD415D90077A85B /* Products */,
+				AEA49EE51DD418540077A85B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,12 +89,24 @@
 			isa = PBXGroup;
 			children = (
 				AEA49ED61DD415D90077A85B /* AppDelegate.swift */,
+				AEE5AC891DD629DD00E07A39 /* CAParse.swift */,
 				AEA49ED81DD415D90077A85B /* ViewController.swift */,
 				AEA49EDA1DD415D90077A85B /* Assets.xcassets */,
 				AEA49EDC1DD415D90077A85B /* Main.storyboard */,
 				AEA49EDF1DD415D90077A85B /* Info.plist */,
 			);
 			path = CadetsAuditions;
+			sourceTree = "<group>";
+		};
+		AEA49EE51DD418540077A85B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE146E701DD41A0A0026E1F6 /* Parse.framework.dSYM */,
+				AE146E6E1DD41A070026E1F6 /* Bolts.framework.dSYM */,
+				AEA49EE81DD418570077A85B /* Parse.framework */,
+				AEA49EE61DD418540077A85B /* Bolts.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,6 +119,7 @@
 				AEA49ECF1DD415D90077A85B /* Sources */,
 				AEA49ED01DD415D90077A85B /* Frameworks */,
 				AEA49ED11DD415D90077A85B /* Resources */,
+				AE146E7A1DD41D160026E1F6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +181,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE5AC8A1DD629DD00E07A39 /* CAParse.swift in Sources */,
 				AEA49ED91DD415D90077A85B /* ViewController.swift in Sources */,
 				AEA49ED71DD415D90077A85B /* AppDelegate.swift in Sources */,
 			);
@@ -246,6 +296,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = CadetsAuditions/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.yea.CadetAuditions.CadetsAuditions;
@@ -259,6 +313,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = CadetsAuditions/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.yea.CadetAuditions.CadetsAuditions;
@@ -286,6 +344,7 @@
 				AEA49EE41DD415D90077A85B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
