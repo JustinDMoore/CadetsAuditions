@@ -11,12 +11,34 @@ import Parse
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var checkCadets2: NSButton!
+    @IBOutlet weak var checkCadets: NSButton!
+    
+    @IBAction func imgCadets_click(_ sender: Any) {
+        if checkCadets.state == NSOnState {
+            checkCadets.state = NSOffState
+        } else {
+            checkCadets.state = NSOnState
+        }
+    }
+    
+    @IBAction func imgCadets2_click(_ sender: Any) {
+        if checkCadets2.state == NSOnState {
+            checkCadets2.state = NSOffState
+        } else {
+            checkCadets2.state = NSOnState
+        }
+    }
+    
+
+    
+    let Server = ParseServer.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let testObject = PFObject(className: "TestObject")
-        testObject["foo"] = "Daniel Fish"
-        testObject.saveInBackground()
+        Server.getCadetsAndCadets2()
+        Server.getCadets2()
+        Server.getCadets()
     }
 
     override var representedObject: Any? {
