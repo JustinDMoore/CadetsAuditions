@@ -11,7 +11,6 @@ import Parse
 import Bolts
 
 var serverInitialized = false
-var arrayOfMembers = [PFObject]()
 
 class ParseServer {
     static let sharedInstance = ParseServer()
@@ -27,76 +26,4 @@ class ParseServer {
             serverInitialized = true
         }
     }
-    
-    //MARK: -
-    //MARK: All Members
-    //MARK: -
-    
-    func getAllMembers() {
-        let query = PFQuery(className: "Member")
-        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
-            if ((members) != nil) {
-                arrayOfMembers = members!
-            }
-            print("\(arrayOfMembers.count) members found")
-        }
-    }
-    
-    //MARK: -
-    //MARK: Filter by Corps
-    //MARK: -
-    
-    func getCadets() {
-        let query = PFQuery(className: "Member")
-        query.whereKey("cadets", equalTo: true)
-        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
-            if ((members) != nil) {
-                arrayOfMembers = members!
-            }
-            print("\(arrayOfMembers.count) members found")
-        }
-    }
-    
-    
-    func getCadets2() {
-        let query = PFQuery(className: "Member")
-        query.whereKey("cadets2", equalTo: true)
-        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
-            if ((members) != nil) {
-                arrayOfMembers = members!
-            }
-            print("\(arrayOfMembers.count) members found")
-        }
-    }
-    
-    func getCadetsAndCadets2() {
-        let query = PFQuery(className: "Member")
-        query.whereKey("cadets2", equalTo: true)
-        query.whereKey("cadets", equalTo: true)
-        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
-            if ((members) != nil) {
-                arrayOfMembers = members!
-            }
-            print("\(arrayOfMembers.count) members found")
-        }
-    }
-    
-    //MARK: -
-    //MARK: Filter by SECTION
-    //MARK: -
-    func get() {
-        let query = PFQuery(className: "Member")
-        query.whereKey("cadets2", equalTo: true)
-        query.whereKey("cadets", equalTo: true)
-        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
-            if ((members) != nil) {
-                arrayOfMembers = members!
-            }
-            print("\(arrayOfMembers.count) members found")
-        }
-    }
-    
-    //MARK: -
-    //MARK: Filter by INSTRUMENT
-    //MARK: -
 }
