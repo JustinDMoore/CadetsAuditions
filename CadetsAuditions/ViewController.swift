@@ -344,7 +344,11 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     //MARK:-
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return arrayOfMembers?.count ?? 0
+        if arrayOfMembers?.count != nil {
+            return arrayOfMembers!.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

@@ -19,6 +19,7 @@
 		AEA49ED91DD415D90077A85B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA49ED81DD415D90077A85B /* ViewController.swift */; };
 		AEA49EDB1DD415D90077A85B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEA49EDA1DD415D90077A85B /* Assets.xcassets */; };
 		AEA49EDE1DD415D90077A85B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEA49EDC1DD415D90077A85B /* Main.storyboard */; };
+		AEB2B7891DD6A88400159243 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB2B7881DD6A88400159243 /* ProfileViewController.swift */; };
 		AEE5AC8A1DD629DD00E07A39 /* CAParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE5AC891DD629DD00E07A39 /* CAParse.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		AEA49EDF1DD415D90077A85B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AEA49EE61DD418540077A85B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Carthage/Build/Mac/Bolts.framework; sourceTree = "<group>"; };
 		AEA49EE81DD418570077A85B /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Carthage/Build/Mac/Parse.framework; sourceTree = "<group>"; };
+		AEB2B7881DD6A88400159243 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		AEE5AC891DD629DD00E07A39 /* CAParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAParse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +93,7 @@
 				AEA49ED61DD415D90077A85B /* AppDelegate.swift */,
 				AEE5AC891DD629DD00E07A39 /* CAParse.swift */,
 				AEA49ED81DD415D90077A85B /* ViewController.swift */,
+				AEB2B7881DD6A88400159243 /* ProfileViewController.swift */,
 				AEA49EDA1DD415D90077A85B /* Assets.xcassets */,
 				AEA49EDC1DD415D90077A85B /* Main.storyboard */,
 				AEA49EDF1DD415D90077A85B /* Info.plist */,
@@ -183,6 +186,7 @@
 			files = (
 				AEE5AC8A1DD629DD00E07A39 /* CAParse.swift in Sources */,
 				AEA49ED91DD415D90077A85B /* ViewController.swift in Sources */,
+				AEB2B7891DD6A88400159243 /* ProfileViewController.swift in Sources */,
 				AEA49ED71DD415D90077A85B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
