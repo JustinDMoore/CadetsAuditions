@@ -13,7 +13,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 
     let Server = ParseServer.sharedInstance
     var searchQuery = PFQuery(className: "Member")
-    var arrayOfMembers: [PFObject]? = nil
+    var arrayOfAllMembers: [PFObject]? = nil
+    var arrayOfFilteredMembers: [PFObject]? = nil
+    var arrayOfInstrumentsToFilter = [String]()
+    var arrayOfRatingsToFilter = [Int]()
     
     //Search variables
     var searchCorps = 0
@@ -31,6 +34,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var tableMembers: NSTableView!
     
     
+    @IBOutlet weak var checkAllMembers: NSButton!
     @IBOutlet weak var checkCadets: NSButton!
     @IBOutlet weak var checkCadets2: NSButton!
     @IBOutlet weak var checkCadetsBoth: NSButton!
@@ -49,6 +53,12 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var checkAllColorguard: NSButton!
     @IBOutlet weak var checkAllDrumMajors: NSButton!
     
+    //Rating checkboxes
+    @IBOutlet weak var checkNoRating: NSButton!
+    @IBOutlet weak var checkRating1: NSButton!
+    @IBOutlet weak var checkRating2: NSButton!
+    @IBOutlet weak var checkRating3: NSButton!
+    
     //Results
     @IBOutlet weak var lblResults: NSTextField!
 
@@ -57,83 +67,219 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         super.viewDidLoad()
         tableMembers.delegate = self
         tableMembers.dataSource = self
-    }
-
-    func searchMembers() {
-        arrayOfMembers?.removeAll()
-        lblResults.stringValue = "Searching..."
-        searchQuery.cancel()
-        
-        //Corps
-        switch searchCorps {
-        case 1: // Cadets
-            searchQuery.whereKey("cadets", equalTo: true)
-            searchQuery.whereKey("cadets2", equalTo: false)
-            break;
-        case 2: // Cadets2
-            searchQuery.whereKey("cadets", equalTo: false)
-            searchQuery.whereKey("cadets2", equalTo: true)
-            break;
-        case 3: //Cadets + Cadets2
-            searchQuery.whereKey("cadets", equalTo: true)
-            searchQuery.whereKey("cadets2", equalTo: true)
-            break;
-        default:
-            break;
-        }
-        
-        //Brass
-        if searchTrumpet {
-            searchQuery.whereKey("sections", contains: "Trumpet")
-        }
-        
-        if searchMellophone {
-            searchQuery.whereKey("sections", contains: "Mellophone")
-        }
-        
-        if searchBaritone {
-            searchQuery.whereKey("sections", contains: "Baritone")
-        }
-        
-        if searchTuba {
-            searchQuery.whereKey("sections", contains: "Tuba")
-        }
-
-        //Percussion
-        if searchSnare {
-            searchQuery.whereKey("sections", contains: "Snare")
-        }
-        
-        if searchTenor {
-            searchQuery.whereKey("sections", contains: "Tenor")
-        }
-        
-        if searchBass {
-            searchQuery.whereKey("sections", contains: "Bass")
-        }
-        
-        if searchFrontEnsemble {
-            searchQuery.whereKey("sections", contains: "Front Ensemble")
-        }
-        
-        //Color Guard
-        if searchColorGuard {
-            searchQuery.whereKey("sections", contains: "Color Guard")
-        }
-        
-        //Drum Major
-        if searchDrumMajor {
-            searchQuery.whereKey("sections", contains: "Drum Major")
-        }
-        
-        //Run the query
-        searchQuery.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
+        arrayOfAllMembers?.removeAll()
+        arrayOfFilteredMembers?.removeAll()
+        let query = PFQuery(className: "Member")
+        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
             if members != nil {
-                self.arrayOfMembers = members!
-                self.lblResults.stringValue = "\(self.arrayOfMembers?.count) found"
+                self.arrayOfAllMembers = members!
+                self.arrayOfFilteredMembers = members!
+                self.lblResults.stringValue = "\(self.arrayOfAllMembers?.count) found"
                 self.tableMembers.reloadData()
             }
         }
+    }
+
+    // SET FILTERS
+    func updateInstrumentFilters() {
+        arrayOfInstrumentsToFilter.removeAll()
+        if checkTrumpet.state == NSOnState { arrayOfInstrumentsToFilter.append("Trumpet") }
+        if checkMellophone.state == NSOnState { arrayOfInstrumentsToFilter.append("Mellophone") }
+        if checkBaritone.state == NSOnState { arrayOfInstrumentsToFilter.append("Baritone") }
+        if checkTuba.state == NSOnState { arrayOfInstrumentsToFilter.append("Tuba") }
+        
+        if checkSnare.state == NSOnState { arrayOfInstrumentsToFilter.append("Snare") }
+        if checkTenor.state == NSOnState { arrayOfInstrumentsToFilter.append("Tenor") }
+        if checkBass.state == NSOnState { arrayOfInstrumentsToFilter.append("Bass") }
+        if checkFrontEnsemble.state == NSOnState { arrayOfInstrumentsToFilter.append("Front Ensemble") }
+        
+        if checkAllColorguard.state == NSOnState { arrayOfInstrumentsToFilter.append("Color Guard") }
+        if checkAllDrumMajors.state == NSOnState { arrayOfInstrumentsToFilter.append("Drum Major") }
+        
+        searchMembers()
+    }
+    
+    
+    func updateRatingFilters() {
+        arrayOfRatingsToFilter.removeAll()
+        if checkNoRating.state == NSOnState { arrayOfRatingsToFilter.append(0) }
+        if checkRating1.state == NSOnState { arrayOfRatingsToFilter.append(1) }
+        if checkRating2.state == NSOnState { arrayOfRatingsToFilter.append(2) }
+        if checkRating3.state == NSOnState { arrayOfRatingsToFilter.append(3) }
+        
+        searchMembers()
+    }
+    
+    // END SET FILTERS
+    
+    
+    // CHECK FILTERS
+    func checkForInstrument(member: PFObject) {
+        if !arrayOfInstrumentsToFilter.isEmpty {
+            if let memberInstruments = member["sections"] as? [String] {
+                for instrumentToCheck in arrayOfInstrumentsToFilter {
+                    if memberInstruments.contains(instrumentToCheck) {
+                        checkForRating(member: member) //We have a match, check the rating filter, then add
+                    }
+                }
+            }
+        } else {
+            checkForRating(member: member)
+        }
+    }
+    
+    func checkForRating(member: PFObject) {
+        if !arrayOfRatingsToFilter.isEmpty {
+            if let memberRating = member["rating"] as? Int {
+                for rating in arrayOfRatingsToFilter {
+                    if memberRating == rating {
+                        addMemberToFilteredArray(member: member)
+                    }
+                }
+            } else { // member does not have a rating, are we searching for No ratings?
+                if arrayOfRatingsToFilter.contains(0) {
+                    addMemberToFilteredArray(member: member)
+                }
+            }
+        } else {
+            addMemberToFilteredArray(member: member)
+        }
+    }
+    
+    func addMemberToFilteredArray(member: PFObject) {
+        //make sure they don't exist in filtered array, then add
+        if !(arrayOfFilteredMembers?.contains(member))! {
+            arrayOfFilteredMembers?.append(member)
+        }
+    }
+    
+    // END CHECK FILTERS
+    
+    func searchMembers() {
+        arrayOfFilteredMembers?.removeAll()
+        lblResults.stringValue = ""
+        
+        for member in arrayOfAllMembers! {
+            
+            //Corps
+            var isCadets: Bool?
+            var isCadets2: Bool?
+            
+            if checkAllMembers.state == NSOnState {
+                
+                checkForInstrument(member: member)
+                
+            } else if checkCadets.state == NSOnState {
+                
+                isCadets = member["cadets"] as? Bool ?? false
+                isCadets2 = member["cadets2"] as? Bool ?? false
+                if isCadets! && !isCadets2! {
+                    
+                    //we have a member matching the corps filter
+                    
+                    //do they match the selected instruments?
+                    checkForInstrument(member: member)
+
+                }
+                
+            } else if checkCadets2.state == NSOnState {
+                
+                isCadets = member["cadets"] as? Bool ?? false
+                isCadets2 = member["cadets2"] as? Bool ?? false
+                if isCadets2! && !isCadets! {
+                    
+                    //we have a member matching the corps filter
+                    
+                    //do they match the selected instruments?
+                    checkForInstrument(member: member)
+                    
+                }
+                
+            } else if checkCadetsBoth.state == NSOnState {
+             
+                isCadets = member["cadets"] as? Bool ?? false
+                isCadets2 = member["cadets2"] as? Bool ?? false
+                if isCadets! && isCadets2! {
+                    
+                    //we have a member matching the corps filter
+                    
+                    //do they match the selected instruments?
+                    checkForInstrument(member: member)
+                    
+                }
+                
+            }
+
+            
+//            //Brass
+//            if checkTrumpet.state == NSOnState {
+//                if let instruments = member["sections"] as? [String] {
+//                    if instruments.contains("Trumpet") {
+//                        //make sure they don't exist in filtered array, then add
+//                        if !(arrayOfFilteredMembers?.contains(member))! {
+//                            arrayOfFilteredMembers?.append(member)
+//                        }
+//                    }
+//                }
+//            }
+//            
+            
+            
+            
+        } // end of for/loop
+        
+//
+//        
+//        if searchMellophone {
+//            searchQuery.whereKey("sections", contains: "Mellophone")
+//        }
+//        
+//        if searchBaritone {
+//            searchQuery.whereKey("sections", contains: "Baritone")
+//        }
+//        
+//        if searchTuba {
+//            searchQuery.whereKey("sections", contains: "Tuba")
+//        }
+//
+//        //Percussion
+//        if searchSnare {
+//            searchQuery.whereKey("sections", contains: "Snare")
+//        }
+//        
+//        if searchTenor {
+//            searchQuery.whereKey("sections", contains: "Tenor")
+//        }
+//        
+//        if searchBass {
+//            searchQuery.whereKey("sections", contains: "Bass")
+//        }
+//        
+//        if searchFrontEnsemble {
+//            searchQuery.whereKey("sections", contains: "Front Ensemble")
+//        }
+//        
+//        //Color Guard
+//        if searchColorGuard {
+//            searchQuery.whereKey("sections", contains: "Color Guard")
+//        }
+//        
+//        //Drum Major
+//        if searchDrumMajor {
+//            searchQuery.whereKey("sections", contains: "Drum Major")
+//        }
+//        
+//        //Run the query
+//        searchQuery.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
+//            if members != nil {
+//                self.arrayOfMembers = members!
+//                self.lblResults.stringValue = "\(self.arrayOfMembers?.count) found"
+//                self.tableMembers.reloadData()
+//            }
+//        }
+        
+        tableMembers.reloadData()
+        lblResults.stringValue = "\(arrayOfFilteredMembers!.count) members found"
     }
     
     //Actions
@@ -174,169 +320,21 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         checkCorps_click(checkCadetsBoth)
     }
     
+    
+    //Corps Filter
     @IBAction func checkCorps_click(_ sender: NSButton) {
         searchCorps = sender.tag
         searchMembers()
     }
     
-    @IBAction func checkAllBrass_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            checkTrumpet.state = NSOnState
-            checkMellophone.state = NSOnState
-            checkBaritone.state = NSOnState
-            checkTuba.state = NSOnState
-        } else {
-            checkTrumpet.state = NSOffState
-            checkMellophone.state = NSOffState
-            checkBaritone.state = NSOffState
-            checkTuba.state = NSOffState
-        }
-        
-        checkTrumpet_click(sender)
-        checkMellophone_click(sender)
-        checkBaritone_click(sender)
-        checkTuba_click(sender)
+    //Instrument Filter
+    @IBAction func checkInstrument_click(_ sender: NSButton) {
+        updateInstrumentFilters()
     }
     
-    //Brass
-    @IBAction func checkTrumpet_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchTrumpet = true
-            print("searching trumpet")
-        } else {
-            searchTrumpet = false
-            print("not searching trumpet")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkMellophone_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchMellophone = true
-            print("searching mellophone")
-        } else {
-            searchMellophone = false
-            print("not searching mellophone")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkBaritone_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchBaritone = true
-            print("searching baritone")
-        } else {
-            searchBaritone = false
-            print("not searching baritone")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkTuba_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchTuba = true
-            print("searching tuba")
-        } else {
-            searchTuba = false
-            print("not searching tuba")
-        }
-        
-        searchMembers()
-    }
-    
-    //Percussion
-    @IBAction func checkAllPercussion_click(_ sender: NSButton) {
-        if checkAllPercussion.state == NSOnState {
-            checkSnare.state = NSOnState
-            checkTenor.state = NSOnState
-            checkBass.state = NSOnState
-            checkFrontEnsemble.state = NSOnState
-        } else {
-            checkSnare.state = NSOffState
-            checkTenor.state = NSOffState
-            checkBass.state = NSOffState
-            checkFrontEnsemble.state = NSOffState
-        }
-        
-        checkSnare_click(sender)
-        checkTenor_click(sender)
-        checkBass_click(sender)
-        checkFrontEnsemble_click(sender)
-    }
-    
-    @IBAction func checkSnare_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchSnare = true
-            print("searching snare")
-        } else {
-            searchSnare = false
-            print("not searching snare")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkTenor_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchTenor = true
-            print("searching tenor")
-        } else {
-            searchTenor = false
-            print("not searching tenor")
-        }
-        
-        searchMembers()
-    }
-
-    @IBAction func checkBass_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchBass = true
-            print("searching bass")
-        } else {
-            searchBass = false
-            print("not searching bass")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkFrontEnsemble_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchFrontEnsemble = true
-            print("searching front ensemble")
-        } else {
-            searchFrontEnsemble = false
-            print("not searching front ensemble")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkAllColorGuard_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchColorGuard = true
-            print("searching color guard")
-        } else {
-            searchColorGuard = false
-            print("not searching color guard")
-        }
-        
-        searchMembers()
-    }
-    
-    @IBAction func checkAllDrumMajors_click(_ sender: NSButton) {
-        if sender.state == NSOnState {
-            searchDrumMajor = true
-            print("searching drum major")
-        } else {
-            searchDrumMajor = false
-            print("not searching drum major")
-        }
-        
-        searchMembers()
+    //Rating Filter
+    @IBAction func checkRating_click(_ sender: NSButton) {
+        updateRatingFilters()
     }
     
     //MARK:-
@@ -344,8 +342,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     //MARK:-
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        if arrayOfMembers?.count != nil {
-            return arrayOfMembers!.count
+        if arrayOfFilteredMembers?.count != nil {
+            return arrayOfFilteredMembers!.count
         } else {
             return 0
         }
@@ -358,7 +356,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         var cellIdentifier: String = ""
         
         // 1
-        guard let member = arrayOfMembers?[row] else {
+        guard let member = arrayOfFilteredMembers?[row] else {
             return nil
         }
         
