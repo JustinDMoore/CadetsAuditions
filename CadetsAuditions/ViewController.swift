@@ -9,7 +9,7 @@
 import Cocoa
 import Parse
 
-class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
 
     let Server = ParseServer.sharedInstance
     var searchQuery = PFQuery(className: "Member")
@@ -17,6 +17,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     var arrayOfFilteredMembers: [PFObject]? = nil
     var arrayOfInstrumentsToFilter = [String]()
     var arrayOfRatingsToFilter = [Int]()
+    var memberToOpen: PFObject? = nil
     
     //Search variables
     var searchCorps = 0
@@ -59,14 +60,22 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var checkRating2: NSButton!
     @IBOutlet weak var checkRating3: NSButton!
     
+    //Search boxes
+    @IBOutlet weak var txtSearch: NSTextField!
+    
     //Results
     @IBOutlet weak var lblResults: NSTextField!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableMembers.delegate = self
         tableMembers.dataSource = self
+        tableMembers.target = self
+        txtSearch.delegate = self
+        refreshServer()
+    }
+
+    func refreshServer() {
         arrayOfAllMembers?.removeAll()
         arrayOfFilteredMembers?.removeAll()
         let query = PFQuery(className: "Member")
@@ -74,12 +83,11 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             if members != nil {
                 self.arrayOfAllMembers = members!
                 self.arrayOfFilteredMembers = members!
-                self.lblResults.stringValue = "\(self.arrayOfAllMembers?.count) found"
-                self.tableMembers.reloadData()
+                self.searchMembers()
             }
         }
     }
-
+    
     // SET FILTERS
     func updateInstrumentFilters() {
         arrayOfInstrumentsToFilter.removeAll()
@@ -284,6 +292,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     //Actions
     //Corps
+    @IBAction func btnRefresh_click(_ sender: NSButton) {
+        refreshServer()
+    }
+    
     @IBAction func imgCadets_click(_ sender: Any) {
         if checkCadets.state == NSOnState {
             checkCadets.state = NSOffState
@@ -355,40 +367,58 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         var text:String = ""
         var cellIdentifier: String = ""
         
-        // 1
         guard let member = arrayOfFilteredMembers?[row] else {
             return nil
         }
         
-        // 2
-        if tableColumn == tableView.tableColumns[0] {
+        if tableColumn == tableView.tableColumns[0] { // NUMBER
+            if let num = member["number"] as? Int {
+                text = String(num)
+            }
+            cellIdentifier = "cellNumber"
+        }
+            
+        if tableColumn == tableView.tableColumns[1] { // NAME
             text = member["name"] as? String ?? ""
             cellIdentifier = "cellName"
-        } else if tableColumn == tableView.tableColumns[1] {
+        }
+        
+        
+        else if tableColumn == tableView.tableColumns[2] { // CADETS LOGO
             let C = member["cadets"] as! Bool
-            let C2 = member["cadets"] as! Bool
-            if C && !C2 {
+            if C {
                 image = NSImage(named: "Cadets")
-            } else if !C && C2 {
+            }
+            cellIdentifier = "cellAuditioningForCadets"
+        }
+        
+        else if tableColumn == tableView.tableColumns[3] { // CADETS2 LOGO
+            let C2 = member["cadets2"] as! Bool
+            if C2 {
                 image = NSImage(named: "Cadets2")
-            } else if C && C2 {
-                image = NSImage(named: "CadetsCadets2")
             }
-            cellIdentifier = "cellAuditioningFor"
-        } else if tableColumn == tableView.tableColumns[2] {
-            let arrayOfInstruments = member["sections"] as? [String]
-            var strInstruments = ""
-            if arrayOfInstruments != nil {
-                for instrument in arrayOfInstruments! {
-                    strInstruments += "\(instrument) - "
+            cellIdentifier = "cellAuditioningForCadets2"
+        }
+        
+        else if tableColumn == tableView.tableColumns[4] { // SECTION
+            if let arrayOfInstruments = member["sections"] as! [String]? {
+                var strInstruments = ""
+                if arrayOfInstruments.count > 1 {
+                    for instrument in arrayOfInstruments {
+                        strInstruments += instrument + "    "
+                    }
+                } else if arrayOfInstruments.count == 1 {
+                    strInstruments = arrayOfInstruments.first!
                 }
+                
+                text = strInstruments
             }
-            text = strInstruments
-            cellIdentifier = "cellSection"
-        } else if tableColumn == tableView.tableColumns[3] {
-            var rating: Int?
-            rating = member["rating"] as! Int?
-            if rating != nil {
+            cellIdentifier = "cellSections"
+        }
+            
+            
+        else if tableColumn == tableView.tableColumns[5] { // RATING
+            if let rating = member["rating"] as! Int? {
                 text = "\(rating)"
             } else {
                 text = ""
@@ -396,13 +426,72 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellRating"
         }
         
+        else if tableColumn == tableView.tableColumns[6] { // PICTURE
+            text = ""
+            if let _ = member["picture"] as? PFFile {
+                image = NSImage(named: "Picture")
+            } else {
+                image = nil
+            }
+            cellIdentifier = "cellPicture"
+        }
+        
+        
         // 3
         if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
             cell.imageView?.image = image ?? nil
             return cell
+        } else {
+            print("no \(cellIdentifier)")
         }
         return nil
         
+    }
+    
+    @IBAction func doubleClick(_ sender: Any) {
+        // 1
+        guard tableMembers.selectedRow >= 0 , let member = arrayOfFilteredMembers?[tableMembers.selectedRow] else {
+            return
+        }
+        memberToOpen = member
+        self.performSegue(withIdentifier: "profile", sender: self)
+    }
+    
+    
+    //NSTEXTFIELD DELAGATE
+    override func controlTextDidChange(_ obj: Notification) {
+        arrayOfFilteredMembers?.removeAll()
+        if txtSearch.stringValue.characters.count == 0 {
+            searchMembers()
+            return
+        }
+        
+        for member in arrayOfAllMembers! {
+            if let num = Int(txtSearch.stringValue) {
+                if let memnum = member["number"] as? Int {
+                    if memnum == num {
+                        addMemberToFilteredArray(member: member)
+                    }
+                }
+            } else {
+                if let name = member["name"] as? String {
+                    let nameLower = name.lowercased()
+                    let textLower = txtSearch.stringValue.lowercased()
+                    if nameLower.range(of: textLower) != nil {
+                        addMemberToFilteredArray(member: member)
+                    }
+                }
+            }
+            tableMembers.reloadData()
+        }
+    }
+    
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        if segue.identifier == "profile" {
+            if let vc = segue.destinationController as? ProfileViewController {
+                vc.member = memberToOpen
+            }
+        }
     }
 }
