@@ -8,6 +8,8 @@
 
 import Cocoa
 import Parse
+import CSVImporter
+
 
 class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
 
@@ -73,6 +75,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         tableMembers.target = self
         txtSearch.delegate = self
         refreshServer()
+        load()
     }
 
     func refreshServer() {
@@ -492,6 +495,147 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             if let vc = segue.destinationController as? ProfileViewController {
                 vc.member = memberToOpen
             }
+        }
+    }
+    
+    func load() {
+        let path = "/Users/JMoore/Downloads/load.csv"
+        let importer = CSVImporter<[String: String]>(path: path)
+        importer.startImportingRecords(structure: { (headerValues) -> Void in
+            
+            //print(headerValues) // => ["firstName", "lastName"]
+            
+        }) { $0 }.onFinish { importedRecords in
+            
+            for record in importedRecords {
+                //print(record) // => e.g. ["firstName": "Harry", "lastName": "Potter"]
+                //print(record["Name (First)"]) // prints "Harry" on first, "Hermione" on second run
+                //print(record["lastName"]) // prints "Potter" on first, "Granger" on second run
+                
+                let newMember = PFObject(className: "Member")
+                newMember["name"] = record["Name (First)"]! + " " + record["Name (Last)"]!
+                
+                
+                //BIRTHDAY
+                let dateString = record["Date of Birth"]
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM-dd-yyyy"
+                let dob = dateFormatter.date(from: dateString!)
+                newMember["dob"] = dob
+                //END BIRTHDAY
+
+                newMember["email"] = record["Email"]
+                newMember["phone"] = record["Phone"]
+                newMember["school"] = record["High School/College Name"]
+                
+                //CORPS
+                let corps = record["I'm auditioning for"]
+                if corps == "The Cadets" {
+                    newMember["cadets"] = true
+                    newMember["cadets2"] = false
+                } else if corps == "Cadets2" {
+                    newMember["cadets"] = false
+                    newMember["cadets2"] = true
+                } else if corps == "Both" {
+                    newMember["cadets"] = true
+                    newMember["cadets2"] = true
+                }
+                //END CORPS
+                
+                //INSTRUMENT/SECTION
+                let str = record["I'm auditioning for the these sections"]
+                let arr = str?.characters.split(separator: "|").map(String.init)
+                newMember["sections"] = arr
+                //END SECTION
+                
+                newMember["marchingYears"] = record["Years of marching experience"]
+                
+                //MARCHED ANOTHER CORPS
+                let marched = record["Have you marched for another drum corps?"]
+                if marched == "Yes" {
+                    newMember["marchedCorps"] = true
+                } else if marched == "No" {
+                    newMember["marchedCorps"] = false
+                }
+                //END CORPS
+                
+                //WHAT CORPS
+                newMember["otherCorps"] = record["What drum corps have you marched with?"]
+                
+                //Have you marched in a Winter Guard?
+                let marchedGuard = record["Have you marched in a Winter Guard?"]
+                if marchedGuard == "Yes" {
+                    newMember["marchedGuard"] = true
+                } else if marched == "No" {
+                    newMember["marchedGuard"] = false
+                }
+                //END GUARD
+                
+                //What Winter Guards have you marched with?
+                newMember["otherGuard"] = record["What Winter Guards have you marched with?"]
+                
+                //Have you marched in an Indoor Percussion Ensemble?
+                let marchedPerc = record["Have you marched in an Indoor Percussion Ensemble?"]
+                if marchedPerc == "Yes" {
+                    newMember["marchedPerc"] = true
+                } else if marched == "No" {
+                    newMember["marchedPerc"] = false
+                }
+                //END GUARD
+                
+                //What ensembles have you marched with?
+                newMember["otherPerc"] = record["What ensembles have you marched with?"]
+                
+                //Do you have any prior movement or dance training?
+                let prevDance = record["Do you have any prior movement or dance training?"]
+                if prevDance == "Yes" {
+                    newMember["prevDance"] = true
+                } else if marched == "No" {
+                    newMember["prevDance"] = false
+                }
+                //END DANCE
+                
+                //Years of movement/dance training
+                newMember["yearsDance"] = record["Years of movement/dance training"]
+                
+                //List your previous instructors/teachers
+                newMember["prevInstructors"] = record["List your previous instructors/teachers"]
+                
+                //Can you attend the December camp?
+                let dec = record["Can you attend the December camp?"]
+                if dec == "Yes" {
+                    newMember["december"] = true
+                } else if marched == "No" {
+                    newMember["december"] = false
+                }
+                
+                //Why can't you attend the December camp?
+                newMember["whyDecember"] = record["Why can't you attend the December camp?"]
+                
+                //Do you have a clear understanding of the financial obligations?
+                let money = record["Do you have a clear understanding of the financial obligations?"]
+                if money == "Yes" {
+                    newMember["understandMoney"] = true
+                } else if marched == "No" {
+                    newMember["understandMoney"] = false
+                }
+                
+                //What questions do you have about the financial obligations?
+                newMember["questionMoney"] = record["What questions do you have about the financial obligations?"]
+                
+                //How do you plan to meet your financial obligations?
+                newMember["planMoney"] = record["How do you plan to meet your financial obligations?"]
+                
+                //List any existing medical conditions
+                newMember["medical"] = record["List any existing medical conditions"]
+                
+                //What do you hope to gain through participation in The Cadets?
+                newMember["goals"] = record["What do you hope to gain through participation in The Cadets?"]
+                
+                
+                newMember.saveInBackground()
+            }
+            
         }
     }
 }
