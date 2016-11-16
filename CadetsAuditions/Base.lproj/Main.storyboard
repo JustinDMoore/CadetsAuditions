@@ -2004,12 +2004,22 @@
                         <outlet property="imgPicture" destination="dOM-iZ-nCh" id="Ida-V6-xh6"/>
                         <outlet property="lblAge" destination="HRe-Gz-l09" id="Sck-u9-vN2"/>
                         <outlet property="lblDecember" destination="HDT-ZY-8pt" id="IUH-gp-doK"/>
+                        <outlet property="lblIndoorPerc" destination="Yi3-4h-I83" id="M1N-rH-CZL"/>
+                        <outlet property="lblIndoorPercName" destination="Wa5-qi-nfT" id="rBw-bK-qVI"/>
+                        <outlet property="lblInstructors" destination="Wyq-8i-OcV" id="TyX-BI-0Xa"/>
+                        <outlet property="lblMarchingYears" destination="bfb-3L-iyP" id="hYC-AH-zgQ"/>
                         <outlet property="lblName" destination="Nvc-YN-L24" id="lmp-os-nxT"/>
                         <outlet property="lblNumber" destination="CZJ-Cp-UB4" id="V4R-sj-gZx"/>
                         <outlet property="lblPhone" destination="Vd5-pM-aAq" id="6zo-31-M41"/>
+                        <outlet property="lblPriorDC" destination="PJs-5V-Clg" id="wr2-SM-OEj"/>
+                        <outlet property="lblPriorDCName" destination="EYD-kZ-lgr" id="D39-zo-Dkr"/>
+                        <outlet property="lblPriorDance" destination="uBc-Te-UYb" id="eog-4g-jzn"/>
+                        <outlet property="lblPriorDanceYears" destination="arS-b1-sDM" id="6aZ-g1-F97"/>
                         <outlet property="lblRating" destination="ehU-z9-nzC" id="q95-7r-uje"/>
                         <outlet property="lblSchool" destination="y5L-4M-Vud" id="Mpg-3T-oRd"/>
                         <outlet property="lblSections" destination="wq6-8J-Zkd" id="vT9-7d-t8H"/>
+                        <outlet property="lblWinterGuard" destination="w7P-sA-RjG" id="QFj-Cz-93g"/>
+                        <outlet property="lblWinterGuardName" destination="llC-us-p1o" id="KJy-Wf-ULY"/>
                         <outlet property="tableNotes" destination="7LD-tw-qsv" id="RO3-Pu-HZW"/>
                     </connections>
                 </viewController>

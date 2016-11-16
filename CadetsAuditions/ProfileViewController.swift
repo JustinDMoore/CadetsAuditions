@@ -26,6 +26,16 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblPhone: NSTextField!
     @IBOutlet weak var lblSchool: NSTextField!
     @IBOutlet weak var lblDecember: NSTextField!
+    @IBOutlet weak var lblMarchingYears: NSTextField!
+    @IBOutlet weak var lblPriorDC: NSTextField!
+    @IBOutlet weak var lblPriorDCName: NSTextField!
+    @IBOutlet weak var lblIndoorPerc: NSTextField!
+    @IBOutlet weak var lblIndoorPercName: NSTextField!
+    @IBOutlet weak var lblPriorDance: NSTextField!
+    @IBOutlet weak var lblPriorDanceYears: NSTextField!
+    @IBOutlet weak var lblWinterGuard: NSTextField!
+    @IBOutlet weak var lblWinterGuardName: NSTextField!
+    @IBOutlet weak var lblInstructors: NSTextField!
 
     
     override func viewDidLoad() {
@@ -64,7 +74,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: dob, to: now)
         let age = ageComponents.year!
-        lblAge.stringValue = "\(age)"
+        lblAge.stringValue = "\(age) Years Old"
         
         lblName.stringValue = member?["name"] as? String ?? "Error"
         btnEmail.title = member?["email"] as? String ?? "Error"
@@ -98,7 +108,10 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         //december
         if let dec = member?["december"] as? Bool {
             if !dec {
-                let reason = member!["whyDecember"] as! String ?? ""
+                var reason = member!["whyDecember"] as? String ?? "No Reason Given"
+                if reason == "" {
+                    reason = "No Reason Given"
+                }
                 lblDecember.stringValue = "I cannot come to the December Camp" + "\n \n \(reason)"
             } else {
                 lblDecember.stringValue = "I can come to the December Camp"
@@ -107,6 +120,80 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             lblDecember.stringValue = "N/A"
         }
         
+        //experience
+        if let marchingYears = member?["marchingYears"] as? String {
+            lblMarchingYears.stringValue = marchingYears + " Years"
+        } else {
+            lblMarchingYears.stringValue = "Unknown Years"
+        }
+        
+        if let marchedCorps = member?["marchedCorps"] as? Bool {
+            if marchedCorps {
+                lblPriorDC.stringValue = "Yes"
+            } else {
+                lblPriorDC.stringValue = "No"
+            }
+        } else {
+            lblPriorDC.stringValue = ""
+        }
+        
+        if let priorCorpsName = member?["otherCorps"] as? String {
+            lblPriorDCName.stringValue = priorCorpsName
+        } else {
+            lblPriorDCName.stringValue = ""
+        }
+        
+        if let priorPerc = member?["marchedPerc"] as? Bool {
+            if priorPerc {
+                lblIndoorPerc.stringValue = "Yes"
+            } else {
+                lblIndoorPerc.stringValue = "No"
+            }
+        } else {
+            lblIndoorPerc.stringValue = ""
+        }
+        
+        if let priorPercName = member?["otherPerc"] as? String {
+            lblIndoorPercName.stringValue = priorPercName
+        } else {
+            lblIndoorPercName.stringValue = ""
+        }
+        
+        if let priorDance = member?["prevDance"] as? Bool {
+            if priorDance {
+                lblPriorDance.stringValue = "Yes"
+            } else {
+                lblPriorDance.stringValue = "No"
+            }
+        } else {
+            lblPriorDance.stringValue = ""
+        }
+        
+        if let priorDanceYears = member?["yearsDance"] as? String {
+            lblPriorDanceYears.stringValue = priorDanceYears + " Years"
+        }
+        
+        if let priorGuard = member?["marchedGuard"] as? Bool {
+            if priorGuard {
+                lblWinterGuard.stringValue = "Yes"
+            } else {
+                lblWinterGuard.stringValue = "No"
+            }
+        } else {
+            lblWinterGuard.stringValue = ""
+        }
+        
+        if let priorGuardName = member?["otherGuard"] as? String {
+            lblWinterGuardName.stringValue = priorGuardName
+        } else {
+            lblWinterGuardName.stringValue = ""
+        }
+        
+        if let instructors = member?["prevInstructors"] as? String {
+            lblInstructors.stringValue = instructors
+        } else {
+            lblInstructors.stringValue = "None listed"
+        }
    }
 //
 //    func calculateAge (birthday: NSDate) -> NSInteger {
