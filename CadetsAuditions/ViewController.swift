@@ -75,18 +75,38 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         tableMembers.target = self
         txtSearch.delegate = self
         refreshServer()
-        load()
+        //load()
+        //deleteAllMembers()
     }
 
     func refreshServer() {
         arrayOfAllMembers?.removeAll()
         arrayOfFilteredMembers?.removeAll()
         let query = PFQuery(className: "Member")
+        query.limit = 1000
         query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
             if members != nil {
                 self.arrayOfAllMembers = members!
                 self.arrayOfFilteredMembers = members!
                 self.searchMembers()
+            }
+        }
+    }
+    
+    func deleteAllMembers() {
+        var count = 0
+        arrayOfAllMembers?.removeAll()
+        arrayOfFilteredMembers?.removeAll()
+        let query = PFQuery(className: "Member")
+        query.limit = 1000
+        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
+            for member in members! {
+                member.deleteInBackground(block: { (done: Bool, err: Error?) in
+                    if done {
+                        count += 1
+                        print("deleted \(count) members")
+                    }
+                })
             }
         }
     }
@@ -386,8 +406,17 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellName"
         }
         
+        if tableColumn == tableView.tableColumns[2] { // AGE
+            let dob = member["dob"] as! Date
+            let now = Date()
+            let calendar = Calendar.current
+            let ageComponents = calendar.dateComponents([.year], from: dob, to: now)
+            let age = ageComponents.year!
+            text = "\(age)"
+            cellIdentifier = "cellAge"
+        }
         
-        else if tableColumn == tableView.tableColumns[2] { // CADETS LOGO
+        else if tableColumn == tableView.tableColumns[3] { // CADETS LOGO
             let C = member["cadets"] as! Bool
             if C {
                 image = NSImage(named: "Cadets")
@@ -395,7 +424,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellAuditioningForCadets"
         }
         
-        else if tableColumn == tableView.tableColumns[3] { // CADETS2 LOGO
+        else if tableColumn == tableView.tableColumns[4] { // CADETS2 LOGO
             let C2 = member["cadets2"] as! Bool
             if C2 {
                 image = NSImage(named: "Cadets2")
@@ -403,7 +432,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellAuditioningForCadets2"
         }
         
-        else if tableColumn == tableView.tableColumns[4] { // SECTION
+        else if tableColumn == tableView.tableColumns[5] { // SECTION
             if let arrayOfInstruments = member["sections"] as! [String]? {
                 var strInstruments = ""
                 if arrayOfInstruments.count > 1 {
@@ -420,7 +449,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         }
             
             
-        else if tableColumn == tableView.tableColumns[5] { // RATING
+        else if tableColumn == tableView.tableColumns[6] { // RATING
             if let rating = member["rating"] as! Int? {
                 text = "\(rating)"
             } else {
@@ -429,7 +458,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellRating"
         }
         
-        else if tableColumn == tableView.tableColumns[6] { // PICTURE
+        else if tableColumn == tableView.tableColumns[7] { // PICTURE
             text = ""
             if let _ = member["picture"] as? PFFile {
                 image = NSImage(named: "Picture")
@@ -499,6 +528,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func load() {
+        var count = 0
+        
         let path = "/Users/JMoore/Downloads/load.csv"
         let importer = CSVImporter<[String: String]>(path: path)
         importer.startImportingRecords(structure: { (headerValues) -> Void in
@@ -633,7 +664,12 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 newMember["goals"] = record["What do you hope to gain through participation in The Cadets?"]
                 
                 
-                newMember.saveInBackground()
+                newMember.saveInBackground(block: { (done: Bool, err: Error?) in
+                    if done {
+                        count += 1
+                        print("\(count) imported")
+                    }
+                })
             }
             
         }
