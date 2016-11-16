@@ -36,7 +36,11 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblWinterGuard: NSTextField!
     @IBOutlet weak var lblWinterGuardName: NSTextField!
     @IBOutlet weak var lblInstructors: NSTextField!
-
+    @IBOutlet weak var lblFinancialObligations: NSTextField!
+    @IBOutlet weak var lblFinancialPlan: NSTextField!
+    @IBOutlet weak var lblMedical: NSTextField!
+    @IBOutlet weak var lblGoals: NSTextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,7 +158,11 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         }
         
         if let priorPercName = member?["otherPerc"] as? String {
-            lblIndoorPercName.stringValue = priorPercName
+            if priorPercName.characters.count > 1 {
+                lblIndoorPercName.stringValue = priorPercName
+            } else {
+                lblIndoorPercName.stringValue = ""
+            }
         } else {
             lblIndoorPercName.stringValue = ""
         }
@@ -166,11 +174,15 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
                 lblPriorDance.stringValue = "No"
             }
         } else {
-            lblPriorDance.stringValue = ""
+            lblPriorDance.stringValue = "No Answer"
         }
         
         if let priorDanceYears = member?["yearsDance"] as? String {
-            lblPriorDanceYears.stringValue = priorDanceYears + " Years"
+            if priorDanceYears.characters.count > 0 {
+                lblPriorDanceYears.stringValue = priorDanceYears + " Years"
+            } else {
+                lblPriorDanceYears.stringValue = ""
+            }
         }
         
         if let priorGuard = member?["marchedGuard"] as? Bool {
@@ -184,7 +196,11 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         }
         
         if let priorGuardName = member?["otherGuard"] as? String {
-            lblWinterGuardName.stringValue = priorGuardName
+            if priorGuardName.characters.count > 1 {
+                lblWinterGuardName.stringValue = priorGuardName
+            } else {
+                lblWinterGuardName.stringValue = ""
+            }
         } else {
             lblWinterGuardName.stringValue = ""
         }
@@ -193,6 +209,35 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             lblInstructors.stringValue = instructors
         } else {
             lblInstructors.stringValue = "None listed"
+        }
+        
+        let moneyQuestion = " - \(member?["questionMoney"] as? String ?? "")"
+        if let financial = member?["understandMoney"] as? Bool {
+            if financial {
+                lblFinancialObligations.stringValue = "Yes I understand" + moneyQuestion
+            } else {
+                lblFinancialObligations.stringValue = "No I don't understand" + moneyQuestion
+            }
+        } else {
+            lblFinancialObligations.stringValue = "Did not answer" + moneyQuestion
+        }
+        
+        if let plan = member?["planMoney"] as? String {
+            lblFinancialPlan.stringValue = plan
+        } else {
+            lblFinancialPlan.stringValue = "Did not answer"
+        }
+        
+        if let medical = member?["medical"] as? String {
+            lblMedical.stringValue = medical
+        } else {
+            lblMedical.stringValue = "Did not answer"
+        }
+        
+        if let goals = member?["goals"] as? String {
+            lblGoals.stringValue = goals
+        } else {
+            lblGoals.stringValue = "Did not answer"
         }
    }
 //

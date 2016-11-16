@@ -1424,6 +1424,39 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="S4f-yt-o0D">
+                                <rect key="frame" x="321" y="643" width="71" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="1" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AFe-NB-ppg">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="btnRating_click:" target="d0k-n9-vqa" id="QLE-8y-QZs"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="w2C-9B-bXE">
+                                <rect key="frame" x="402" y="643" width="71" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="2" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hxe-FO-oKO">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="btnRating_click:" target="d0k-n9-vqa" id="g7x-27-Koh"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-BM-35T">
+                                <rect key="frame" x="483" y="643" width="71" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="3" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="U1A-ek-e4m">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="btnRating_click:" target="d0k-n9-vqa" id="m3i-hr-K0u"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZ3-HJ-OKl">
                                 <rect key="frame" x="321" y="455" width="841" height="181"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1639,7 +1672,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bfb-3L-iyP">
-                                            <rect key="frame" x="164" y="408" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="408" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="5+ Years" id="anU-fn-FhT">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1648,7 +1681,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oHI-AB-XNO">
-                                            <rect key="frame" x="52" y="408" width="102" height="22"/>
+                                            <rect key="frame" x="57" y="408" width="74" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Marching" id="HLP-WY-zIs">
                                                 <font key="font" metaFont="system"/>
@@ -1657,7 +1690,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PJs-5V-Clg">
-                                            <rect key="frame" x="164" y="386" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="386" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Yes" id="rO3-sS-2zc">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1666,7 +1699,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MeH-xf-jVG">
-                                            <rect key="frame" x="32" y="386" width="122" height="22"/>
+                                            <rect key="frame" x="57" y="386" width="74" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Prior DC?" id="yre-zC-c0o">
                                                 <font key="font" metaFont="system"/>
@@ -1675,7 +1708,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EYD-kZ-lgr">
-                                            <rect key="frame" x="164" y="366" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="366" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cadets2, 2016" id="S8T-Ym-gOE">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1684,7 +1717,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tee-J8-Phz">
-                                            <rect key="frame" x="35" y="366" width="119" height="22"/>
+                                            <rect key="frame" x="69" y="366" width="62" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="mJ8-xq-riS">
                                                 <font key="font" metaFont="system"/>
@@ -1693,7 +1726,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w7P-sA-RjG">
-                                            <rect key="frame" x="164" y="252" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="252" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Yes" id="SX0-MW-CCi">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1702,7 +1735,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXZ-Tz-eXc">
-                                            <rect key="frame" x="25" y="252" width="129" height="22"/>
+                                            <rect key="frame" x="30" y="252" width="101" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Winter Guard?" id="fyU-QJ-Jc5">
                                                 <font key="font" metaFont="system"/>
@@ -1711,7 +1744,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="llC-us-p1o">
-                                            <rect key="frame" x="164" y="232" width="385" height="22"/>
+                                            <rect key="frame" x="141" y="232" width="385" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Emanon World 2017" id="Ink-xM-tt1">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1720,7 +1753,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LIL-3H-uQ2">
-                                            <rect key="frame" x="35" y="232" width="119" height="22"/>
+                                            <rect key="frame" x="62" y="232" width="69" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="7BQ-hk-FcE">
                                                 <font key="font" metaFont="system"/>
@@ -1729,7 +1762,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yi3-4h-I83">
-                                            <rect key="frame" x="164" y="342" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="342" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="N/A" id="vsL-Jt-Xvi">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1738,7 +1771,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YAe-9R-aYp">
-                                            <rect key="frame" x="25" y="342" width="129" height="22"/>
+                                            <rect key="frame" x="50" y="342" width="81" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Indoor Perc?" id="jvc-Bu-pLG">
                                                 <font key="font" metaFont="system"/>
@@ -1747,7 +1780,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wa5-qi-nfT">
-                                            <rect key="frame" x="164" y="322" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="322" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="N/A" id="Z4N-fR-U1s">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1756,7 +1789,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="idS-hM-Gz2">
-                                            <rect key="frame" x="35" y="323" width="119" height="22"/>
+                                            <rect key="frame" x="50" y="323" width="81" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="eKu-fm-aNS">
                                                 <font key="font" metaFont="system"/>
@@ -1765,7 +1798,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBc-Te-UYb">
-                                            <rect key="frame" x="164" y="297" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="297" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Yes" id="epk-8m-EHE">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1774,7 +1807,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYe-XY-ZQ8">
-                                            <rect key="frame" x="-2" y="297" width="156" height="22"/>
+                                            <rect key="frame" x="9" y="297" width="122" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Movement/Dance?" id="rDB-Lk-8ex">
                                                 <font key="font" metaFont="system"/>
@@ -1783,7 +1816,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="arS-b1-sDM">
-                                            <rect key="frame" x="164" y="277" width="100" height="22"/>
+                                            <rect key="frame" x="141" y="277" width="100" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="3 Years" id="dxE-eG-pCY">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1792,7 +1825,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2TA-Fg-rJ2">
-                                            <rect key="frame" x="35" y="277" width="119" height="22"/>
+                                            <rect key="frame" x="69" y="277" width="62" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Years:" id="m7W-f9-7oC">
                                                 <font key="font" metaFont="system"/>
@@ -1801,7 +1834,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wyq-8i-OcV">
-                                            <rect key="frame" x="164" y="114" width="178" height="117"/>
+                                            <rect key="frame" x="57" y="8" width="289" height="203"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="yvS-ZV-zkk">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1811,7 +1844,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RKN-dl-8mi">
-                                            <rect key="frame" x="80" y="214" width="74" height="17"/>
+                                            <rect key="frame" x="57" y="214" width="74" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Instructors:" id="056-w9-ZuS">
                                                 <font key="font" metaFont="system"/>
@@ -1963,37 +1996,20 @@
                                     </subviews>
                                 </view>
                             </box>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="S4f-yt-o0D">
-                                <rect key="frame" x="321" y="643" width="71" height="59"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="ca2-VH-y6W">
+                                <rect key="frame" x="1126" y="704" width="36" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="1" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AFe-NB-ppg">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Next" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NqG-hM-2VU">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <connections>
-                                        <action selector="btnRating_click:" target="d0k-n9-vqa" id="QLE-8y-QZs"/>
-                                    </connections>
                                 </buttonCell>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="w2C-9B-bXE">
-                                <rect key="frame" x="402" y="643" width="71" height="59"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="Tf6-sf-Gff">
+                                <rect key="frame" x="1091" y="704" width="36" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="2" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hxe-FO-oKO">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Previous" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="alp-6B-On3">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
-                                    <connections>
-                                        <action selector="btnRating_click:" target="d0k-n9-vqa" id="g7x-27-Koh"/>
-                                    </connections>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-BM-35T">
-                                <rect key="frame" x="483" y="643" width="71" height="59"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="3" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="U1A-ek-e4m">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <connections>
-                                        <action selector="btnRating_click:" target="d0k-n9-vqa" id="m3i-hr-K0u"/>
-                                    </connections>
                                 </buttonCell>
                             </button>
                         </subviews>
@@ -2004,10 +2020,14 @@
                         <outlet property="imgPicture" destination="dOM-iZ-nCh" id="Ida-V6-xh6"/>
                         <outlet property="lblAge" destination="HRe-Gz-l09" id="Sck-u9-vN2"/>
                         <outlet property="lblDecember" destination="HDT-ZY-8pt" id="IUH-gp-doK"/>
+                        <outlet property="lblFinancialObligations" destination="RmF-tV-dZS" id="2eG-ZS-nvO"/>
+                        <outlet property="lblFinancialPlan" destination="pmY-bR-KDW" id="sD1-fH-aa2"/>
+                        <outlet property="lblGoals" destination="SSv-sr-yk9" id="9se-WF-x8u"/>
                         <outlet property="lblIndoorPerc" destination="Yi3-4h-I83" id="M1N-rH-CZL"/>
                         <outlet property="lblIndoorPercName" destination="Wa5-qi-nfT" id="rBw-bK-qVI"/>
                         <outlet property="lblInstructors" destination="Wyq-8i-OcV" id="TyX-BI-0Xa"/>
                         <outlet property="lblMarchingYears" destination="bfb-3L-iyP" id="hYC-AH-zgQ"/>
+                        <outlet property="lblMedical" destination="ivJ-fQ-2jC" id="kSL-tr-XfS"/>
                         <outlet property="lblName" destination="Nvc-YN-L24" id="lmp-os-nxT"/>
                         <outlet property="lblNumber" destination="CZJ-Cp-UB4" id="V4R-sj-gZx"/>
                         <outlet property="lblPhone" destination="Vd5-pM-aAq" id="6zo-31-M41"/>
@@ -2037,6 +2057,8 @@
         <image name="CadetsCadets2" width="462" height="202"/>
         <image name="Logo" width="1400" height="369"/>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="Next" width="96" height="96"/>
+        <image name="Previous" width="96" height="96"/>
         <image name="pfeil" width="960" height="960"/>
         <image name="refresh" width="614" height="460"/>
     </resources>
