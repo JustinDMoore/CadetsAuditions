@@ -11,7 +11,7 @@ import Parse
 import CSVImporter
 
 
-class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
+class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate {
 
     let Server = ParseServer.sharedInstance
     var searchQuery = PFQuery(className: "Member")
@@ -523,6 +523,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         if segue.identifier == "profile" {
             if let vc = segue.destinationController as? ProfileViewController {
                 vc.member = memberToOpen
+                vc.arrayOfFilteredMembers = arrayOfFilteredMembers
             }
         }
     }
@@ -673,5 +674,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             }
             
         }
+    }
+    
+    func popoverDidClose(_ notification: Notification) {
+        tableMembers.reloadData()
     }
 }

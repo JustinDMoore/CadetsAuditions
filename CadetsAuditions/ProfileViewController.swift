@@ -9,8 +9,9 @@
 import Cocoa
 import Parse
 
-class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSPopoverDelegate {
     
+    var arrayOfFilteredMembers: [PFObject]?
     var member: PFObject? = nil
     
     @IBOutlet weak var imgPicture: NSImageView!
@@ -21,7 +22,6 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var imgCorps: NSImageView!
     @IBOutlet weak var lblName: NSTextField!
     @IBOutlet weak var lblNumber: NSTextField!
-    @IBOutlet weak var lblRating: NSTextField!
     @IBOutlet weak var tableNotes: NSTableView!
     @IBOutlet weak var lblPhone: NSTextField!
     @IBOutlet weak var lblSchool: NSTextField!
@@ -41,6 +41,11 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblMedical: NSTextField!
     @IBOutlet weak var lblGoals: NSTextField!
     
+    @IBOutlet weak var btnNext: NSButton!
+    @IBOutlet weak var btnPrevious: NSButton!
+    
+    @IBOutlet weak var imgRating: NSImageView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +55,10 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     }
 
     func loadProfile() {
+        
+        checkIndexForButtons()
+        loadRating()
+        
         if let imageFile = member?["picture"] as? PFFile {
             imageFile.getDataInBackground(block: { (data: Data?, err: Error?) in
                 if data != nil {
@@ -59,18 +68,6 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         } else {
             imgPicture.image = NSImage(named: "Picture")
         }
-        
-//        let number = member?["number"] as? Int ?? 0
-//        let name = member?["name"] as? String ?? ""
-//        lblName.stringValue = name
-//        lblNumber.stringValue = String(number)
-//        
-//        if let dob = member?["dob"] as? Date {
-//            let now = Date()
-//           // let ageComponents = Calendar.dateComponents([.year], from: dob, to: now)
-//        } else {
-//            lblAge.stringValue = "Unknown"
-//        }
         
         //age
         let dob = member?["dob"] as! Date
@@ -261,8 +258,31 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
 //    }
     
     @IBAction func btnRating_click(_ sender: NSButtonCell) {
-        lblRating.stringValue = "\(sender.tag)"
-        //save the rating to profile
+        if sender.tag == 0 {
+            member?.remove(forKey: "rating")
+            member?.saveEventually()
+            imgRating.image = NSImage(named: "DeleteRating")
+        } else {
+            member?.setObject(sender.tag, forKey: "rating")
+            member?.saveEventually()
+        }
+        loadRating()
+    }
+    
+    func loadRating() {
+        if let rating = member?["rating"] as? Int {
+            switch rating {
+            case 1:
+               imgRating.image = NSImage(named: "1")
+            case 2:
+                imgRating.image = NSImage(named: "2")
+            case 3:
+                imgRating.image = NSImage(named: "3")
+            default: imgRating.image = NSImage(named: "Question")
+            }
+        } else {
+            imgRating.image = NSImage(named: "Question")
+        }
     }
     
     //MARK:-
@@ -364,6 +384,49 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
 //        return nil
 //        
 //    }
+    
+    @IBAction func btnNext(_ sender: Any) {
+        let index = getInexOfMember() + 1
+        member = arrayOfFilteredMembers?[index]
+        loadProfile()
+    }
+    
+    @IBAction func btnPrevious(_ sender: Any) {
+        let index = getInexOfMember() - 1
+        member = arrayOfFilteredMembers?[index]
+        loadProfile()
+    }
+    
+    func checkIndexForButtons() {
+        let index = arrayOfFilteredMembers!.index(of: member!)!
+        if index >= (arrayOfFilteredMembers?.count)! - 1 {
+            btnNext.isHidden = true
+        } else {
+            btnNext.isHidden = false
+        }
+        
+        print(index)
+        if index <= 0 {
+            btnPrevious.isHidden = true
+        } else {
+            btnPrevious.isHidden = false
+        }
+    }
+    
+    func getInexOfMember() -> Int {
+        if member != nil && arrayOfFilteredMembers != nil {
+            return arrayOfFilteredMembers!.index(of: member!)!
+        } else {
+            return 0
+        }
+    }
+    @IBAction func btnClose_clicked(_ sender: Any) {
+        self.dismiss(nil)
+    }
+    
+    func popoverDidClose(_ notification: Notification) {
+        print("closed")
+    }
 }
 
 
