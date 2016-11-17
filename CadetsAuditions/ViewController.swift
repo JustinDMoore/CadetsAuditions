@@ -130,7 +130,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         searchMembers()
     }
     
-    
     func updateRatingFilters() {
         arrayOfRatingsToFilter.removeAll()
         if checkNoRating.state == NSOnState { arrayOfRatingsToFilter.append(0) }
@@ -448,17 +447,25 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellSections"
         }
             
-            
-        else if tableColumn == tableView.tableColumns[6] { // RATING
-            if let rating = member["rating"] as! Int? {
+        else if tableColumn == tableView.tableColumns[6] { // VISUAL RATING
+            if let rating = member["visualRating"] as! Int? {
                 text = "\(rating)"
             } else {
                 text = ""
             }
-            cellIdentifier = "cellRating"
+            cellIdentifier = "cellVisualRating"
+        }
+            
+        else if tableColumn == tableView.tableColumns[7] { // MUSIC RATING
+            if let rating = member["musicRating"] as! Int? {
+                text = "\(rating)"
+            } else {
+                text = ""
+            }
+            cellIdentifier = "cellMusicRating"
         }
         
-        else if tableColumn == tableView.tableColumns[7] { // PICTURE
+        else if tableColumn == tableView.tableColumns[8] { // PICTURE
             text = ""
             if let _ = member["picture"] as? PFFile {
                 image = NSImage(named: "Picture")
@@ -524,6 +531,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             if let vc = segue.destinationController as? ProfileViewController {
                 vc.member = memberToOpen
                 vc.arrayOfFilteredMembers = arrayOfFilteredMembers
+                vc.tableParent = tableMembers
             }
         }
     }

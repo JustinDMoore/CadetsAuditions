@@ -12,7 +12,9 @@ import Parse
 class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSPopoverDelegate {
     
     var arrayOfFilteredMembers: [PFObject]?
+    var arrayOfNotes: [PFObject]?
     var member: PFObject? = nil
+    var tableParent: NSTableView? = nil
     
     @IBOutlet weak var imgPicture: NSImageView!
 
@@ -43,21 +45,51 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     
     @IBOutlet weak var btnNext: NSButton!
     @IBOutlet weak var btnPrevious: NSButton!
-    
-    @IBOutlet weak var imgRating: NSImageView!
 
+    @IBOutlet weak var imgRatingVisual: NSImageView!
+    @IBOutlet weak var imgRatingMusic: NSImageView!
+
+    @IBOutlet weak var viewNote: NSBox!
+    @IBOutlet weak var txtNote: NSTextField!
+    @IBOutlet weak var btnCancelNote: NSButton!
+    @IBOutlet weak var btnSaveNote: NSButton!
+    
+    @IBOutlet weak var txtSetNumber: NSTextField!
+    @IBOutlet weak var btnSaveNumber: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewNote.isHidden = true
         tableNotes.delegate = self
         tableNotes.dataSource = self
         loadProfile()
     }
 
+    func loadNotes() {
+        arrayOfNotes?.removeAll()
+        let query = PFQuery(className: "MemberNotes")
+        query.limit = 1000
+        query.whereKey("member", equalTo: member!)
+        query.findObjectsInBackground { (notes: [PFObject]?, err: Error?) in
+            if notes != nil {
+                self.arrayOfNotes = notes!
+                self.tableNotes.reloadData()
+            }
+        }
+    }
+    
     func loadProfile() {
         
+        loadNotes()
         checkIndexForButtons()
         loadRating()
+        
+        //number
+        if let number = member?["number"] as? Int {
+            lblNumber.stringValue = "\(number)"
+        } else {
+            lblNumber.stringValue = "No #"
+        }
         
         if let imageFile = member?["picture"] as? PFFile {
             imageFile.getDataInBackground(block: { (data: Data?, err: Error?) in
@@ -236,52 +268,75 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         } else {
             lblGoals.stringValue = "Did not answer"
         }
+        
+        //set tooltips
+        lblName.toolTip = lblName.stringValue
+        btnEmail.toolTip = btnEmail.stringValue
+        lblSchool.toolTip = lblSchool.stringValue
+        lblDecember.toolTip = lblDecember.stringValue
+        
+        lblPriorDCName.toolTip = lblPriorDCName.stringValue
+        lblIndoorPercName.toolTip = lblIndoorPercName.stringValue
+        lblWinterGuardName.toolTip = lblWinterGuardName.stringValue
+        lblInstructors.toolTip = lblInstructors.stringValue
+        
+        lblFinancialObligations.toolTip = lblFinancialObligations.stringValue
+        lblFinancialPlan.toolTip = lblFinancialPlan.stringValue
+        lblMedical.toolTip = lblMedical.stringValue
+        lblGoals.toolTip = lblGoals.stringValue
    }
-//
-//    func calculateAge (birthday: NSDate) -> NSInteger {
-//        
-////        var userAge : NSInteger = 0
-////        var calendar : NSCalendar = NSCalendar.currentCalendar
-////        var unitFlags : NSCalendarUnit = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay
-////        var dateComponentNow : NSDateComponents = calendar.components(unitFlags, fromDate: NSDate.date())
-////        var dateComponentBirth : NSDateComponents = calendar.components(unitFlags, fromDate: birthday)
-////        
-////        if ( (dateComponentNow.month < dateComponentBirth.month) ||
-////            ((dateComponentNow.month == dateComponentBirth.month) && (dateComponentNow.day < dateComponentBirth.day))
-////            )
-////        {
-////            return dateComponentNow.year - dateComponentBirth.year - 1
-////        }
-////        else {
-////            return dateComponentNow.year - dateComponentBirth.year
-////        }
-//    }
     
-    @IBAction func btnRating_click(_ sender: NSButtonCell) {
+    @IBAction func btnVisualRating_click(_ sender: NSButton) {
         if sender.tag == 0 {
-            member?.remove(forKey: "rating")
+            member?.remove(forKey: "visualRating")
             member?.saveEventually()
-            imgRating.image = NSImage(named: "DeleteRating")
+            imgRatingVisual.image = NSImage(named: "DeleteRating")
         } else {
-            member?.setObject(sender.tag, forKey: "rating")
+            member?.setObject(sender.tag, forKey: "visualRating")
             member?.saveEventually()
         }
         loadRating()
     }
-    
+
+    @IBAction func btnMusicRating_click(_ sender: NSButton) {
+        if sender.tag == 0 {
+            member?.remove(forKey: "musicRating")
+            member?.saveEventually()
+            imgRatingMusic.image = NSImage(named: "DeleteRating")
+        } else {
+            member?.setObject(sender.tag, forKey: "musicRating")
+            member?.saveEventually()
+        }
+        loadRating()
+    }
+  
     func loadRating() {
-        if let rating = member?["rating"] as? Int {
-            switch rating {
+        if let musicRating = member?["musicRating"] as? Int {
+            switch musicRating {
             case 1:
-               imgRating.image = NSImage(named: "1")
+               imgRatingMusic.image = NSImage(named: "1")
             case 2:
-                imgRating.image = NSImage(named: "2")
+                imgRatingMusic.image = NSImage(named: "2")
             case 3:
-                imgRating.image = NSImage(named: "3")
-            default: imgRating.image = NSImage(named: "Question")
+                imgRatingMusic.image = NSImage(named: "3")
+            default: imgRatingMusic.image = NSImage(named: "Question")
             }
         } else {
-            imgRating.image = NSImage(named: "Question")
+            imgRatingMusic.image = NSImage(named: "Question")
+        }
+        
+        if let visualRating = member?["visualRating"] as? Int {
+            switch visualRating {
+            case 1:
+                imgRatingVisual.image = NSImage(named: "1")
+            case 2:
+                imgRatingVisual.image = NSImage(named: "2")
+            case 3:
+                imgRatingVisual.image = NSImage(named: "3")
+            default: imgRatingVisual.image = NSImage(named: "Question")
+            }
+        } else {
+            imgRatingVisual.image = NSImage(named: "Question")
         }
     }
     
@@ -289,101 +344,50 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     //MARK:TABLE VIEW
     //MARK:-
     
-//    func numberOfRows(in tableView: NSTableView) -> Int {
-//        if arrayOfFilteredMembers?.count != nil {
-//            return arrayOfFilteredMembers!.count
-//        } else {
-//            return 0
-//        }
-//    }
-//    
-//    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-//        
-//        var image:NSImage?
-//        var text:String = ""
-//        var cellIdentifier: String = ""
-//        
-//        guard let member = arrayOfFilteredMembers?[row] else {
-//            return nil
-//        }
-//        
-//        if tableColumn == tableView.tableColumns[0] { // NUMBER
-//            if let num = member["number"] as? Int {
-//                text = String(num)
-//            }
-//            cellIdentifier = "cellNumber"
-//        }
-//        
-//        if tableColumn == tableView.tableColumns[1] { // NAME
-//            text = member["name"] as? String ?? ""
-//            cellIdentifier = "cellName"
-//        }
-//            
-//            
-//        else if tableColumn == tableView.tableColumns[2] { // CADETS LOGO
-//            let C = member["cadets"] as! Bool
-//            if C {
-//                image = NSImage(named: "Cadets")
-//            }
-//            cellIdentifier = "cellAuditioningForCadets"
-//        }
-//            
-//        else if tableColumn == tableView.tableColumns[3] { // CADETS2 LOGO
-//            let C2 = member["cadets2"] as! Bool
-//            if C2 {
-//                image = NSImage(named: "Cadets2")
-//            }
-//            cellIdentifier = "cellAuditioningForCadets2"
-//        }
-//            
-//        else if tableColumn == tableView.tableColumns[4] { // SECTION
-//            if let arrayOfInstruments = member["sections"] as! [String]? {
-//                var strInstruments = ""
-//                if arrayOfInstruments.count > 1 {
-//                    for instrument in arrayOfInstruments {
-//                        strInstruments += instrument + "    "
-//                    }
-//                } else if arrayOfInstruments.count == 1 {
-//                    strInstruments = arrayOfInstruments.first!
-//                }
-//                
-//                text = strInstruments
-//            }
-//            cellIdentifier = "cellSections"
-//        }
-//            
-//            
-//        else if tableColumn == tableView.tableColumns[5] { // RATING
-//            if let rating = member["rating"] as! Int? {
-//                text = "\(rating)"
-//            } else {
-//                text = ""
-//            }
-//            cellIdentifier = "cellRating"
-//        }
-//            
-//        else if tableColumn == tableView.tableColumns[6] { // PICTURE
-//            text = ""
-//            if let _ = member["picture"] as? PFFile {
-//                image = NSImage(named: "Picture")
-//            } else {
-//                image = nil
-//            }
-//            cellIdentifier = "cellPicture"
-//        }
-//        
-//        
-//        // 3
-//        if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
-//            cell.textField?.stringValue = text
-//            cell.imageView?.image = image ?? nil
-//            return cell
-//        } else {
-//            print("no \(cellIdentifier)")
-//        }
-//        return nil
-//        
-//    }
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        if arrayOfNotes?.count != nil {
+            return arrayOfNotes!.count
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        
+        var image:NSImage?
+        var text:String = ""
+        var cellIdentifier: String = ""
+        
+        guard let note = arrayOfNotes?[row] else {
+            return nil
+        }
+        
+        if tableColumn == tableView.tableColumns[1] { // DATE
+            let date = note.createdAt! as Date
+            let dateFormatter = DateFormatter()
+            dateFormatter.amSymbol = "AM"
+            dateFormatter.pmSymbol = "PM"
+            dateFormatter.dateFormat = "MM-dd-yy hh:mm a"
+            text = dateFormatter.string(from: date)
+            cellIdentifier = "cellDate"
+        }
+        
+        if tableColumn == tableView.tableColumns[0] { // NOTE
+            text = note["note"] as? String ?? ""
+            cellIdentifier = "cellNote"
+        }
+        
+        // 3
+        if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
+            cell.textField?.stringValue = text
+            cell.imageView?.image = image ?? nil
+            return cell
+        } else {
+            print("no \(cellIdentifier)")
+        }
+        return nil
+        
+    }
     
     @IBAction func btnNext(_ sender: Any) {
         let index = getInexOfMember() + 1
@@ -405,7 +409,6 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             btnNext.isHidden = false
         }
         
-        print(index)
         if index <= 0 {
             btnPrevious.isHidden = true
         } else {
@@ -420,12 +423,68 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             return 0
         }
     }
+    
     @IBAction func btnClose_clicked(_ sender: Any) {
         self.dismiss(nil)
+        tableParent?.reloadData()
     }
     
     func popoverDidClose(_ notification: Notification) {
-        print("closed")
+        tableParent?.reloadData()
+    }
+    
+    @IBAction func btnNote_click(_ sender: Any) {
+        viewNote.isHidden = false
+        btnSaveNote.isHidden = false
+    }
+    
+    @IBAction func btnCancelNote_clicked(_ sender: Any) {
+        txtNote.stringValue = ""
+        viewNote.isHidden = true
+    }
+    
+    @IBAction func btnSave_clicked(_ sender: Any) {
+        let newNote = PFObject(className: "MemberNotes")
+        newNote["note"] = txtNote.stringValue
+        newNote.setObject(member!, forKey: "member")
+        newNote.saveEventually { (done: Bool, err: Error?) in
+            if done {
+                self.arrayOfNotes?.append(newNote)
+                self.tableNotes.reloadData()
+            }
+        }
+        btnCancelNote_clicked(self)
+    }
+    
+    @IBAction func btnNumber_click(_ sender: Any) {
+        if txtSetNumber.isHidden {
+            txtSetNumber.isHidden = false
+            btnSaveNumber.isHidden = false
+            txtSetNumber.becomeFirstResponder()
+        } else {
+            txtSetNumber.isHidden = true
+            btnSaveNumber.isHidden = true
+            txtSetNumber.resignFirstResponder()
+        }
+    }
+    
+    @IBAction func btnSaveNumber_clicked(_ sender: Any) {
+        txtSetNumber.isHidden = true
+        btnSaveNumber.isHidden = true
+        member?["number"] = Int(txtSetNumber.stringValue)
+        lblNumber.stringValue = txtSetNumber.stringValue
+        member?.saveEventually()
+        txtSetNumber.stringValue = ""
+    }
+    
+    @IBAction func doubleClick(_ sender: Any) {
+        // 1
+        guard tableNotes.selectedRow >= 0 , let note = arrayOfNotes?[tableNotes.selectedRow] else {
+            return
+        }
+        btnNote_click(self)
+        btnSaveNote.isHidden = true
+        txtNote.stringValue = note["note"] as! String
     }
 }
 
