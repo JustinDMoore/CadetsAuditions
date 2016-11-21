@@ -9,7 +9,7 @@
 import Cocoa
 import Parse
 import CSVImporter
-
+import AVFoundation
 
 class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate {
 
@@ -18,7 +18,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     var arrayOfAllMembers: [PFObject]? = nil
     var arrayOfFilteredMembers: [PFObject]? = nil
     var arrayOfInstrumentsToFilter = [String]()
-    var arrayOfRatingsToFilter = [Int]()
+    var arrayOfVisualRatingsToFilter = [Int]()
+    var arrayOfMusicRatingsToFilter = [Int]()
     var memberToOpen: PFObject? = nil
     
     //Search variables
@@ -35,7 +36,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     var searchDrumMajor = false
     
     @IBOutlet weak var tableMembers: NSTableView!
-    
     
     @IBOutlet weak var checkAllMembers: NSButton!
     @IBOutlet weak var checkCadets: NSButton!
@@ -57,10 +57,17 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var checkAllDrumMajors: NSButton!
     
     //Rating checkboxes
-    @IBOutlet weak var checkNoRating: NSButton!
-    @IBOutlet weak var checkRating1: NSButton!
-    @IBOutlet weak var checkRating2: NSButton!
-    @IBOutlet weak var checkRating3: NSButton!
+    @IBOutlet weak var checkVisual_NoRating: NSButton!
+    @IBOutlet weak var checkVisual_1: NSButton!
+    @IBOutlet weak var checkVisual_2: NSButton!
+    @IBOutlet weak var checkVisual_3: NSButton!
+
+    @IBOutlet weak var checkMusic_NoRating: NSButton!
+    @IBOutlet weak var checkMusic_1: NSButton!
+    @IBOutlet weak var checkMusic_2: NSButton!
+    @IBOutlet weak var checkMusic_3: NSButton!
+    
+    @IBOutlet weak var checkVets: NSButton!
     
     //Search boxes
     @IBOutlet weak var txtSearch: NSTextField!
@@ -79,12 +86,74 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         //deleteAllMembers()
     }
 
+    
+    @IBAction func video(_ sender: Any) {
+        memberToOpen?.add("VIDEO", forKey: "sections")
+    }
+    
+    @IBAction func multiple(_ sender: Any) {
+        let new = PFObject(className: "Member")
+        new["prevDance"] = memberToOpen?["prevDance"]
+        new["goals"] = memberToOpen?["goals"]
+        new["understandMoney"] = memberToOpen?["understandMoney"]
+        new["marchedGuard"] = memberToOpen?["marchedGuard"]
+        new["prevInstructors"] = memberToOpen?["prevInstructors"]
+        new["december"] = memberToOpen?["december"]
+        new["marchedCorps"] = memberToOpen?["marchedCorps"]
+        new["marchedPerc"] = memberToOpen?["marchedPerc"]
+        new["number"] = memberToOpen?["number"]
+        new["name"] = memberToOpen?["name"]
+        new["sections"] = memberToOpen?["sections"]
+        new["multiple"] = true
+        memberToOpen?["multiple"] = true
+        memberToOpen?.saveInBackground()
+        new["whyDecember"] = memberToOpen?["whyDecember"]
+        new["phone"] = memberToOpen?["phone"]
+        new["medical"] = memberToOpen?["medical"]
+        new["school"] = memberToOpen?["school"]
+        new["cadets2"] = memberToOpen?["cadets2"]
+        new["otherGuard"] = memberToOpen?["otherGuard"]
+        new["otherPerc"] = memberToOpen?["otherPerc"]
+        new["marchingYears"] = memberToOpen?["marchingYears"]
+        new["dob"] = memberToOpen?["dob"]
+        new["planMoney"] = memberToOpen?["planMoney"]
+        new["otherCorps"] = memberToOpen?["otherCorps"]
+        new["questionMoney"] = memberToOpen?["questionMoney"]
+        new["email"] = memberToOpen?["email"]
+        new["yearsDance"] = memberToOpen?["yearsDance"]
+        new["cadets"] = memberToOpen?["cadets"]
+        new["picture"] = memberToOpen?["picture"]
+        new.saveInBackground()
+    }
+    
+    @IBAction func deleteMember(_ sender: NSButton) {
+        memberToOpen?.deleteInBackground(block: { (done: Bool, err: Error?) in
+            self.tableMembers.reloadData()
+        })
+    }
+
+    
+    func duplicateSections() {
+//        for member in arrayOfAllMembers! {
+//            let dup = member["multiple"]
+//            if dup == true {
+//                var new = PFObject(className: "Member")
+//                new = member
+//                new.saveInBackground()
+//            }
+//        }
+    }
+    
     func refreshServer() {
+        lblResults.stringValue = "Refreshing..."
+        searchQuery.cancel()
         arrayOfAllMembers?.removeAll()
         arrayOfFilteredMembers?.removeAll()
-        let query = PFQuery(className: "Member")
-        query.limit = 1000
-        query.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
+        searchQuery.limit = 1000
+        searchQuery.whereKeyExists("number")
+        searchQuery.order(byAscending: "name")
+        //searchQuery.order(byAscending: "lastUpdated")
+        searchQuery.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
             if members != nil {
                 self.arrayOfAllMembers = members!
                 self.arrayOfFilteredMembers = members!
@@ -131,11 +200,18 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func updateRatingFilters() {
-        arrayOfRatingsToFilter.removeAll()
-        if checkNoRating.state == NSOnState { arrayOfRatingsToFilter.append(0) }
-        if checkRating1.state == NSOnState { arrayOfRatingsToFilter.append(1) }
-        if checkRating2.state == NSOnState { arrayOfRatingsToFilter.append(2) }
-        if checkRating3.state == NSOnState { arrayOfRatingsToFilter.append(3) }
+        arrayOfVisualRatingsToFilter.removeAll()
+        arrayOfMusicRatingsToFilter.removeAll()
+        
+        if checkVisual_NoRating.state == NSOnState { arrayOfVisualRatingsToFilter.append(0) }
+        if checkVisual_1.state == NSOnState { arrayOfVisualRatingsToFilter.append(1) }
+        if checkVisual_2.state == NSOnState { arrayOfVisualRatingsToFilter.append(2) }
+        if checkVisual_3.state == NSOnState { arrayOfVisualRatingsToFilter.append(3) }
+        
+        if checkMusic_NoRating.state == NSOnState { arrayOfMusicRatingsToFilter.append(0) }
+        if checkMusic_1.state == NSOnState { arrayOfMusicRatingsToFilter.append(1) }
+        if checkMusic_2.state == NSOnState { arrayOfMusicRatingsToFilter.append(2) }
+        if checkMusic_3.state == NSOnState { arrayOfMusicRatingsToFilter.append(3) }
         
         searchMembers()
     }
@@ -154,33 +230,155 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 }
             }
         } else {
-            checkForRating(member: member)
+            checkForRating(member: member) // no instruments selected, so skip to rating
         }
     }
     
     func checkForRating(member: PFObject) {
-        if !arrayOfRatingsToFilter.isEmpty {
-            if let memberRating = member["rating"] as? Int {
-                for rating in arrayOfRatingsToFilter {
-                    if memberRating == rating {
+        
+        
+        if arrayOfVisualRatingsToFilter.isEmpty && arrayOfMusicRatingsToFilter.isEmpty {
+            //we don't care about ratings, add the member
+            addMemberToFilteredArray(member: member)
+            
+        } else if arrayOfVisualRatingsToFilter.isEmpty && !arrayOfMusicRatingsToFilter.isEmpty {
+            //we only care about music ratings
+            //MUSIC
+            if !arrayOfMusicRatingsToFilter.isEmpty {
+                if let memberMusicRating = member["musicRating"] as? Int {
+                    for rating in arrayOfMusicRatingsToFilter {
+                        if memberMusicRating == rating {
+                            addMemberToFilteredArray(member: member)
+                        }
+                    }
+                } else { // member does not have a rating, are we searching for No ratings?
+                    if arrayOfMusicRatingsToFilter.contains(0) {
                         addMemberToFilteredArray(member: member)
                     }
                 }
-            } else { // member does not have a rating, are we searching for No ratings?
-                if arrayOfRatingsToFilter.contains(0) {
+            } else {
+                addMemberToFilteredArray(member: member)
+            }
+
+            
+        } else if !arrayOfVisualRatingsToFilter.isEmpty && arrayOfMusicRatingsToFilter.isEmpty {
+            //we only care about visual ratings
+            if !arrayOfVisualRatingsToFilter.isEmpty {
+                if let memberVisualRating = member["visualRating"] as? Int {
+                    for rating in arrayOfVisualRatingsToFilter {
+                        if memberVisualRating == rating {
+                            print("match visual \(rating) - \(memberVisualRating)")
+                            addMemberToFilteredArray(member: member)
+                        }
+                    }
+                } else { // member does not have a rating, are we searching for No ratings?
+                    if arrayOfVisualRatingsToFilter.contains(0) {
+                        addMemberToFilteredArray(member: member)
+                    }
+                }
+            } else {
+                addMemberToFilteredArray(member: member)
+            }
+            
+            
+        } else if !arrayOfVisualRatingsToFilter.isEmpty && !arrayOfMusicRatingsToFilter.isEmpty {
+            //we care about both ratings
+            let memberVis = member["visualRating"] as? Int ?? nil
+            let memberMus = member["musicRating"] as? Int ?? nil
+            
+            var addMusic = false
+            var addVisual = false
+            
+            if memberVis != nil {
+                for rating in arrayOfVisualRatingsToFilter {//check visual rating
+                    if memberVis == rating {
+                        addVisual = true
+                    }
+                }
+            } else {
+                // are we checking for no rating?
+                if arrayOfVisualRatingsToFilter.contains(0) {
                     addMemberToFilteredArray(member: member)
                 }
             }
-        } else {
-            addMemberToFilteredArray(member: member)
+            
+            
+            if memberMus != nil {
+                for rating in arrayOfMusicRatingsToFilter {//check music rating
+                    if memberMus == rating {
+                        addMusic = true
+                    }
+                }
+            } else {
+                // are we checking for no rating?
+                if arrayOfMusicRatingsToFilter.contains(0) {
+                    addMemberToFilteredArray(member: member)
+                }
+            }
+            
+            if addMusic && addVisual {
+                addMemberToFilteredArray(member: member)
+            }
         }
+        
+        
+//        //VISUAL
+//        if !arrayOfVisualRatingsToFilter.isEmpty {
+//            if let memberVisualRating = member["visualRating"] as? Int {
+//                for rating in arrayOfVisualRatingsToFilter {
+//                    print("checking for rating of visual \(rating)")
+//                    if memberVisualRating == rating {
+//                        print("match visual \(rating) - \(memberVisualRating)")
+//                        addMemberToFilteredArray(member: member)
+//                    }
+//                }
+//            } else { // member does not have a rating, are we searching for No ratings?
+//                if arrayOfVisualRatingsToFilter.contains(0) {
+//                    addMemberToFilteredArray(member: member)
+//                }
+//            }
+//        } else {
+//            addMemberToFilteredArray(member: member)
+//        }
+//        
+//        //MUSIC
+//        if !arrayOfMusicRatingsToFilter.isEmpty {
+//            if let memberMusicRating = member["musicRating"] as? Int {
+//                for rating in arrayOfMusicRatingsToFilter {
+//                    if memberMusicRating == rating {
+//                        addMemberToFilteredArray(member: member)
+//                    }
+//                }
+//            } else { // member does not have a rating, are we searching for No ratings?
+//                if arrayOfMusicRatingsToFilter.contains(0) {
+//                    addMemberToFilteredArray(member: member)
+//                }
+//            }
+//        } else {
+//            addMemberToFilteredArray(member: member)
+//        }
     }
     
     func addMemberToFilteredArray(member: PFObject) {
+        
+        //check veteran rating first
+        if checkVets.state == NSOnState {
+            let cVet = member["cadetsVet"] as? Bool ?? nil
+            let c2Vet = member["cadets2Vet"] as? Bool ?? nil
+            
+            if cVet == true || c2Vet == true {
+                //vet
+            } else {
+                //no vet
+                return
+            }
+        }
+        
         //make sure they don't exist in filtered array, then add
         if !(arrayOfFilteredMembers?.contains(member))! {
             arrayOfFilteredMembers?.append(member)
         }
+        tableMembers.reloadData()
     }
     
     // END CHECK FILTERS
@@ -371,6 +569,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         updateRatingFilters()
     }
     
+    @IBAction func checkVets_click(_ sender: NSButton) {
+        searchMembers()
+    }
+    
     //MARK:-
     //MARK:TABLE VIEW
     //MARK:-
@@ -399,13 +601,26 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             }
             cellIdentifier = "cellNumber"
         }
+        
+        if tableColumn == tableView.tableColumns[1] { // VET
+            let cVet = member["cadetsVet"] as? Bool ?? nil
+            let c2Vet = member["cadets2Vet"] as? Bool ?? nil
             
-        if tableColumn == tableView.tableColumns[1] { // NAME
+            if cVet == true || c2Vet == true {
+                image = NSImage(named: "Check")
+            } else {
+                image = nil
+            }
+            
+            cellIdentifier = "cellVeteran"
+        }
+        
+        if tableColumn == tableView.tableColumns[2] { // NAME
             text = member["name"] as? String ?? ""
             cellIdentifier = "cellName"
         }
         
-        if tableColumn == tableView.tableColumns[2] { // AGE
+        if tableColumn == tableView.tableColumns[3] { // AGE
             let dob = member["dob"] as! Date
             let now = Date()
             let calendar = Calendar.current
@@ -415,7 +630,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellAge"
         }
         
-        else if tableColumn == tableView.tableColumns[3] { // CADETS LOGO
+        else if tableColumn == tableView.tableColumns[4] { // CADETS LOGO
             let C = member["cadets"] as! Bool
             if C {
                 image = NSImage(named: "Cadets")
@@ -423,7 +638,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellAuditioningForCadets"
         }
         
-        else if tableColumn == tableView.tableColumns[4] { // CADETS2 LOGO
+        else if tableColumn == tableView.tableColumns[5] { // CADETS2 LOGO
             let C2 = member["cadets2"] as! Bool
             if C2 {
                 image = NSImage(named: "Cadets2")
@@ -431,7 +646,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellAuditioningForCadets2"
         }
         
-        else if tableColumn == tableView.tableColumns[5] { // SECTION
+        else if tableColumn == tableView.tableColumns[6] { // SECTION
             if let arrayOfInstruments = member["sections"] as! [String]? {
                 var strInstruments = ""
                 if arrayOfInstruments.count > 1 {
@@ -447,7 +662,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellSections"
         }
             
-        else if tableColumn == tableView.tableColumns[6] { // VISUAL RATING
+        else if tableColumn == tableView.tableColumns[7] { // VISUAL RATING
             if let rating = member["visualRating"] as! Int? {
                 text = "\(rating)"
             } else {
@@ -456,7 +671,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellVisualRating"
         }
             
-        else if tableColumn == tableView.tableColumns[7] { // MUSIC RATING
+        else if tableColumn == tableView.tableColumns[8] { // MUSIC RATING
             if let rating = member["musicRating"] as! Int? {
                 text = "\(rating)"
             } else {
@@ -465,7 +680,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellMusicRating"
         }
         
-        else if tableColumn == tableView.tableColumns[8] { // PICTURE
+        else if tableColumn == tableView.tableColumns[9] { // PICTURE
             text = ""
             if let _ = member["picture"] as? PFFile {
                 image = NSImage(named: "Picture")
@@ -473,6 +688,31 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 image = nil
             }
             cellIdentifier = "cellPicture"
+        }
+        
+        else if tableColumn == tableView.tableColumns[10] { // MULTIPLE AUDITIONS
+            text = ""
+            let multiple = member["multiple"] as? Bool ?? false
+            if multiple {
+                image = NSImage(named: "Check")
+            } else {
+                image = nil
+            }
+            cellIdentifier = "cellMultiple"
+        }
+        
+        else if tableColumn == tableView.tableColumns[11] { // RECOMMEND
+            if let recommendedCorps = member["corps"] as? Int {
+                if recommendedCorps == 1 {
+                    image = NSImage(named: "Cadets")
+                } else if recommendedCorps == 2 {
+                    image = NSImage(named: "Cadets2")
+                }
+            } else {
+                image = nil
+            }
+            
+            cellIdentifier = "cellCorps"
         }
         
         
@@ -487,6 +727,13 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         return nil
         
     }
+    @IBAction func click(_ sender: Any) {
+        // 1
+        guard tableMembers.selectedRow >= 0 , let member = arrayOfFilteredMembers?[tableMembers.selectedRow] else {
+            return
+        }
+        memberToOpen = member
+    }
     
     @IBAction func doubleClick(_ sender: Any) {
         // 1
@@ -497,6 +744,13 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         self.performSegue(withIdentifier: "profile", sender: self)
     }
     
+    func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+//        arrayOfFilteredMembers.sort
+//        var songsAsMutableArray = NSMutableArray(array: arrayOfFilteredMembers!)
+//        songsAsMutableArray.sort(using: tableView.sortDescriptors)
+//        arrayOfFilteredMembers = songsAsMutableArray
+//        tableView.reloadData()
+    }
     
     //NSTEXTFIELD DELAGATE
     override func controlTextDidChange(_ obj: Notification) {
@@ -687,4 +941,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     func popoverDidClose(_ notification: Notification) {
         tableMembers.reloadData()
     }
+    
+    
 }

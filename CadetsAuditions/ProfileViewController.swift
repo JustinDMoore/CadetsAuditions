@@ -8,6 +8,7 @@
 
 import Cocoa
 import Parse
+import AVFoundation
 
 class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSPopoverDelegate {
     
@@ -15,6 +16,10 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     var arrayOfNotes: [PFObject]?
     var member: PFObject? = nil
     var tableParent: NSTableView? = nil
+    
+    let session = AVCaptureSession()
+    let video_connection = AVCaptureConnection()
+    let still_image_output = AVCaptureStillImageOutput()
     
     @IBOutlet weak var imgPicture: NSImageView!
 
@@ -43,6 +48,8 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblMedical: NSTextField!
     @IBOutlet weak var lblGoals: NSTextField!
     
+    @IBOutlet weak var lblMultiple: NSTextField!
+    
     @IBOutlet weak var btnNext: NSButton!
     @IBOutlet weak var btnPrevious: NSButton!
 
@@ -56,15 +63,93 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     
     @IBOutlet weak var txtSetNumber: NSTextField!
     @IBOutlet weak var btnSaveNumber: NSButton!
+    @IBOutlet weak var progressWheel: NSProgressIndicator!
+    
+    @IBOutlet weak var imgRecommended: NSImageView!
+    
+    @IBOutlet weak var checkCadetsVet: NSButton!
+    @IBOutlet weak var checkCadets2Vet: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewNote.isHidden = true
         tableNotes.delegate = self
         tableNotes.dataSource = self
+        imgPicture.image = nil
         loadProfile()
     }
 
+    @IBAction func btnRecommendCorps(_ sender: NSButton) {
+        switch sender.tag {
+        case 0:
+            member?.remove(forKey: "corps")
+            member?.saveEventually()
+            imgRecommended.image = NSImage(named: "Question")
+        case 1:
+            member?["corps"] = sender.tag
+            member?.saveEventually()
+            imgRecommended.image = NSImage(named: "Cadets")
+        case 2:
+            member?["corps"] = sender.tag
+            member?.saveEventually()
+            imgRecommended.image = NSImage(named: "Cadets2")
+        default:
+            print("Error")
+        }
+    }
+ 
+    @IBAction func checkVet_clicked(_ sender: NSButton) {
+        if sender.tag == 1 {
+            if sender.state == NSOnState {
+                member?["cadetsVet"] = true
+                member?.saveEventually()
+            } else {
+                member?["cadetsVet"] = false
+            }
+        } else if sender.tag == 2 {
+            if sender.state == NSOnState {
+                member?["cadets2Vet"] = true
+                member?.saveEventually()
+            } else {
+                member?["cadets2Vet"] = false
+            }
+        }
+    }
+    
+    
+    @IBAction func email(_ sender: NSButton) {
+        if sender.stringValue.characters.count > 0 {
+            openMailApp()
+        }
+    }
+    
+    func openMailApp() {
+        
+        let toEmail = member?["email"]
+        let urlString = "mailto:\(toEmail!)"
+        
+        if let url = URL(string: urlString) {
+            print(toEmail!)
+            NSWorkspace.shared().open(url)
+        }
+    }
+    
+    @IBAction func deleteNOte(_ sender: Any) {
+        selectedNote?.deleteInBackground(block: { (done: Bool, err: Error?) in
+            self.btnCancelNote_clicked(self)
+            self.tableNotes.reloadData()
+        })
+    }
+    
+    @IBAction func updateNote(_ sender: Any) {
+        selectedNote?["note"] = txtNote.stringValue
+        selectedNote?.saveEventually({ (done: Bool, err: Error?) in
+            self.btnCancelNote_clicked(self)
+            self.tableNotes.reloadData()
+        })
+    }
+    
+    
     func loadNotes() {
         arrayOfNotes?.removeAll()
         let query = PFQuery(className: "MemberNotes")
@@ -80,6 +165,51 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     
     func loadProfile() {
         
+        if let imageFile = member?["picture"] as? PFFile {
+            imgPicture.image = nil
+            progressWheel.isHidden = false
+            progressWheel.startAnimation(self)
+            imageFile.getDataInBackground(block: { (data: Data?, err: Error?) in
+                if data != nil {
+                    self.progressWheel.stopAnimation(self)
+                    self.progressWheel.isHidden = true
+                    self.imgPicture.image = NSImage(data: data!)
+                }
+            })
+        } else {
+            imgPicture.image = NSImage(named: "Picture")
+            progressWheel.stopAnimation(self)
+            progressWheel.isHidden = true
+        }
+        
+        if let cadetsVet = member?["cadetsVet"] as? Bool {
+            if cadetsVet {
+                checkCadetsVet.state = NSOnState
+            } else {
+                checkCadetsVet.state = NSOffState
+            }
+        } else {
+            checkCadetsVet.state = NSOffState
+        }
+        
+        if let cadets2Vet = member?["cadets2Vet"] as? Bool {
+            if cadets2Vet {
+                checkCadets2Vet.state = NSOnState
+            } else {
+                checkCadets2Vet.state = NSOffState
+            }
+        } else {
+            checkCadets2Vet.state = NSOffState
+        }
+
+        
+        let multiple = member?["multiple"] as? Bool ?? false
+        if multiple {
+            lblMultiple.isHidden = false
+        } else {
+            lblMultiple.isHidden = true
+        }
+        
         loadNotes()
         checkIndexForButtons()
         loadRating()
@@ -89,16 +219,6 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             lblNumber.stringValue = "\(number)"
         } else {
             lblNumber.stringValue = "No #"
-        }
-        
-        if let imageFile = member?["picture"] as? PFFile {
-            imageFile.getDataInBackground(block: { (data: Data?, err: Error?) in
-                if data != nil {
-                    self.imgPicture.image = NSImage(data: data!)
-                }
-            })
-        } else {
-            imgPicture.image = NSImage(named: "Picture")
         }
         
         //age
@@ -122,6 +242,16 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             imgCorps.image = NSImage(named: "Cadets2")
         } else if cadets && cadets2 {
             imgCorps.image = NSImage(named: "CadetsCadets2")
+        }
+        
+        if let corps = member?["corps"] as? Int {
+            if corps == 1 {
+                imgRecommended.image = NSImage(named: "Cadets")
+            } else if corps == 2 {
+                imgRecommended.image = NSImage(named: "Cadets2")
+            }
+        } else {
+            imgRecommended.image = NSImage(named: "Question")
         }
         
         //sections
@@ -389,6 +519,22 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         
     }
     
+    func tableView(_ tableView: NSTableView, shouldShowCellExpansionFor tableColumn: NSTableColumn?, row: Int) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
+        return "test"
+    }
+
+    func tableView(_ tableView: NSTableView, shouldTrackCell cell: NSCell, for tableColumn: NSTableColumn?, row: Int) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
+        print("display")
+    }
+    
     @IBAction func btnNext(_ sender: Any) {
         let index = getInexOfMember() + 1
         member = arrayOfFilteredMembers?[index]
@@ -436,6 +582,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBAction func btnNote_click(_ sender: Any) {
         viewNote.isHidden = false
         btnSaveNote.isHidden = false
+        txtNote.becomeFirstResponder()
     }
     
     @IBAction func btnCancelNote_clicked(_ sender: Any) {
@@ -469,6 +616,10 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     }
     
     @IBAction func btnSaveNumber_clicked(_ sender: Any) {
+        saveNumber()
+    }
+    
+    func saveNumber() {
         txtSetNumber.isHidden = true
         btnSaveNumber.isHidden = true
         member?["number"] = Int(txtSetNumber.stringValue)
@@ -477,6 +628,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         txtSetNumber.stringValue = ""
     }
     
+    var selectedNote: PFObject?
     @IBAction func doubleClick(_ sender: Any) {
         // 1
         guard tableNotes.selectedRow >= 0 , let note = arrayOfNotes?[tableNotes.selectedRow] else {
@@ -485,7 +637,14 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         btnNote_click(self)
         btnSaveNote.isHidden = true
         txtNote.stringValue = note["note"] as! String
+        selectedNote = note
     }
+    
+    @IBAction func saveNumber(_ sender: NSTextField) {
+        saveNumber()
+    }
+    
+ 
 }
 
 

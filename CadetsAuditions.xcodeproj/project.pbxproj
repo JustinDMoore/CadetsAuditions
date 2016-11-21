@@ -16,6 +16,7 @@
 		AE146E771DD41D160026E1F6 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE81DD418570077A85B /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AE146E781DD41D160026E1F6 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE61DD418540077A85B /* Bolts.framework */; };
 		AE146E791DD41D160026E1F6 /* Bolts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AEA49EE61DD418540077A85B /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AE57B1461DDE0942000CE13D /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE57B1451DDE0942000CE13D /* CustomView.swift */; };
 		AEA49ED71DD415D90077A85B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA49ED61DD415D90077A85B /* AppDelegate.swift */; };
 		AEA49ED91DD415D90077A85B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA49ED81DD415D90077A85B /* ViewController.swift */; };
 		AEA49EDB1DD415D90077A85B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEA49EDA1DD415D90077A85B /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		3B065F0AB5B4903AFB5C3F07 /* Pods-CadetsAuditions.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CadetsAuditions.release.xcconfig"; path = "Pods/Target Support Files/Pods-CadetsAuditions/Pods-CadetsAuditions.release.xcconfig"; sourceTree = "<group>"; };
 		AE146E6E1DD41A070026E1F6 /* Bolts.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Bolts.framework.dSYM; path = Carthage/Build/Mac/Bolts.framework.dSYM; sourceTree = "<group>"; };
 		AE146E701DD41A0A0026E1F6 /* Parse.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Parse.framework.dSYM; path = Carthage/Build/Mac/Parse.framework.dSYM; sourceTree = "<group>"; };
+		AE57B1451DDE0942000CE13D /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		AEA49ED31DD415D90077A85B /* CadetsAuditions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CadetsAuditions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA49ED61DD415D90077A85B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEA49ED81DD415D90077A85B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				AEB2B7881DD6A88400159243 /* ProfileViewController.swift */,
 				AEA49EDA1DD415D90077A85B /* Assets.xcassets */,
 				AEA49EDC1DD415D90077A85B /* Main.storyboard */,
+				AE57B1451DDE0942000CE13D /* CustomView.swift */,
 				AEA49EDF1DD415D90077A85B /* Info.plist */,
 			);
 			path = CadetsAuditions;
@@ -251,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE57B1461DDE0942000CE13D /* CustomView.swift in Sources */,
 				AEE5AC8A1DD629DD00E07A39 /* CAParse.swift in Sources */,
 				AEA49ED91DD415D90077A85B /* ViewController.swift in Sources */,
 				AEB2B7891DD6A88400159243 /* ProfileViewController.swift in Sources */,
@@ -312,7 +316,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -355,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
