@@ -104,6 +104,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var viewDrumMajor: NSView!
     @IBOutlet weak var viewRating: NSView!
     @IBOutlet weak var viewFrontEnsemble: NSView!
+    @IBOutlet weak var imgMusic: NSImageView!
+    @IBOutlet weak var imgVisual: NSImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -250,6 +252,16 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         setCheckBoxColors(button: checkAllColorguard)
         setCheckBoxColors(button: checkAllDrumMajors)
         
+        setCheckBoxColors(button: checkMusic_1)
+        setCheckBoxColors(button: checkMusic_2)
+        setCheckBoxColors(button: checkMusic_3)
+        setCheckBoxColors(button: checkMusic_NoRating)
+        
+        setCheckBoxColors(button: checkVisual_1)
+        setCheckBoxColors(button: checkVisual_2)
+        setCheckBoxColors(button: checkVisual_3)
+        setCheckBoxColors(button: checkVisual_NoRating)
+        
         viewBattery.frame = viewBrass.frame
         viewFrontEnsemble.frame = viewBrass.frame
         viewColorGuard.frame = viewBrass.frame
@@ -374,7 +386,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         if memberToOpen != nil {
             let answer = dialogOKCancel(question: "Set \(memberToOpen!["name"]!) Video Audition", text: "Are you sure you want to set this as a video audition?")
             if answer {
-                memberToOpen?.add("VIDEO", forKey: "sections")
+                memberToOpen?["video"] = true
                 memberToOpen?.saveEventually()
             }
         }
@@ -458,9 +470,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         arrayOfAllMembers?.removeAll()
         arrayOfFilteredMembers?.removeAll()
         searchQuery.limit = 1000
-        searchQuery.whereKeyExists("number")
-        searchQuery.order(byAscending: "name")
-        //searchQuery.order(byAscending: "lastUpdated")
+        //searchQuery.order(byAscending: "name")
+        searchQuery.order(byAscending: "lastUpdated")
         searchQuery.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
             if members != nil {
                 self.arrayOfAllMembers = members!
@@ -520,6 +531,19 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         if checkMusic_1.state == NSOnState { arrayOfMusicRatingsToFilter.append(1) }
         if checkMusic_2.state == NSOnState { arrayOfMusicRatingsToFilter.append(2) }
         if checkMusic_3.state == NSOnState { arrayOfMusicRatingsToFilter.append(3) }
+        
+        //set the music and visual rating images to "ON" or "OFF"
+        if arrayOfVisualRatingsToFilter.count > 0 {
+            imgVisual.image = NSImage(named: "VisualON")
+        } else {
+            imgVisual.image = NSImage(named: "VisualOFF")
+        }
+        
+        if arrayOfMusicRatingsToFilter.count > 0 {
+            imgMusic.image = NSImage(named: "MusicON")
+        } else {
+            imgMusic.image = NSImage(named: "MusicOFF")
+        }
         
         searchMembers()
     }
@@ -1109,7 +1133,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     func load() {
         var count = 0
         
-        let path = "/Users/JMoore/Downloads/load.csv"
+        let path = "/Users/JMoore/Downloads/AuditionProfile_Data.csv"
         let importer = CSVImporter<[String: String]>(path: path)
         importer.startImportingRecords(structure: { (headerValues) -> Void in
             
