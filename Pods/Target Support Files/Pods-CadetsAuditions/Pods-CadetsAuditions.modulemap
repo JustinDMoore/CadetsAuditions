@@ -1,0 +1,6 @@
+framework module Pods_CadetsAuditions {
+  umbrella header "Pods-CadetsAuditions-umbrella.h"
+
+  export *
+  module * { export * }
+}

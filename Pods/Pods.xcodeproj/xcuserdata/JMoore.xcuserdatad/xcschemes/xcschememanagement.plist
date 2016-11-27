@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>CSVImporter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FileKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>HandySwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CadetsAuditions.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1AB6E520F6C51326F6D857EBE6B094C9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2B7894CA7491CC44AAD68AABF59EC469</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8139523F2FC0E6903D247401047A3BFE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE1822458464D2A3BCE574FE4CE62753</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
