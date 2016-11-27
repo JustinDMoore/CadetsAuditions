@@ -14,6 +14,7 @@ import AVFoundation
 class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate {
 
     let Server = ParseServer.sharedInstance
+    var buttonClicked = 0
     var searchQuery = PFQuery(className: "Member")
     var arrayOfAllMembers: [PFObject]? = nil
     var arrayOfFilteredMembers: [PFObject]? = nil
@@ -69,70 +70,367 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     @IBOutlet weak var checkVets: NSButton!
     
+
+    @IBOutlet weak var lblUserName: NSTextField!
+    @IBOutlet weak var barSelect: NSImageView!
+    @IBOutlet weak var lblUserPosition: NSTextField!
+
+    
+    @IBOutlet weak var viewSearch: NSView!
     //Search boxes
     @IBOutlet weak var txtSearch: NSTextField!
     
     //Results
     @IBOutlet weak var lblResults: NSTextField!
 
+    //Section Buttons
+    @IBOutlet weak var btnBrass: NSButton!
+    @IBOutlet weak var btnPercussion: NSButton!
+    @IBOutlet weak var btnFrontEnsemble: NSButton!
+    @IBOutlet weak var btnColorGuard: NSButton!
+    @IBOutlet weak var btnDrumMajor: NSButton!
+    @IBOutlet weak var btnHelp: NSButton!
+    @IBOutlet weak var btnDelete: NSButton!
+    @IBOutlet weak var btnCopy: NSButton!
+    @IBOutlet weak var btnVideo: NSButton!
+    @IBOutlet weak var btnUpload: NSButton!
+    
+    //Filter Groups
+    
+    @IBOutlet weak var lblFilterGroup: NSTextField!
+    @IBOutlet weak var viewBrass: NSView!
+    @IBOutlet weak var viewBattery: NSView!
+    @IBOutlet weak var viewColorGuard: NSView!
+    @IBOutlet weak var viewDrumMajor: NSView!
+    @IBOutlet weak var viewRating: NSView!
+    @IBOutlet weak var viewFrontEnsemble: NSView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableMembers.delegate = self
         tableMembers.dataSource = self
-        tableMembers.target = self
         txtSearch.delegate = self
         refreshServer()
         //load()
-        //deleteAllMembers()
+        
+        loadSideBar()
+        loadFilterBar()
+        self.view.layer?.backgroundColor = NSColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1).cgColor
     }
 
-    
-    @IBAction func video(_ sender: Any) {
-        memberToOpen?.add("VIDEO", forKey: "sections")
+    override func mouseEntered(with event: NSEvent) {
+        if let userData = event.trackingArea?.userInfo as? [String : AnyObject] {
+            let button = userData["button"] as! String
+            if button == "Brass" {
+                if buttonClicked != 1 {
+                    btnBrass.image = NSImage(named: "BrassHover")
+                }
+            } else if button == "Percussion" {
+                if buttonClicked != 2 {
+                    btnPercussion.image = NSImage(named: "PercussionHover")
+                }
+            }  else if button == "FrontEnsemble" {
+                if buttonClicked != 3 {
+                    btnFrontEnsemble.image = NSImage(named: "PercussionHover")
+                }
+            } else if button == "ColorGuard" {
+                if buttonClicked != 4 {
+                    btnColorGuard.image = NSImage(named: "ColorGuardHover")
+                }
+            } else if button == "DrumMajor" {
+                if buttonClicked != 5 {
+                    btnDrumMajor.image = NSImage(named: "DrumMajorHover")
+                }
+            } else if button == "Help" {
+                if buttonClicked != 6 {
+                    btnHelp.image = NSImage(named: "HelpHover")
+                }
+            } else if button == "Delete" {
+                btnDelete.image = NSImage(named: "DeleteHover")
+            } else if button == "Copy" {
+                btnCopy.image = NSImage(named: "CopyHover")
+            } else if button == "Video" {
+                btnVideo.image = NSImage(named: "VideoHover")
+            } else if button == "Upload" {
+                btnUpload.image = NSImage(named: "UploadHover")
+            }
+        }
     }
     
-    @IBAction func multiple(_ sender: Any) {
-        let new = PFObject(className: "Member")
-        new["prevDance"] = memberToOpen?["prevDance"]
-        new["goals"] = memberToOpen?["goals"]
-        new["understandMoney"] = memberToOpen?["understandMoney"]
-        new["marchedGuard"] = memberToOpen?["marchedGuard"]
-        new["prevInstructors"] = memberToOpen?["prevInstructors"]
-        new["december"] = memberToOpen?["december"]
-        new["marchedCorps"] = memberToOpen?["marchedCorps"]
-        new["marchedPerc"] = memberToOpen?["marchedPerc"]
-        new["number"] = memberToOpen?["number"]
-        new["name"] = memberToOpen?["name"]
-        new["sections"] = memberToOpen?["sections"]
-        new["multiple"] = true
-        memberToOpen?["multiple"] = true
-        memberToOpen?.saveInBackground()
-        new["whyDecember"] = memberToOpen?["whyDecember"]
-        new["phone"] = memberToOpen?["phone"]
-        new["medical"] = memberToOpen?["medical"]
-        new["school"] = memberToOpen?["school"]
-        new["cadets2"] = memberToOpen?["cadets2"]
-        new["otherGuard"] = memberToOpen?["otherGuard"]
-        new["otherPerc"] = memberToOpen?["otherPerc"]
-        new["marchingYears"] = memberToOpen?["marchingYears"]
-        new["dob"] = memberToOpen?["dob"]
-        new["planMoney"] = memberToOpen?["planMoney"]
-        new["otherCorps"] = memberToOpen?["otherCorps"]
-        new["questionMoney"] = memberToOpen?["questionMoney"]
-        new["email"] = memberToOpen?["email"]
-        new["yearsDance"] = memberToOpen?["yearsDance"]
-        new["cadets"] = memberToOpen?["cadets"]
-        new["picture"] = memberToOpen?["picture"]
-        new.saveInBackground()
+    override func mouseExited(with event: NSEvent) {
+        if let userData = event.trackingArea?.userInfo as? [String : AnyObject] {
+            let button = userData["button"] as! String
+            if button == "Brass" {
+                if buttonClicked != 1 {
+                    btnBrass.image = NSImage(named: "Brass")
+                }
+            } else if button == "Percussion" {
+                if buttonClicked != 2 {
+                    btnPercussion.image = NSImage(named: "Percussion")
+                }
+            } else if button == "FrontEnsemble" {
+                if buttonClicked != 3 {
+                    btnFrontEnsemble.image = NSImage(named: "Percussion")
+                }
+            } else if button == "ColorGuard" {
+                if buttonClicked != 4 {
+                    btnColorGuard.image = NSImage(named: "ColorGuard")
+                }
+            } else if button == "DrumMajor" {
+                if buttonClicked != 5 {
+                    btnDrumMajor.image = NSImage(named: "DrumMajor")
+                }
+            } else if button == "Help" {
+                if buttonClicked != 6 {
+                    btnHelp.image = NSImage(named: "Help")
+                }
+            } else if button == "Delete" {
+                btnDelete.image = NSImage(named: "Delete")
+            } else if button == "Copy" {
+                btnCopy.image = NSImage(named: "Copy")
+            } else if button == "Video" {
+                btnVideo.image = NSImage(named: "Video")
+            } else if button == "Upload" {
+                btnUpload.image = NSImage(named: "Upload")
+            }
+        }
+    }
+    
+    func loadSideBar() {
+        let areaBrass = NSTrackingArea.init(rect: btnBrass.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Brass"])
+        btnBrass.addTrackingArea(areaBrass)
+        
+        let areaPercussion = NSTrackingArea.init(rect: btnPercussion.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Percussion"])
+        btnPercussion.addTrackingArea(areaPercussion)
+        
+        let areaFrontEnsemble = NSTrackingArea.init(rect: btnFrontEnsemble.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"FrontEnsemble"])
+        btnFrontEnsemble.addTrackingArea(areaFrontEnsemble)
+        
+        let areaColorGuard = NSTrackingArea.init(rect: btnColorGuard.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"ColorGuard"])
+        btnColorGuard.addTrackingArea(areaColorGuard)
+        
+        let areaDrumMajor = NSTrackingArea.init(rect: btnDrumMajor.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"DrumMajor"])
+        btnDrumMajor.addTrackingArea(areaDrumMajor)
+        
+        let areaHelp = NSTrackingArea.init(rect: btnHelp.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Help"])
+        btnHelp.addTrackingArea(areaHelp)
+        
+        let areaDelete = NSTrackingArea.init(rect: btnDelete.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Delete"])
+        btnDelete.addTrackingArea(areaDelete)
+        
+        let areaCopy = NSTrackingArea.init(rect: btnCopy.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Copy"])
+        btnCopy.addTrackingArea(areaCopy)
+        
+        let areaVideo = NSTrackingArea.init(rect: btnVideo.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Video"])
+        btnVideo.addTrackingArea(areaVideo)
+        
+        let areaUpload = NSTrackingArea.init(rect: btnUpload.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Upload"])
+        btnUpload.addTrackingArea(areaUpload)
+    }
+    
+    func loadFilterBar() {
+        
+        viewSearch.layer?.backgroundColor = NSColor(colorLiteralRed: 74/255, green: 74/255, blue: 74/255, alpha: 1).cgColor
+        viewSearch.layer?.cornerRadius = 3
+        
+        setCheckBoxColors(button: checkVets)
+        setCheckBoxColors(button: checkAllMembers)
+        
+        setCheckBoxColors(button: checkTrumpet)
+        setCheckBoxColors(button: checkMellophone)
+        setCheckBoxColors(button: checkBaritone)
+        setCheckBoxColors(button: checkTuba)
+        
+        setCheckBoxColors(button: checkSnare)
+        setCheckBoxColors(button: checkTenor)
+        setCheckBoxColors(button: checkBass)
+        setCheckBoxColors(button: checkFrontEnsemble)
+        
+        setCheckBoxColors(button: checkAllColorguard)
+        setCheckBoxColors(button: checkAllDrumMajors)
+        
+        viewBattery.frame = viewBrass.frame
+        viewFrontEnsemble.frame = viewBrass.frame
+        viewColorGuard.frame = viewBrass.frame
+        viewDrumMajor.frame = viewBrass.frame
+        
+        btnSection_click(btnBrass)
+    }
+    
+    @IBAction func btnSection_click(_ sender: NSButton) {
+        
+        buttonClicked = sender.tag
+        
+        //reposition the 'selection indicator'
+        barSelect.frame = CGRect(x: barSelect.frame.origin.x, y: sender.frame.origin.y, width: barSelect.frame.size.width, height: barSelect.frame.size.height)
+        
+        //Change the button images
+        if sender.identifier == "brass" {
+            btnPercussion.image = NSImage(named: "Percussion")
+            btnColorGuard.image = NSImage(named: "ColorGuard")
+            btnDrumMajor.image = NSImage(named: "DrumMajor")
+            btnHelp.image = NSImage(named: "Help")
+            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnBrass.image = NSImage(named: "BrassClick")
+        } else if sender.identifier == "percussion" {
+            btnBrass.image = NSImage(named: "Brass")
+            btnColorGuard.image = NSImage(named: "ColorGuard")
+            btnDrumMajor.image = NSImage(named: "DrumMajor")
+            btnHelp.image = NSImage(named: "Help")
+            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnPercussion.image = NSImage(named: "PercussionClick")
+        } else if sender.identifier == "colorguard" {
+            btnBrass.image = NSImage(named: "Brass")
+            btnPercussion.image = NSImage(named: "Percussion")
+            btnDrumMajor.image = NSImage(named: "DrumMajor")
+            btnHelp.image = NSImage(named: "Help")
+            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnColorGuard.image = NSImage(named: "ColorGuardClick")
+        } else if sender.identifier == "drummajor" {
+            btnBrass.image = NSImage(named: "Brass")
+            btnPercussion.image = NSImage(named: "Percussion")
+            btnColorGuard.image = NSImage(named: "ColorGuard")
+            btnHelp.image = NSImage(named: "Help")
+            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnDrumMajor.image = NSImage(named: "DrumMajorClick")
+        } else if sender.identifier == "help" {
+            btnBrass.image = NSImage(named: "Brass")
+            btnPercussion.image = NSImage(named: "Percussion")
+            btnColorGuard.image = NSImage(named: "ColorGuard")
+            btnDrumMajor.image = NSImage(named: "DrumMajor")
+            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnHelp.image = NSImage(named: "HelpClick")
+        } else if sender.identifier == "frontensemble" {
+            btnBrass.image = NSImage(named: "Brass")
+            btnPercussion.image = NSImage(named: "Percussion")
+            btnColorGuard.image = NSImage(named: "ColorGuard")
+            btnDrumMajor.image = NSImage(named: "DrumMajor")
+            btnHelp.image = NSImage(named: "Help")
+            btnFrontEnsemble.image = NSImage(named: "PercussionClick")
+        }
+        
+        updateFilterBoxes()
+    }
+    
+    func updateFilterBoxes() {
+        switch buttonClicked {
+        case 1:
+            viewBattery.isHidden = true
+            viewFrontEnsemble.isHidden = true
+            viewColorGuard.isHidden = true
+            viewDrumMajor.isHidden = true
+            viewBrass.isHidden = false
+            lblFilterGroup.stringValue = "BRASS"
+            break;
+        case 2:
+            viewBrass.isHidden = true
+            viewFrontEnsemble.isHidden = true
+            viewColorGuard.isHidden = true
+            viewDrumMajor.isHidden = true
+            viewBattery.isHidden = false
+            lblFilterGroup.stringValue = "BATTERY"
+            break;
+        case 3:
+            viewBrass.isHidden = true
+            viewBattery.isHidden = true
+            viewColorGuard.isHidden = true
+            viewDrumMajor.isHidden = true
+            viewFrontEnsemble.isHidden = false
+            lblFilterGroup.stringValue = "FRONT ENSEMBLE"
+            break;
+        case 4:
+            viewBrass.isHidden = true
+            viewBattery.isHidden = true
+            viewFrontEnsemble.isHidden = true
+            viewDrumMajor.isHidden = true
+            viewColorGuard.isHidden = false
+            lblFilterGroup.stringValue = "COLOR GUARD"
+            break;
+        case 5:
+            viewBrass.isHidden = true
+            viewBattery.isHidden = true
+            viewFrontEnsemble.isHidden = true
+            viewColorGuard.isHidden = true
+            viewDrumMajor.isHidden = false
+            lblFilterGroup.stringValue = "DRUM MAJOR"
+            break;
+        case 6:
+            break;
+        default:
+            break;
+        }
+    }
+    
+    func setCheckBoxColors(button: NSButton) {
+        let pstyle = NSMutableParagraphStyle()
+        pstyle.alignment = .center
+        
+        button.attributedTitle = NSAttributedString(string: button.title, attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+
+    }
+    
+    @IBAction func video(_ sender: NSButton) {
+        if memberToOpen != nil {
+            let answer = dialogOKCancel(question: "Set \(memberToOpen!["name"]!) Video Audition", text: "Are you sure you want to set this as a video audition?")
+            if answer {
+                memberToOpen?.add("VIDEO", forKey: "sections")
+                memberToOpen?.saveEventually()
+            }
+        }
+    }
+    
+    @IBAction func multiple(_ sender: NSButton) {
+        if memberToOpen != nil {
+            let answer = dialogOKCancel(question: "Copy \(memberToOpen!["name"]!)", text: "Are you sure you want to copy this member?")
+            if answer {
+                let new = PFObject(className: "Member")
+                new["prevDance"] = memberToOpen?["prevDance"]
+                new["goals"] = memberToOpen?["goals"]
+                new["understandMoney"] = memberToOpen?["understandMoney"]
+                new["marchedGuard"] = memberToOpen?["marchedGuard"]
+                new["prevInstructors"] = memberToOpen?["prevInstructors"]
+                new["december"] = memberToOpen?["december"]
+                new["marchedCorps"] = memberToOpen?["marchedCorps"]
+                new["marchedPerc"] = memberToOpen?["marchedPerc"]
+                new["number"] = memberToOpen?["number"]
+                new["name"] = memberToOpen?["name"]
+                new["sections"] = memberToOpen?["sections"]
+                new["multiple"] = true
+                memberToOpen?["multiple"] = true
+                memberToOpen?.saveInBackground()
+                new["whyDecember"] = memberToOpen?["whyDecember"]
+                new["phone"] = memberToOpen?["phone"]
+                new["medical"] = memberToOpen?["medical"]
+                new["school"] = memberToOpen?["school"]
+                new["cadets2"] = memberToOpen?["cadets2"]
+                new["otherGuard"] = memberToOpen?["otherGuard"]
+                new["otherPerc"] = memberToOpen?["otherPerc"]
+                new["marchingYears"] = memberToOpen?["marchingYears"]
+                new["dob"] = memberToOpen?["dob"]
+                new["planMoney"] = memberToOpen?["planMoney"]
+                new["otherCorps"] = memberToOpen?["otherCorps"]
+                new["questionMoney"] = memberToOpen?["questionMoney"]
+                new["email"] = memberToOpen?["email"]
+                new["yearsDance"] = memberToOpen?["yearsDance"]
+                new["cadets"] = memberToOpen?["cadets"]
+                new["picture"] = memberToOpen?["picture"]
+                new.saveInBackground()
+            }
+        }
     }
     
     @IBAction func deleteMember(_ sender: NSButton) {
-        memberToOpen?.deleteInBackground(block: { (done: Bool, err: Error?) in
-            self.tableMembers.reloadData()
-        })
+        if memberToOpen != nil {
+            let answer = dialogOKCancel(question: "Delete \(memberToOpen!["name"]!)", text: "Are you sure you want to delete this member?")
+            if answer {
+                memberToOpen?.deleteInBackground(block: { (done: Bool, err: Error?) in
+                    self.tableMembers.reloadData()
+                })
+            }
+        }
     }
 
-    
     func duplicateSections() {
 //        for member in arrayOfAllMembers! {
 //            let dup = member["multiple"]
@@ -142,6 +440,16 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
 //                new.saveInBackground()
 //            }
 //        }
+    }
+    
+    func dialogOKCancel(question: String, text: String) -> Bool {
+        let myPopup: NSAlert = NSAlert()
+        myPopup.messageText = question
+        myPopup.informativeText = text
+        myPopup.alertStyle = NSAlertStyle.warning
+        myPopup.addButton(withTitle: "OK")
+        myPopup.addButton(withTitle: "Cancel")
+        return myPopup.runModal() == NSAlertFirstButtonReturn
     }
     
     func refreshServer() {
@@ -790,6 +1098,14 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         }
     }
     
+    
+    @IBAction func btnUpload_click(_ sender: NSButton) {
+        let answer = dialogOKCancel(question: "Upload Profiles", text: "Are you sure you want to upload new user profiles?")
+        if answer {
+            load()
+        }
+    }
+    
     func load() {
         var count = 0
         
@@ -934,7 +1250,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                     }
                 })
             }
-            
         }
     }
     
