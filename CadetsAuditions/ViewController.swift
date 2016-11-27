@@ -69,7 +69,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var checkMusic_3: NSButton!
     
     @IBOutlet weak var checkVets: NSButton!
-    
+    @IBOutlet weak var checkContract: NSButton!
 
     @IBOutlet weak var lblUserName: NSTextField!
     @IBOutlet weak var barSelect: NSImageView!
@@ -107,12 +107,19 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var imgMusic: NSImageView!
     @IBOutlet weak var imgVisual: NSImageView!
     
+    @IBOutlet weak var btnAudition: NSButton!
+    @IBOutlet weak var btnAssigned: NSButton!
+    @IBOutlet weak var switchCorps: NSSlider!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableMembers.delegate = self
         tableMembers.dataSource = self
         txtSearch.delegate = self
+
+        
         refreshServer()
         //load()
         
@@ -120,7 +127,41 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         loadFilterBar()
         self.view.layer?.backgroundColor = NSColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1).cgColor
     }
-
+    
+    @IBAction func btnAuditionAssigned_Click(_ sender: NSButton) {
+        
+        let gray = NSColor(calibratedRed: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+        if sender.tag == 0 {
+            setCheckBoxColors(button: btnAudition)
+            
+            let pstyle = NSMutableParagraphStyle()
+            pstyle.alignment = .center
+            
+            btnAssigned.attributedTitle = NSAttributedString(string: btnAssigned.title, attributes: [ NSForegroundColorAttributeName : gray, NSParagraphStyleAttributeName : pstyle ])
+        } else if sender.tag == 1 {
+            setCheckBoxColors(button: btnAssigned)
+            
+            let pstyle = NSMutableParagraphStyle()
+            pstyle.alignment = .center
+            
+            btnAudition.attributedTitle = NSAttributedString(string: btnAudition.title, attributes: [ NSForegroundColorAttributeName : gray, NSParagraphStyleAttributeName : pstyle ])
+        }
+        
+        switchCorps.doubleValue = Double(sender.tag)
+        
+        //Now refresh the search
+        searchMembers()
+    }
+    
+    @IBAction func switchCorps_Click(_ sender: NSSlider) {
+        if switchCorps.doubleValue == 0.0 {
+            btnAuditionAssigned_Click(btnAudition)
+        } else if switchCorps.doubleValue == 1.0 {
+            btnAuditionAssigned_Click(btnAssigned)
+        }
+    }
+    
+    
     override func mouseEntered(with event: NSEvent) {
         if let userData = event.trackingArea?.userInfo as? [String : AnyObject] {
             let button = userData["button"] as! String
@@ -237,6 +278,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         viewSearch.layer?.cornerRadius = 3
         
         setCheckBoxColors(button: checkVets)
+        setCheckBoxColors(button: checkContract)
         setCheckBoxColors(button: checkAllMembers)
         
         setCheckBoxColors(button: checkTrumpet)
@@ -268,6 +310,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         viewDrumMajor.frame = viewBrass.frame
         
         btnSection_click(btnBrass)
+        btnAuditionAssigned_Click(btnAudition)
+        
     }
     
     @IBAction func btnSection_click(_ sender: NSButton) {
@@ -706,6 +750,21 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             }
         }
         
+        checkContractThenAdd(member: member)
+    }
+    
+    func checkContractThenAdd(member: PFObject) {
+        
+        //check if contact is filtered, then add
+        if checkContract.state == NSOnState {
+            let contract = member["contract"] as? Bool ?? nil
+            if contract == true {
+                
+            } else {
+                return
+            }
+        }
+
         //make sure they don't exist in filtered array, then add
         if !(arrayOfFilteredMembers?.contains(member))! {
             arrayOfFilteredMembers?.append(member)
@@ -719,6 +778,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         arrayOfFilteredMembers?.removeAll()
         lblResults.stringValue = ""
         
+        if arrayOfAllMembers == nil || arrayOfAllMembers?.count == 0 {
+            return
+        }
+        
         for member in arrayOfAllMembers! {
             
             //Corps
@@ -731,43 +794,67 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 
             } else if checkCadets.state == NSOnState {
                 
-                isCadets = member["cadets"] as? Bool ?? false
-                isCadets2 = member["cadets2"] as? Bool ?? false
-                if isCadets! && !isCadets2! {
+                if switchCorps.doubleValue == 0.0 { //SEARCHING BY AUDITON
                     
-                    //we have a member matching the corps filter
+                    isCadets = member["cadets"] as? Bool ?? false
+                    isCadets2 = member["cadets2"] as? Bool ?? false
+                    if isCadets! && !isCadets2! {
+                        
+                        //we have a member matching the corps filter
+                        
+                        //do they match the selected instruments?
+                        checkForInstrument(member: member)
+                        
+                    }
                     
-                    //do they match the selected instruments?
-                    checkForInstrument(member: member)
-
+                } else if switchCorps.doubleValue == 1.0 { //SEARCHING BY ASSIGNED
+                    let corps = member["corps"] as? Int ?? nil
+                    if corps == 1 {
+                        checkForInstrument(member: member)
+                    }
                 }
                 
             } else if checkCadets2.state == NSOnState {
                 
-                isCadets = member["cadets"] as? Bool ?? false
-                isCadets2 = member["cadets2"] as? Bool ?? false
-                if isCadets2! && !isCadets! {
+                if switchCorps.doubleValue == 0.0 { //SEARCHING BY AUDITON
                     
-                    //we have a member matching the corps filter
+                    isCadets = member["cadets"] as? Bool ?? false
+                    isCadets2 = member["cadets2"] as? Bool ?? false
+                    if isCadets2! && !isCadets! {
+                        
+                        //we have a member matching the corps filter
+                        
+                        //do they match the selected instruments?
+                        checkForInstrument(member: member)
+                        
+                    }
                     
-                    //do they match the selected instruments?
-                    checkForInstrument(member: member)
-                    
+                } else if switchCorps.doubleValue == 1.0 { //SEARCHING BY ASSIGNED
+                    let corps = member["corps"] as? Int ?? nil
+                    if corps == 2 {
+                        checkForInstrument(member: member)
+                    }
                 }
+
                 
             } else if checkCadetsBoth.state == NSOnState {
              
-                isCadets = member["cadets"] as? Bool ?? false
-                isCadets2 = member["cadets2"] as? Bool ?? false
-                if isCadets! && isCadets2! {
+                // This is disabled if switchCorps == 1.0 ie. searching by Assigned
+                // Member cannot be asssigned to BOTH.
+                if switchCorps.doubleValue == 0.0 {
                     
-                    //we have a member matching the corps filter
-                    
-                    //do they match the selected instruments?
-                    checkForInstrument(member: member)
+                    isCadets = member["cadets"] as? Bool ?? false
+                    isCadets2 = member["cadets2"] as? Bool ?? false
+                    if isCadets! && isCadets2! {
+                        
+                        //we have a member matching the corps filter
+                        
+                        //do they match the selected instruments?
+                        checkForInstrument(member: member)
+                        
+                    }
                     
                 }
-                
             }
 
             
@@ -1047,12 +1134,28 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellCorps"
         }
         
+        if tableColumn == tableView.tableColumns[12] { // CONTRACT
+            let contract = member["contract"] as? Bool ?? nil
+            
+            if contract == true {
+                image = NSImage(named: "Check")
+            } else {
+                image = nil
+            }
+            
+            cellIdentifier = "cellContract"
+        }
+        
         
         // 3
         if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
             cell.imageView?.image = image ?? nil
+            
+            cell.textField?.font = NSFont(name: "PT Sans", size: NSFont.systemFontSize())
+            
             return cell
+            
         } else {
             print("no \(cellIdentifier)")
         }
