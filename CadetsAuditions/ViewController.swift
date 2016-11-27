@@ -1142,7 +1142,17 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellCorps"
         }
         
-        if tableColumn == tableView.tableColumns[12] { // CONTRACT
+            
+        else if tableColumn == tableView.tableColumns[12] { // POSITION
+            if let position = member["position"] as! String? {
+                text = position
+            } else {
+                text = ""
+            }
+            cellIdentifier = "cellPosition"
+        }
+        
+        if tableColumn == tableView.tableColumns[13] { // CONTRACT
             let contract = member["contract"] as? Bool ?? nil
             
             if contract == true {
