@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "C2 Logo (Maroon).png",
+      "filename" : "Mail-128.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "C2 Logo (Maroon)-1.png",
+      "filename" : "Mail-129.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "C2 Logo (Maroon)-2.png",
+      "filename" : "Mail-130.png",
       "scale" : "3x"
     }
   ],

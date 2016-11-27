@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "C2 Logo (Maroon).png",
+      "filename" : "pit.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "C2 Logo (Maroon)-1.png",
+      "filename" : "pit-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "C2 Logo (Maroon)-2.png",
+      "filename" : "pit-2.png",
       "scale" : "3x"
     }
   ],

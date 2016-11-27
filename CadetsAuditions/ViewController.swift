@@ -94,6 +94,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var btnCopy: NSButton!
     @IBOutlet weak var btnVideo: NSButton!
     @IBOutlet weak var btnUpload: NSButton!
+    @IBOutlet weak var btnMail: NSButton!
     
     //Filter Groups
     
@@ -104,8 +105,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var viewDrumMajor: NSView!
     @IBOutlet weak var viewRating: NSView!
     @IBOutlet weak var viewFrontEnsemble: NSView!
-    @IBOutlet weak var imgMusic: NSImageView!
-    @IBOutlet weak var imgVisual: NSImageView!
+    @IBOutlet weak var lblMusic: NSTextField!
+    @IBOutlet weak var lblVisual: NSTextField!
     
     @IBOutlet weak var btnAudition: NSButton!
     @IBOutlet weak var btnAssigned: NSButton!
@@ -175,7 +176,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 }
             }  else if button == "FrontEnsemble" {
                 if buttonClicked != 3 {
-                    btnFrontEnsemble.image = NSImage(named: "PercussionHover")
+                    btnFrontEnsemble.image = NSImage(named: "FrontEnsembleHover")
                 }
             } else if button == "ColorGuard" {
                 if buttonClicked != 4 {
@@ -197,6 +198,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 btnVideo.image = NSImage(named: "VideoHover")
             } else if button == "Upload" {
                 btnUpload.image = NSImage(named: "UploadHover")
+            } else if button == "Mail" {
+                btnMail.image = NSImage(named: "MailHover")
             }
         }
     }
@@ -214,7 +217,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 }
             } else if button == "FrontEnsemble" {
                 if buttonClicked != 3 {
-                    btnFrontEnsemble.image = NSImage(named: "Percussion")
+                    btnFrontEnsemble.image = NSImage(named: "FrontEnsemble")
                 }
             } else if button == "ColorGuard" {
                 if buttonClicked != 4 {
@@ -236,6 +239,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 btnVideo.image = NSImage(named: "Video")
             } else if button == "Upload" {
                 btnUpload.image = NSImage(named: "Upload")
+            } else if button == "Mail" {
+                btnMail.image = NSImage(named: "Mail")
             }
         }
     }
@@ -270,6 +275,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         
         let areaUpload = NSTrackingArea.init(rect: btnUpload.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Upload"])
         btnUpload.addTrackingArea(areaUpload)
+        
+        let areaMail = NSTrackingArea.init(rect: btnMail.bounds, options: [NSTrackingAreaOptions.mouseEnteredAndExited, NSTrackingAreaOptions.activeAlways], owner: self, userInfo: ["button":"Mail"])
+        btnMail.addTrackingArea(areaMail)
     }
     
     func loadFilterBar() {
@@ -327,35 +335,35 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             btnColorGuard.image = NSImage(named: "ColorGuard")
             btnDrumMajor.image = NSImage(named: "DrumMajor")
             btnHelp.image = NSImage(named: "Help")
-            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnFrontEnsemble.image = NSImage(named: "FrontEnsemble")
             btnBrass.image = NSImage(named: "BrassClick")
         } else if sender.identifier == "percussion" {
             btnBrass.image = NSImage(named: "Brass")
             btnColorGuard.image = NSImage(named: "ColorGuard")
             btnDrumMajor.image = NSImage(named: "DrumMajor")
             btnHelp.image = NSImage(named: "Help")
-            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnFrontEnsemble.image = NSImage(named: "FrontEnsemble")
             btnPercussion.image = NSImage(named: "PercussionClick")
         } else if sender.identifier == "colorguard" {
             btnBrass.image = NSImage(named: "Brass")
             btnPercussion.image = NSImage(named: "Percussion")
             btnDrumMajor.image = NSImage(named: "DrumMajor")
             btnHelp.image = NSImage(named: "Help")
-            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnFrontEnsemble.image = NSImage(named: "FrontEnsemble")
             btnColorGuard.image = NSImage(named: "ColorGuardClick")
         } else if sender.identifier == "drummajor" {
             btnBrass.image = NSImage(named: "Brass")
             btnPercussion.image = NSImage(named: "Percussion")
             btnColorGuard.image = NSImage(named: "ColorGuard")
             btnHelp.image = NSImage(named: "Help")
-            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnFrontEnsemble.image = NSImage(named: "FrontEnsemble")
             btnDrumMajor.image = NSImage(named: "DrumMajorClick")
         } else if sender.identifier == "help" {
             btnBrass.image = NSImage(named: "Brass")
             btnPercussion.image = NSImage(named: "Percussion")
             btnColorGuard.image = NSImage(named: "ColorGuard")
             btnDrumMajor.image = NSImage(named: "DrumMajor")
-            btnFrontEnsemble.image = NSImage(named: "Percussion")
+            btnFrontEnsemble.image = NSImage(named: "FrontEnsemble")
             btnHelp.image = NSImage(named: "HelpClick")
         } else if sender.identifier == "frontensemble" {
             btnBrass.image = NSImage(named: "Brass")
@@ -363,7 +371,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             btnColorGuard.image = NSImage(named: "ColorGuard")
             btnDrumMajor.image = NSImage(named: "DrumMajor")
             btnHelp.image = NSImage(named: "Help")
-            btnFrontEnsemble.image = NSImage(named: "PercussionClick")
+            btnFrontEnsemble.image = NSImage(named: "FrontEnsembleClick")
         }
         
         updateFilterBoxes()
@@ -578,15 +586,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         
         //set the music and visual rating images to "ON" or "OFF"
         if arrayOfVisualRatingsToFilter.count > 0 {
-            imgVisual.image = NSImage(named: "VisualON")
+            lblVisual.textColor = NSColor.white
         } else {
-            imgVisual.image = NSImage(named: "VisualOFF")
+            lblVisual.textColor = NSColor(calibratedRed: 75/255, green: 75/255, blue: 75/255, alpha: 1)
         }
         
         if arrayOfMusicRatingsToFilter.count > 0 {
-            imgMusic.image = NSImage(named: "MusicON")
+            lblMusic.textColor = NSColor.white
         } else {
-            imgMusic.image = NSImage(named: "MusicOFF")
+            lblMusic.textColor = NSColor(calibratedRed: 75/255, green: 75/255, blue: 75/255, alpha: 1)
         }
         
         searchMembers()
@@ -1113,7 +1121,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             text = ""
             let multiple = member["multiple"] as? Bool ?? false
             if multiple {
-                image = NSImage(named: "Check")
+                image = NSImage(named: "Multiple")
             } else {
                 image = nil
             }
@@ -1138,7 +1146,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             let contract = member["contract"] as? Bool ?? nil
             
             if contract == true {
-                image = NSImage(named: "Check")
+                image = NSImage(named: "Contract")
             } else {
                 image = nil
             }
@@ -1230,6 +1238,33 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         let answer = dialogOKCancel(question: "Upload Profiles", text: "Are you sure you want to upload new user profiles?")
         if answer {
             load()
+        }
+    }
+    
+    @IBAction func btnMail_click(_ sender: NSButton) {
+        
+        var toEmail = ""
+        
+        if arrayOfFilteredMembers?.count == 1 {
+            let member = arrayOfFilteredMembers?.first
+            if let email = member?["email"] as? String {
+                toEmail = email
+            }
+        } else if (arrayOfFilteredMembers?.count)! > 1 {
+            for member in arrayOfFilteredMembers! {
+                if let email = member["email"] as? String {
+                    toEmail += email
+                    if member != arrayOfFilteredMembers?.last {
+                        toEmail += ","
+                    }
+                }
+            }
+        }
+
+        let urlString = "mailto:\(toEmail)"
+        
+        if let url = URL(string: urlString) {
+            NSWorkspace.shared().open(url)
         }
     }
     
