@@ -22,6 +22,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     var arrayOfVisualRatingsToFilter = [Int]()
     var arrayOfMusicRatingsToFilter = [Int]()
     var memberToOpen: PFObject? = nil
+    var arrayOfButtons = [NSButton]()
     
     //Search variables
     var searchCorps = 0
@@ -42,6 +43,12 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var checkCadets: NSButton!
     @IBOutlet weak var checkCadets2: NSButton!
     @IBOutlet weak var checkCadetsBoth: NSButton!
+    @IBOutlet weak var imgCadets: NSImageView!
+    @IBOutlet weak var imgCadets2: NSImageView!
+    @IBOutlet weak var imgCadetsBoth: NSImageView!
+    @IBOutlet weak var imgCadets2Both: NSImageView!
+    @IBOutlet weak var lblPlus: NSTextField!
+    
 
     //Search checkboxes
     @IBOutlet weak var checkAllBrass: NSButton!
@@ -112,14 +119,26 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var btnAssigned: NSButton!
     @IBOutlet weak var switchCorps: NSSlider!
     
+    @IBOutlet weak var imgDotBrass: NSImageView!
+    @IBOutlet weak var imgDotBattery: NSImageView!
+    @IBOutlet weak var imgDotDrumMajor: NSImageView!
+    @IBOutlet weak var imgDotColorGuard: NSImageView!
+    @IBOutlet weak var imgDotFrontEnsemble: NSImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addButtonsToArray()
         
         tableMembers.delegate = self
         tableMembers.dataSource = self
         txtSearch.delegate = self
 
+        imgDotBrass.isHidden = true
+        imgDotBattery.isHidden = true
+        imgDotFrontEnsemble.isHidden = true
+        imgDotColorGuard.isHidden = true
+        imgDotDrumMajor.isHidden = true
         
         refreshServer()
         //load()
@@ -127,6 +146,121 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         loadSideBar()
         loadFilterBar()
         self.view.layer?.backgroundColor = NSColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1).cgColor
+    }
+    
+    func addButtonsToArray() {
+        arrayOfButtons.append(checkTrumpet)
+        arrayOfButtons.append(checkMellophone)
+        arrayOfButtons.append(checkBaritone)
+        arrayOfButtons.append(checkTuba)
+        
+        arrayOfButtons.append(checkSnare)
+        arrayOfButtons.append(checkTenor)
+        arrayOfButtons.append(checkBass)
+        
+        arrayOfButtons.append(checkFrontEnsemble)
+        
+        arrayOfButtons.append(checkAllColorguard)
+        
+        arrayOfButtons.append(checkAllDrumMajors)
+        
+        arrayOfButtons.append(checkMusic_NoRating)
+        arrayOfButtons.append(checkMusic_1)
+        arrayOfButtons.append(checkMusic_2)
+        arrayOfButtons.append(checkMusic_3)
+        
+        arrayOfButtons.append(checkVisual_NoRating)
+        arrayOfButtons.append(checkVisual_1)
+        arrayOfButtons.append(checkVisual_2)
+        arrayOfButtons.append(checkVisual_3)
+        
+        arrayOfButtons.append(checkVets)
+        
+        arrayOfButtons.append(checkContract)
+        
+        arrayOfButtons.append(checkAllMembers)
+        arrayOfButtons.append(checkCadets)
+        arrayOfButtons.append(checkCadets2)
+        arrayOfButtons.append(checkCadetsBoth)
+        
+        checkButtons()
+    }
+    
+    func checkButtons() {
+        if arrayOfButtons.count > 0 {
+            
+            var showBrass = false
+            var showBattery = false
+            var showFrontEnsemble = false
+            var showColorGuard = false
+            var showDrumMajor = false
+            
+            for button in arrayOfButtons {
+                var color = NSColor()
+                
+                if button.state == NSOnState {
+                    color = NSColor.white
+                    
+                    switch button.tag { //turn on the dot
+                    case 11:
+                        showBrass = true
+                        break;
+                    case 12:
+                        showBattery = true
+                        break;
+                    case 13:
+                        showFrontEnsemble = true
+                        break;
+                    case 14:
+                        showColorGuard = true
+                        break;
+                    case 15:
+                        showDrumMajor = true
+                        break;
+                    default:
+                        break;
+                    }
+                    
+                } else {
+                    color = NSColor(calibratedRed: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+                }
+                
+                let pstyle = NSMutableParagraphStyle()
+                pstyle.alignment = .center
+                
+                button.attributedTitle = NSAttributedString(string: button.title, attributes: [ NSForegroundColorAttributeName : color, NSParagraphStyleAttributeName : pstyle ])
+                
+                if button == checkCadets {
+                    if button.state == NSOnState {
+                        imgCadets.image = NSImage(named: "CadetsON")
+                    } else {
+                        imgCadets.image = NSImage(named: "CadetsOFF")
+                    }
+                } else if button == checkCadets2 {
+                    if button.state == NSOnState {
+                        imgCadets2.image = NSImage(named: "Cadets2ON")
+                    } else {
+                        imgCadets2.image = NSImage(named: "Cadets2OFF")
+                    }
+                } else if button == checkCadetsBoth {
+                    if button.state == NSOnState {
+                        imgCadetsBoth.image = NSImage(named: "CadetsON")
+                        imgCadets2Both.image = NSImage(named: "Cadets2ON")
+                        lblPlus.textColor = NSColor.white
+                    } else {
+                        imgCadetsBoth.image = NSImage(named: "CadetsOFF")
+                        imgCadets2Both.image = NSImage(named: "Cadets2OFF")
+                        lblPlus.textColor = NSColor(calibratedRed: 75/255, green: 75/255, blue: 75/255, alpha: 1)
+                    }
+                }
+            }
+            
+            imgDotBrass.isHidden = !showBrass
+            imgDotBattery.isHidden = !showBattery
+            imgDotFrontEnsemble.isHidden = !showFrontEnsemble
+            imgDotColorGuard.isHidden = !showColorGuard
+            imgDotDrumMajor.isHidden = !showDrumMajor
+        }
     }
     
     @IBAction func btnAuditionAssigned_Click(_ sender: NSButton) {
@@ -983,21 +1117,25 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     //Corps Filter
     @IBAction func checkCorps_click(_ sender: NSButton) {
         searchCorps = sender.tag
+        checkButtons()
         searchMembers()
     }
     
     //Instrument Filter
     @IBAction func checkInstrument_click(_ sender: NSButton) {
         updateInstrumentFilters()
+        checkButtons()
     }
     
     //Rating Filter
     @IBAction func checkRating_click(_ sender: NSButton) {
         updateRatingFilters()
+        checkButtons()
     }
     
     @IBAction func checkVets_click(_ sender: NSButton) {
         searchMembers()
+        checkButtons()
     }
     
     //MARK:-

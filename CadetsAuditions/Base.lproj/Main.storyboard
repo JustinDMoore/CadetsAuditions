@@ -747,7 +747,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="cellVeteran" width="34" minWidth="34" maxWidth="1000" id="JoM-Nx-gl2" userLabel="veteran">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Vet">
-                                                        <font key="font" metaFont="systemMedium" size="11"/>
+                                                        <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -876,7 +876,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="cellAuditioningForCadets2" width="34" minWidth="34" maxWidth="1000" id="Gzc-bc-m5e">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                        <font key="font" metaFont="systemMedium" size="11"/>
+                                                        <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -925,11 +925,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="aJi-xp-FlT">
-                                                            <rect key="frame" x="337" y="1" width="123" height="17"/>
+                                                            <rect key="frame" x="337" y="1" width="122" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tn1-E2-M5W">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="123" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="122" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Xzf-wS-bjc">
                                                                         <font key="font" metaFont="system"/>
@@ -959,7 +959,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="zYD-Yq-ZK1">
-                                                            <rect key="frame" x="463" y="1" width="34" height="17"/>
+                                                            <rect key="frame" x="462.5" y="1" width="34" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rFT-PT-WGr">
@@ -993,7 +993,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="zjT-pT-U2g">
-                                                            <rect key="frame" x="500" y="1" width="34" height="17"/>
+                                                            <rect key="frame" x="499.5" y="1" width="34" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S5I-ge-tK0">
@@ -1023,7 +1023,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="6jQ-rN-eCm">
-                                                            <rect key="frame" x="537" y="1" width="34" height="17"/>
+                                                            <rect key="frame" x="536.5" y="1" width="34" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3BD-do-REG">
@@ -1059,7 +1059,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="57P-uY-pfD">
-                                                            <rect key="frame" x="574" y="1" width="99" height="17"/>
+                                                            <rect key="frame" x="573.5" y="1" width="99" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mRA-DT-iIy">
@@ -1086,7 +1086,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="cellCorps" width="57" minWidth="40" maxWidth="1000" id="DGO-dr-1H7" userLabel="recommendedCorps">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Assigned">
-                                                        <font key="font" metaFont="systemMedium" size="11"/>
+                                                        <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -1095,7 +1095,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="XVL-Q2-tQq">
-                                                            <rect key="frame" x="676" y="1" width="57" height="17"/>
+                                                            <rect key="frame" x="675.5" y="1" width="57" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaH-qi-LBz">
@@ -1135,7 +1135,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="fsZ-4q-TEr">
-                                                            <rect key="frame" x="736" y="1" width="166" height="17"/>
+                                                            <rect key="frame" x="735.5" y="1" width="166" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="63r-ED-bfF">
@@ -1154,7 +1154,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="cellContract" width="223" minWidth="34" maxWidth="1000" id="M4w-2e-sfb" userLabel="Contract">
+                                                <tableColumn identifier="cellContract" width="223.5" minWidth="34" maxWidth="1000" id="M4w-2e-sfb" userLabel="Contract">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Contract">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1165,7 +1165,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="dUD-dO-b2w">
-                                                            <rect key="frame" x="905" y="1" width="223" height="17"/>
+                                                            <rect key="frame" x="904.5" y="1" width="223" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ma2-l9-fTf">
@@ -1232,7 +1232,7 @@
                                         </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="BACKGROUND_GOLD" id="H5K-pI-nq6"/>
                                     </imageView>
-                                    <button identifier="frontensemble" verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="iII-Pu-HpX">
+                                    <button identifier="frontensemble" toolTip="Front Ensemble" verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="iII-Pu-HpX">
                                         <rect key="frame" x="0.0" y="534" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="FrontEnsemble" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="t4b-lR-ZTn">
@@ -1243,7 +1243,7 @@
                                             <action selector="btnSection_click:" target="XfG-lQ-9wD" id="jOy-Q8-TUW"/>
                                         </connections>
                                     </button>
-                                    <button identifier="colorguard" verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="pDr-mZ-RuM">
+                                    <button identifier="colorguard" toolTip="Color Guard" verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="pDr-mZ-RuM">
                                         <rect key="frame" x="0.0" y="481" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ColorGuard" imagePosition="overlaps" alignment="center" alternateImage="ColorGuardClick" imageScaling="proportionallyDown" inset="2" id="oi8-A7-P6B">
@@ -1254,7 +1254,7 @@
                                             <action selector="btnSection_click:" target="XfG-lQ-9wD" id="XIE-Sx-Qij"/>
                                         </connections>
                                     </button>
-                                    <button identifier="drummajor" verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="58h-0d-KYw">
+                                    <button identifier="drummajor" toolTip="Drum Major" verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="58h-0d-KYw">
                                         <rect key="frame" x="0.0" y="427" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="DrumMajor" imagePosition="overlaps" alignment="center" alternateImage="DrumMajorClick" imageScaling="proportionallyDown" inset="2" id="Yq6-CR-DIQ">
@@ -1265,7 +1265,7 @@
                                             <action selector="btnSection_click:" target="XfG-lQ-9wD" id="H5P-a4-NOj"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ndi-QD-XHQ">
+                                    <button toolTip="Delete Member" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ndi-QD-XHQ">
                                         <rect key="frame" x="0.0" y="374" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Delete" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="tXM-qm-L1m">
@@ -1276,7 +1276,7 @@
                                             <action selector="deleteMember:" target="XfG-lQ-9wD" id="yw5-CO-TPV"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5pa-8k-Afb">
+                                    <button toolTip="Duplicate Member" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5pa-8k-Afb">
                                         <rect key="frame" x="0.0" y="321" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Copy" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="7wp-SB-MvN">
@@ -1287,7 +1287,7 @@
                                             <action selector="multiple:" target="XfG-lQ-9wD" id="Nql-H0-DKz"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UKm-z1-UlS">
+                                    <button toolTip="Set as Video Audition" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UKm-z1-UlS">
                                         <rect key="frame" x="0.0" y="268" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Video" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="eWk-GY-cEv">
@@ -1298,7 +1298,7 @@
                                             <action selector="video:" target="XfG-lQ-9wD" id="wap-CN-06m"/>
                                         </connections>
                                     </button>
-                                    <button identifier="brass" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="jE4-12-Sdl">
+                                    <button identifier="brass" toolTip="Brass" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="jE4-12-Sdl">
                                         <rect key="frame" x="0.0" y="641" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="BrassClick" imagePosition="overlaps" alignment="center" alternateImage="BrassClick" state="on" imageScaling="proportionallyDown" inset="2" id="ftV-Qp-Frd">
@@ -1309,7 +1309,7 @@
                                             <action selector="btnSection_click:" target="XfG-lQ-9wD" id="slQ-43-sbP"/>
                                         </connections>
                                     </button>
-                                    <button identifier="percussion" verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="J7x-xI-D4b">
+                                    <button identifier="percussion" toolTip="Battery" verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="J7x-xI-D4b">
                                         <rect key="frame" x="0.0" y="587" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Percussion" imagePosition="overlaps" alignment="center" alternateImage="PercussionClick" imageScaling="proportionallyDown" inset="2" id="P13-7u-ssx">
@@ -1339,7 +1339,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="BACKGROUND_MAROON" id="v6R-4I-SqF"/>
                                     </imageView>
-                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R8Z-f4-vTS">
+                                    <button toolTip="Upload Profiles" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R8Z-f4-vTS">
                                         <rect key="frame" x="0.0" y="215" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Upload" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="aqk-0V-FgC">
@@ -1350,7 +1350,7 @@
                                             <action selector="btnUpload_click:" target="XfG-lQ-9wD" id="eJ4-KY-BUQ"/>
                                         </connections>
                                     </button>
-                                    <button identifier="mail" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Srg-2t-uQG">
+                                    <button identifier="mail" toolTip="Mail Filtered Members" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Srg-2t-uQG">
                                         <rect key="frame" x="0.0" y="162" width="45" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Mail" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Ntw-Ep-N2A">
@@ -1361,6 +1361,31 @@
                                             <action selector="btnMail_click:" target="XfG-lQ-9wD" id="EYg-qK-kSo"/>
                                         </connections>
                                     </button>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZc-Q6-Z2g">
+                                        <rect key="frame" x="25" y="564" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Dot" id="bLF-vT-2gy"/>
+                                    </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GwN-3T-J3r">
+                                        <rect key="frame" x="25" y="511" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Dot" id="gIk-32-vt1"/>
+                                    </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UcW-t9-v5B">
+                                        <rect key="frame" x="25" y="458" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Dot" id="RSc-rA-1Ly"/>
+                                    </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WH6-Kq-NCH">
+                                        <rect key="frame" x="25" y="617" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Dot" id="53g-80-jhH"/>
+                                    </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-Zt-C8k">
+                                        <rect key="frame" x="25" y="671" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Dot" id="YO1-Dc-zMd"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="iwu-Vo-zmo" firstAttribute="leading" secondItem="UHR-gs-Ahb" secondAttribute="leading" id="KJB-Oh-meD"/>
@@ -1399,7 +1424,7 @@
                                 <rect key="frame" x="45" y="559" width="206" height="94"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vYC-ep-uuG">
+                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="vYC-ep-uuG">
                                         <rect key="frame" x="19" y="68" width="73" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Trumpet" bezelStyle="regularSquare" imagePosition="left" inset="2" id="iDG-ah-pPK">
@@ -1410,7 +1435,7 @@
                                             <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="vye-mK-HEt"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QN-gzh">
+                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QN-gzh">
                                         <rect key="frame" x="19" y="48" width="93" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Mellophone" bezelStyle="regularSquare" imagePosition="left" inset="2" id="hAs-pz-ya5">
@@ -1421,7 +1446,7 @@
                                             <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="lvJ-XF-By0"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dFX-ut-2u0">
+                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="dFX-ut-2u0">
                                         <rect key="frame" x="19" y="8" width="52" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Tuba" bezelStyle="regularSquare" imagePosition="left" inset="2" id="RPc-V1-slK">
@@ -1432,7 +1457,7 @@
                                             <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="m3x-0J-wlK"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tWR-ZX-aKP">
+                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="tWR-ZX-aKP">
                                         <rect key="frame" x="19" y="28" width="73" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Baritone" bezelStyle="regularSquare" imagePosition="left" inset="2" id="mWu-Tc-9lA">
@@ -1449,7 +1474,7 @@
                                 <rect key="frame" x="45" y="559" width="206" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8My-ul-brH">
+                                    <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="8My-ul-brH">
                                         <rect key="frame" x="19" y="46" width="57" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Snare" bezelStyle="regularSquare" imagePosition="left" inset="2" id="eY6-6w-cdB">
@@ -1460,7 +1485,7 @@
                                             <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="nyW-ox-gdO"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OF6-bW-xz4">
+                                    <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="OF6-bW-xz4">
                                         <rect key="frame" x="19" y="26" width="57" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Tenor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UHF-BP-xen">
@@ -1471,7 +1496,7 @@
                                             <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="akw-1Y-Rat"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9L1-jK-ONK">
+                                    <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="9L1-jK-ONK">
                                         <rect key="frame" x="19" y="6" width="51" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Bass" bezelStyle="regularSquare" imagePosition="left" inset="2" id="SxZ-Fc-8uh">
@@ -1488,7 +1513,7 @@
                                 <rect key="frame" x="45" y="559" width="206" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jlt-tX-LjT">
+                                    <button fixedFrame="YES" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="Jlt-tX-LjT">
                                         <rect key="frame" x="19" y="1" width="108" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Color Guard" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jky-ws-eMY">
@@ -1505,7 +1530,7 @@
                                 <rect key="frame" x="45" y="559" width="206" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-bs-9FW">
+                                    <button fixedFrame="YES" tag="13" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-bs-9FW">
                                         <rect key="frame" x="19" y="5" width="117" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Front Ensemble" bezelStyle="regularSquare" imagePosition="left" inset="2" id="4un-HJ-AQQ">
@@ -1522,7 +1547,7 @@
                                 <rect key="frame" x="45" y="559" width="206" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mcC-dY-9gS">
+                                    <button fixedFrame="YES" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="mcC-dY-9gS">
                                         <rect key="frame" x="19" y="6" width="93" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="check" title="Drum Major" bezelStyle="regularSquare" imagePosition="left" inset="2" id="7DT-mZ-WSV">
@@ -1720,7 +1745,7 @@
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fgg-BX-Fzl">
                                 <rect key="frame" x="66" y="138" width="107" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Veterans Only" bezelStyle="regularSquare" imagePosition="left" inset="2" id="dU6-ca-u53">
+                                <buttonCell key="cell" type="check" title="Veterans Only" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dU6-ca-u53">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" size="13" name="PTSans-Regular"/>
                                 </buttonCell>
@@ -1740,7 +1765,7 @@
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rMX-vT-mfi">
                                 <rect key="frame" x="66" y="113" width="107" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Contracts Only" bezelStyle="regularSquare" imagePosition="left" inset="2" id="u23-cG-eUg">
+                                <buttonCell key="cell" type="check" title="Contracts Only" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="u23-cG-eUg">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" size="13" name="PTSans-Regular"/>
                                 </buttonCell>
@@ -1934,9 +1959,18 @@
                         <outlet property="checkVisual_2" destination="mtK-qw-z3T" id="45G-S9-OA8"/>
                         <outlet property="checkVisual_3" destination="IML-Ez-0be" id="5DP-Wm-nje"/>
                         <outlet property="checkVisual_NoRating" destination="YuI-TH-Vg4" id="rW4-SK-90k"/>
-                        <outlet property="imgCadets2" destination="JAI-1Z-v4x" id="Za6-GS-oEP"/>
+                        <outlet property="imgCadets" destination="FII-NE-rsf" id="vsh-8O-b41"/>
+                        <outlet property="imgCadets2" destination="JAI-1Z-v4x" id="wUo-eZ-G1q"/>
+                        <outlet property="imgCadets2Both" destination="mXy-bj-MCX" id="3NL-NK-GxT"/>
+                        <outlet property="imgCadetsBoth" destination="JsR-Rk-F9X" id="Ocl-0I-Z6E"/>
+                        <outlet property="imgDotBattery" destination="WH6-Kq-NCH" id="ypi-mI-kai"/>
+                        <outlet property="imgDotBrass" destination="CXd-Zt-C8k" id="s78-Ns-T5A"/>
+                        <outlet property="imgDotColorGuard" destination="GwN-3T-J3r" id="9C1-mC-738"/>
+                        <outlet property="imgDotDrumMajor" destination="UcW-t9-v5B" id="JTZ-cv-m6L"/>
+                        <outlet property="imgDotFrontEnsemble" destination="NZc-Q6-Z2g" id="aYf-HJ-PMd"/>
                         <outlet property="lblFilterGroup" destination="M9x-9M-45E" id="wEu-7j-ehE"/>
                         <outlet property="lblMusic" destination="oFn-cA-hHA" id="Hr3-AG-itg"/>
+                        <outlet property="lblPlus" destination="hGk-jI-GU2" id="urf-u4-BVl"/>
                         <outlet property="lblResults" destination="85K-gN-lkJ" id="7t9-hE-OI4"/>
                         <outlet property="lblUserName" destination="UUF-6F-elz" id="WJt-B4-1Yi"/>
                         <outlet property="lblUserPosition" destination="IUS-hP-YhZ" id="82S-3A-uOq"/>
@@ -2000,11 +2034,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="M30-8t-RTo">
-                                                            <rect key="frame" x="1" y="1" width="691" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="690" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w07-q4-45A">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="691" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="690" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="This is where you add notes about the audition, or any other relevant information" id="CxJ-zs-fNv">
                                                                         <font key="font" metaFont="system"/>
@@ -2033,11 +2067,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="QFg-dm-guC">
-                                                            <rect key="frame" x="695" y="1" width="148" height="17"/>
+                                                            <rect key="frame" x="694.5" y="1" width="147" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fpo-Es-Ppf">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="148" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="147" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="11/18/16" id="gzs-If-B3x">
                                                                         <font key="font" metaFont="system"/>
@@ -2937,6 +2971,7 @@ Gw
         <image name="Copy" width="96" height="96"/>
         <image name="Delete" width="96" height="96"/>
         <image name="DeleteRating" width="96" height="96"/>
+        <image name="Dot" width="36" height="36"/>
         <image name="DrumMajor" width="96" height="96"/>
         <image name="DrumMajorClick" width="96" height="96"/>
         <image name="FrontEnsemble" width="256" height="256"/>
