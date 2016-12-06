@@ -1397,171 +1397,8 @@
                                     <constraint firstItem="iwu-Vo-zmo" firstAttribute="top" secondItem="UHR-gs-Ahb" secondAttribute="top" id="vDA-DU-gfP"/>
                                 </constraints>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UUF-6F-elz">
-                                <rect key="frame" x="101" y="708" width="146" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Justin Moore" id="1rm-ku-SXH">
-                                    <font key="font" size="20" name="PTSans-Regular"/>
-                                    <color key="textColor" red="0.99607473611831665" green="0.99220293760299683" blue="0.99199241399765015" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IUS-hP-YhZ">
-                                <rect key="frame" x="100" y="696" width="146" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Brass Manager" id="gJL-Oy-hJW">
-                                    <font key="font" size="12" name="PTSans-Regular"/>
-                                    <color key="textColor" red="0.45098039215686275" green="0.45098039215686275" blue="0.45098039215686275" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c0P-Hl-3SL">
-                                <rect key="frame" x="51" y="690" width="48" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Picture" id="kvb-kx-4Pv"/>
-                            </imageView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jUF-0V-DAs">
-                                <rect key="frame" x="45" y="559" width="206" height="94"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="vYC-ep-uuG">
-                                        <rect key="frame" x="19" y="68" width="73" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Trumpet" bezelStyle="regularSquare" imagePosition="left" inset="2" id="iDG-ah-pPK">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="vye-mK-HEt"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QN-gzh">
-                                        <rect key="frame" x="19" y="48" width="93" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Mellophone" bezelStyle="regularSquare" imagePosition="left" inset="2" id="hAs-pz-ya5">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="lvJ-XF-By0"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="dFX-ut-2u0">
-                                        <rect key="frame" x="19" y="8" width="52" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Tuba" bezelStyle="regularSquare" imagePosition="left" inset="2" id="RPc-V1-slK">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="m3x-0J-wlK"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="tWR-ZX-aKP">
-                                        <rect key="frame" x="19" y="28" width="73" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Baritone" bezelStyle="regularSquare" imagePosition="left" inset="2" id="mWu-Tc-9lA">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="Zxj-4P-zAj"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0sQ-cL-tvq">
-                                <rect key="frame" x="45" y="559" width="206" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="8My-ul-brH">
-                                        <rect key="frame" x="19" y="46" width="57" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Snare" bezelStyle="regularSquare" imagePosition="left" inset="2" id="eY6-6w-cdB">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="nyW-ox-gdO"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="OF6-bW-xz4">
-                                        <rect key="frame" x="19" y="26" width="57" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Tenor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UHF-BP-xen">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="akw-1Y-Rat"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="9L1-jK-ONK">
-                                        <rect key="frame" x="19" y="6" width="51" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Bass" bezelStyle="regularSquare" imagePosition="left" inset="2" id="SxZ-Fc-8uh">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="6r1-ia-kys"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RiL-x8-EDw">
-                                <rect key="frame" x="45" y="559" width="206" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button fixedFrame="YES" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="Jlt-tX-LjT">
-                                        <rect key="frame" x="19" y="1" width="108" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Color Guard" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jky-ws-eMY">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="HvF-kW-GnR"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B07-fK-cmb">
-                                <rect key="frame" x="45" y="559" width="206" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button fixedFrame="YES" tag="13" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-bs-9FW">
-                                        <rect key="frame" x="19" y="5" width="117" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Front Ensemble" bezelStyle="regularSquare" imagePosition="left" inset="2" id="4un-HJ-AQQ">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="Nz3-aC-Nb9"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="34F-rc-Dtz">
-                                <rect key="frame" x="45" y="559" width="206" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button fixedFrame="YES" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="mcC-dY-9gS">
-                                        <rect key="frame" x="19" y="6" width="93" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Drum Major" bezelStyle="regularSquare" imagePosition="left" inset="2" id="7DT-mZ-WSV">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="Qds-ld-RO3"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="uGj-Vc-dTp">
-                                <rect key="frame" x="237" y="26" width="179" height="32"/>
+                                <rect key="frame" x="59" y="27" width="179" height="32"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfp-0I-HRL">
                                         <rect key="frame" x="0.0" y="-2" width="31" height="35"/>
@@ -1579,8 +1416,8 @@
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="179" id="Qa0-HM-dQ5"/>
-                                    <constraint firstAttribute="height" constant="32" id="ZX1-bU-Py9"/>
+                                    <constraint firstAttribute="height" constant="32" id="hWo-nM-YGG"/>
+                                    <constraint firstAttribute="width" constant="179" id="wGm-dP-RuC"/>
                                 </constraints>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M9x-9M-45E">
@@ -1782,137 +1619,434 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eaz-oT-8m8">
-                                <rect key="frame" x="45" y="200" width="206" height="125"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IUS-hP-YhZ">
+                                <rect key="frame" x="58" y="701" width="186" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="182" id="idW-Mi-NvP"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Brass Manager" id="gJL-Oy-hJW">
+                                    <font key="font" size="12" name="PTSans-Regular"/>
+                                    <color key="textColor" red="0.45098039215686275" green="0.45098039215686275" blue="0.45098039215686275" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UUF-6F-elz">
+                                <rect key="frame" x="58" y="713" width="185" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="181" id="cay-kF-d3k"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Justin Moore" id="1rm-ku-SXH">
+                                    <font key="font" size="20" name="PTSans-Regular"/>
+                                    <color key="textColor" red="0.99607473611831665" green="0.99220293760299683" blue="0.99199241399765015" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="vYC-ep-uuG">
+                                <rect key="frame" x="66" y="626" width="68" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Trumpet" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="iDG-ah-pPK">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="vye-mK-HEt"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-QN-gzh">
+                                <rect key="frame" x="66" y="606" width="93" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Mellophone" bezelStyle="regularSquare" imagePosition="left" inset="2" id="hAs-pz-ya5">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="lvJ-XF-By0"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="dFX-ut-2u0">
+                                <rect key="frame" x="66" y="566" width="49" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Tuba" bezelStyle="regularSquare" imagePosition="left" inset="2" id="RPc-V1-slK">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="m3x-0J-wlK"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="tWR-ZX-aKP">
+                                <rect key="frame" x="66" y="586" width="73" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Baritone" bezelStyle="regularSquare" imagePosition="left" inset="2" id="mWu-Tc-9lA">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="Zxj-4P-zAj"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="8My-ul-brH">
+                                <rect key="frame" x="114" y="626" width="57" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Snare" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="eY6-6w-cdB">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="nyW-ox-gdO"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="OF6-bW-xz4">
+                                <rect key="frame" x="114" y="606" width="57" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Tenor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UHF-BP-xen">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="akw-1Y-Rat"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="9L1-jK-ONK">
+                                <rect key="frame" x="114" y="586" width="51" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Bass" bezelStyle="regularSquare" imagePosition="left" inset="2" id="SxZ-Fc-8uh">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="6r1-ia-kys"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="13" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-bs-9FW">
+                                <rect key="frame" x="153" y="626" width="117" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Front Ensemble" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4un-HJ-AQQ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="Nz3-aC-Nb9"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="Jlt-tX-LjT">
+                                <rect key="frame" x="181" y="622" width="89" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Color Guard" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="jky-ws-eMY">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="HvF-kW-GnR"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="mcC-dY-9gS">
+                                <rect key="frame" x="216" y="626" width="88" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Drum Major" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="7DT-mZ-WSV">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkInstrument_click:" target="XfG-lQ-9wD" id="Qds-ld-RO3"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FbY-h2-6Yv">
+                                <rect key="frame" x="66" y="279" width="52" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="None" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5xA-7W-beB">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="oKT-h7-qhZ"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oZV-fd-b20">
+                                <rect key="frame" x="66" y="259" width="28" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="1" bezelStyle="regularSquare" imagePosition="left" inset="2" id="aEj-co-C82">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="www-qY-sQu"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LHy-Mf-w7z">
+                                <rect key="frame" x="66" y="239" width="30" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="2" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jZ5-h5-rLk">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="ntu-o1-ziP"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NlN-qo-bHW">
+                                <rect key="frame" x="66" y="219" width="31" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="3" bezelStyle="regularSquare" imagePosition="left" inset="2" id="FPt-xq-2dd">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="0fC-uh-me3"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IML-Ez-0be">
+                                <rect key="frame" x="167" y="219" width="31" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="3" bezelStyle="regularSquare" imagePosition="left" inset="2" id="3cX-Dx-8SG">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="ihQ-3C-0L1"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLr-el-HWH">
+                                <rect key="frame" x="167" y="259" width="28" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="1" bezelStyle="regularSquare" imagePosition="left" inset="2" id="92W-VB-W9S">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="1fS-bM-raY"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YuI-TH-Vg4">
+                                <rect key="frame" x="167" y="279" width="52" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="None" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="C0l-IF-NeF">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="tgF-1M-5je"/>
+                                </connections>
+                            </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mtK-qw-z3T">
+                                <rect key="frame" x="167" y="239" width="30" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="2" bezelStyle="regularSquare" imagePosition="left" inset="2" id="FSg-Ha-qI7">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" size="13" name="PTSans-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="checkRating_click:" target="XfG-lQ-9wD" id="rgt-0j-ec1"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atS-Xh-bde">
+                                <rect key="frame" x="167" y="297" width="41" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Visual" id="Cfd-PP-pBk">
+                                    <font key="font" size="12" name="PTSans-Regular"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFn-cA-hHA">
+                                <rect key="frame" x="66" y="297" width="41" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Music" id="J13-cR-mxo">
+                                    <font key="font" size="12" name="PTSans-Regular"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PnG-9I-2Oz">
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="758"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FbY-h2-6Yv">
-                                        <rect key="frame" x="18" y="78" width="52" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="None" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5xA-7W-beB">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q8v-fg-nDi">
+                                        <rect key="frame" x="0.0" y="0.0" width="1384" height="758"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="BACKGROUND_GOLD" id="32o-dJ-BvC"/>
+                                    </imageView>
+                                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iqK-nO-AlH">
+                                        <rect key="frame" x="684" y="226" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="g39-mv-o4j"/>
+                                            <constraint firstAttribute="height" constant="16" id="zOc-sh-FAL"/>
+                                        </constraints>
+                                    </progressIndicator>
+                                    <tabView translatesAutoresizingMaskIntoConstraints="NO" id="tSl-9p-fA2">
+                                        <rect key="frame" x="566" y="335" width="253" height="164"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="148" id="43i-SH-kQe"/>
+                                            <constraint firstAttribute="width" constant="239" id="pe3-p5-PA7"/>
+                                        </constraints>
+                                        <font key="font" metaFont="system"/>
+                                        <tabViewItems>
+                                            <tabViewItem label="Sign In" identifier="1" id="Hpl-M8-aD5">
+                                                <view key="view" id="86F-ed-xld">
+                                                    <rect key="frame" x="10" y="33" width="139" height="0.0"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jmB-Im-KTn">
+                                                            <rect key="frame" x="33" y="-37" width="165" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Username" drawsBackground="YES" id="WXx-jl-vbR">
+                                                                <font key="font" size="13" name="PTSans-Regular"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hXF-X9-IB2">
+                                                            <rect key="frame" x="34" y="-69" width="165" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Password" drawsBackground="YES" usesSingleLineMode="YES" id="TaG-Ld-wj5">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                    </subviews>
+                                                </view>
+                                            </tabViewItem>
+                                            <tabViewItem label="New User" identifier="2" id="VKN-6e-kCR">
+                                                <view key="view" id="vWD-2T-qMH">
+                                                    <rect key="frame" x="10" y="33" width="233" height="118"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VeI-hR-gBL">
+                                                            <rect key="frame" x="34" y="36" width="165" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Username" drawsBackground="YES" id="wpx-68-b0i">
+                                                                <font key="font" size="13" name="PTSans-Regular"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6JH-4t-oTF">
+                                                            <rect key="frame" x="34" y="62" width="165" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Brass Caption Head" drawsBackground="YES" id="w7n-eM-cO8">
+                                                                <font key="font" size="13" name="PTSans-Regular"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PiH-oB-g6s">
+                                                            <rect key="frame" x="34" y="88" width="165" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="John Doe" drawsBackground="YES" id="oZr-yP-LBk">
+                                                                <font key="font" size="13" name="PTSans-Regular"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhD-6b-3pf">
+                                                            <rect key="frame" x="34" y="10" width="165" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Password" drawsBackground="YES" usesSingleLineMode="YES" id="Mcy-YJ-TVg">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <allowedInputSourceLocales>
+                                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                                </allowedInputSourceLocales>
+                                                            </secureTextFieldCell>
+                                                        </secureTextField>
+                                                    </subviews>
+                                                </view>
+                                            </tabViewItem>
+                                        </tabViewItems>
+                                        <connections>
+                                            <outlet property="delegate" destination="XfG-lQ-9wD" id="wND-hV-u1X"/>
+                                        </connections>
+                                    </tabView>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wUe-6w-Tbb">
+                                        <rect key="frame" x="610" y="284" width="165" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="165" id="TTH-xM-go3"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="bevel" title="Sign In" bezelStyle="rounded" image="BACKGROUND_MAROON" imagePosition="overlaps" alignment="center" imageScaling="axesIndependently" inset="2" id="Q2M-UF-2cQ">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="oKT-h7-qhZ"/>
+                                            <action selector="loginActionWithSender:" target="XfG-lQ-9wD" id="LXb-7H-3L8"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oZV-fd-b20">
-                                        <rect key="frame" x="18" y="58" width="28" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="1" bezelStyle="regularSquare" imagePosition="left" inset="2" id="aEj-co-C82">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tay-3X-NcX">
+                                        <rect key="frame" x="486" y="259" width="412" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="408" id="16a-F2-cK4"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="nKb-E5-KuP">
                                             <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="www-qY-sQu"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LHy-Mf-w7z">
-                                        <rect key="frame" x="18" y="38" width="30" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="2" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jZ5-h5-rLk">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="ntu-o1-ziP"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NlN-qo-bHW">
-                                        <rect key="frame" x="18" y="18" width="31" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="3" bezelStyle="regularSquare" imagePosition="left" inset="2" id="FPt-xq-2dd">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="0fC-uh-me3"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IML-Ez-0be">
-                                        <rect key="frame" x="119" y="18" width="31" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="3" bezelStyle="regularSquare" imagePosition="left" inset="2" id="3cX-Dx-8SG">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="ihQ-3C-0L1"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLr-el-HWH">
-                                        <rect key="frame" x="119" y="58" width="28" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="1" bezelStyle="regularSquare" imagePosition="left" inset="2" id="92W-VB-W9S">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="1fS-bM-raY"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YuI-TH-Vg4">
-                                        <rect key="frame" x="119" y="78" width="52" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="None" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="C0l-IF-NeF">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="tgF-1M-5je"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mtK-qw-z3T">
-                                        <rect key="frame" x="119" y="38" width="30" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="2" bezelStyle="regularSquare" imagePosition="left" inset="2" id="FSg-Ha-qI7">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name="PTSans-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="checkRating_click:" target="XfG-lQ-9wD" id="rgt-0j-ec1"/>
-                                        </connections>
-                                    </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atS-Xh-bde">
-                                        <rect key="frame" x="119" y="96" width="41" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Visual" id="Cfd-PP-pBk">
-                                            <font key="font" size="12" name="PTSans-Regular"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.86470019817352295" green="0.061726391315460205" blue="0.09318242222070694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFn-cA-hHA">
-                                        <rect key="frame" x="18" y="96" width="41" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Music" id="J13-cR-mxo">
-                                            <font key="font" size="12" name="PTSans-Regular"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e3V-w4-AYr">
+                                        <rect key="frame" x="686" y="501" width="113" height="105"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="105" id="bMt-UZ-kx6"/>
+                                            <constraint firstAttribute="width" constant="113" id="d8z-1R-xa5"/>
+                                        </constraints>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Cadets2" id="LYz-k4-DVZ"/>
+                                    </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J53-r2-Qjg">
+                                        <rect key="frame" x="585" y="507" width="100" height="93"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="CAM-K2-eue"/>
+                                            <constraint firstAttribute="height" constant="93" id="sqc-uy-7PR"/>
+                                        </constraints>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Cadets" id="l3z-Sr-8FB"/>
+                                    </imageView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="q8v-fg-nDi" secondAttribute="bottom" id="0st-i0-NNv"/>
+                                    <constraint firstItem="wUe-6w-Tbb" firstAttribute="centerX" secondItem="tSl-9p-fA2" secondAttribute="centerX" id="2BT-3v-W4j"/>
+                                    <constraint firstItem="tSl-9p-fA2" firstAttribute="top" secondItem="J53-r2-Qjg" secondAttribute="bottom" constant="14" id="7dN-Xf-m1l"/>
+                                    <constraint firstItem="wUe-6w-Tbb" firstAttribute="top" secondItem="tSl-9p-fA2" secondAttribute="bottom" constant="29" id="Bdu-JI-9kk"/>
+                                    <constraint firstItem="iqK-nO-AlH" firstAttribute="top" secondItem="Tay-3X-NcX" secondAttribute="bottom" constant="17" id="Em5-YL-eBo"/>
+                                    <constraint firstItem="tSl-9p-fA2" firstAttribute="leading" secondItem="J53-r2-Qjg" secondAttribute="trailing" constant="-112" id="EzZ-Ts-sdd"/>
+                                    <constraint firstItem="Tay-3X-NcX" firstAttribute="centerX" secondItem="wUe-6w-Tbb" secondAttribute="centerX" id="Fxf-xU-a8v"/>
+                                    <constraint firstItem="q8v-fg-nDi" firstAttribute="leading" secondItem="PnG-9I-2Oz" secondAttribute="leading" id="HCh-76-sqd"/>
+                                    <constraint firstItem="tSl-9p-fA2" firstAttribute="top" secondItem="q8v-fg-nDi" secondAttribute="bottom" constant="-493" id="HOG-tA-3aI"/>
+                                    <constraint firstItem="tSl-9p-fA2" firstAttribute="top" secondItem="e3V-w4-AYr" secondAttribute="bottom" constant="8" id="TNI-yX-dU1"/>
+                                    <constraint firstItem="q8v-fg-nDi" firstAttribute="top" secondItem="PnG-9I-2Oz" secondAttribute="top" id="a5h-EE-q59"/>
+                                    <constraint firstItem="Tay-3X-NcX" firstAttribute="top" secondItem="wUe-6w-Tbb" secondAttribute="bottom" constant="8" id="aYh-jv-dPc"/>
+                                    <constraint firstItem="iqK-nO-AlH" firstAttribute="centerX" secondItem="Tay-3X-NcX" secondAttribute="centerX" id="hsb-dI-4tg"/>
+                                    <constraint firstItem="e3V-w4-AYr" firstAttribute="leading" secondItem="tSl-9p-fA2" secondAttribute="trailing" constant="-126" id="kvv-ob-JkU"/>
+                                    <constraint firstAttribute="trailing" secondItem="q8v-fg-nDi" secondAttribute="trailing" id="nig-1n-PAZ"/>
+                                    <constraint firstItem="tSl-9p-fA2" firstAttribute="centerX" secondItem="q8v-fg-nDi" secondAttribute="centerX" id="w0b-8p-bDU"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="rD9-tj-e9e" secondAttribute="bottom" id="3JN-Le-VdT"/>
+                            <constraint firstItem="IUS-hP-YhZ" firstAttribute="leading" secondItem="UUF-6F-elz" secondAttribute="leading" id="5Sy-N8-x9E"/>
                             <constraint firstItem="wUK-71-uek" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="5dU-uv-4r2"/>
-                            <constraint firstAttribute="bottom" secondItem="uGj-Vc-dTp" secondAttribute="bottom" constant="26" id="GMO-L3-Aif"/>
+                            <constraint firstItem="UUF-6F-elz" firstAttribute="leading" secondItem="rD9-tj-e9e" secondAttribute="trailing" constant="-191" id="6gn-d4-9a2"/>
+                            <constraint firstAttribute="bottom" secondItem="PnG-9I-2Oz" secondAttribute="bottom" id="8Ne-Dp-bnL"/>
+                            <constraint firstItem="IUS-hP-YhZ" firstAttribute="top" secondItem="UUF-6F-elz" secondAttribute="bottom" constant="-3" id="CBq-p9-ELW"/>
                             <constraint firstItem="85K-gN-lkJ" firstAttribute="leading" secondItem="rD9-tj-e9e" secondAttribute="trailing" constant="8" id="Ght-PV-XSo"/>
                             <constraint firstItem="rD9-tj-e9e" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="HMS-Ju-Bnf"/>
+                            <constraint firstItem="uGj-Vc-dTp" firstAttribute="centerX" secondItem="rD9-tj-e9e" secondAttribute="centerX" id="KZQ-Yw-57e"/>
                             <constraint firstAttribute="trailing" secondItem="3xZ-nN-D9U" secondAttribute="trailing" id="N3X-S7-Ihc"/>
                             <constraint firstAttribute="trailing" secondItem="wUK-71-uek" secondAttribute="trailing" id="OOP-NK-fTn"/>
+                            <constraint firstItem="PnG-9I-2Oz" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="SZT-6q-TdV"/>
+                            <constraint firstAttribute="bottom" secondItem="uGj-Vc-dTp" secondAttribute="bottom" constant="27" id="U43-Jh-NF5"/>
                             <constraint firstItem="3xZ-nN-D9U" firstAttribute="leading" secondItem="rD9-tj-e9e" secondAttribute="trailing" constant="1" id="Vrb-fH-pvD"/>
                             <constraint firstItem="rD9-tj-e9e" firstAttribute="leading" secondItem="UHR-gs-Ahb" secondAttribute="trailing" id="W9i-Cb-pv5"/>
                             <constraint firstItem="7YN-sz-FrZ" firstAttribute="leading" secondItem="38n-Gf-uUF" secondAttribute="trailing" constant="-10" id="WSc-XL-bvx"/>
                             <constraint firstItem="wUK-71-uek" firstAttribute="leading" secondItem="rD9-tj-e9e" secondAttribute="trailing" id="cvW-ql-k2R"/>
                             <constraint firstItem="UHR-gs-Ahb" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="eH4-Ml-4d7"/>
                             <constraint firstItem="85K-gN-lkJ" firstAttribute="top" secondItem="3xZ-nN-D9U" secondAttribute="bottom" constant="8" id="eH5-uH-SZ6"/>
+                            <constraint firstAttribute="trailing" secondItem="PnG-9I-2Oz" secondAttribute="trailing" id="fIC-Oj-zZE"/>
                             <constraint firstItem="85K-gN-lkJ" firstAttribute="centerY" secondItem="38n-Gf-uUF" secondAttribute="centerY" id="fuP-o8-oHe"/>
+                            <constraint firstItem="PnG-9I-2Oz" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="h8o-8L-aQB"/>
                             <constraint firstItem="38n-Gf-uUF" firstAttribute="top" secondItem="wUK-71-uek" secondAttribute="bottom" constant="-26" id="mrG-e3-8FY"/>
                             <constraint firstAttribute="bottom" secondItem="wUK-71-uek" secondAttribute="bottom" id="oK5-9S-7oM"/>
-                            <constraint firstItem="uGj-Vc-dTp" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" constant="-366" id="psE-dU-KTK"/>
+                            <constraint firstItem="rD9-tj-e9e" firstAttribute="top" secondItem="UUF-6F-elz" secondAttribute="bottom" constant="-45" id="onE-Qr-UmJ"/>
                             <constraint firstItem="3xZ-nN-D9U" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="-1" id="put-hq-TzG"/>
                             <constraint firstAttribute="bottom" secondItem="7YN-sz-FrZ" secondAttribute="bottom" constant="-6" id="pz6-Hz-O3D"/>
                             <constraint firstItem="UHR-gs-Ahb" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="rtv-4r-wRS"/>
@@ -1933,6 +2067,7 @@
                         <outlet property="btnHelp" destination="GwK-6v-no5" id="weG-Xd-XW8"/>
                         <outlet property="btnMail" destination="Srg-2t-uQG" id="CuA-hr-M0b"/>
                         <outlet property="btnPercussion" destination="J7x-xI-D4b" id="K0C-tV-8qi"/>
+                        <outlet property="btnSignIn" destination="wUe-6w-Tbb" id="glt-6S-4Ic"/>
                         <outlet property="btnUpload" destination="R8Z-f4-vTS" id="c9h-Ea-nJu"/>
                         <outlet property="btnVideo" destination="UKm-z1-UlS" id="7oU-Fj-6bp"/>
                         <outlet property="checkAllColorguard" destination="Jlt-tX-LjT" id="eOV-4e-gqt"/>
@@ -1959,39 +2094,46 @@
                         <outlet property="checkVisual_2" destination="mtK-qw-z3T" id="45G-S9-OA8"/>
                         <outlet property="checkVisual_3" destination="IML-Ez-0be" id="5DP-Wm-nje"/>
                         <outlet property="checkVisual_NoRating" destination="YuI-TH-Vg4" id="rW4-SK-90k"/>
-                        <outlet property="imgCadets" destination="FII-NE-rsf" id="vsh-8O-b41"/>
+                        <outlet property="imgCadets" destination="FII-NE-rsf" id="gl3-fX-r64"/>
                         <outlet property="imgCadets2" destination="JAI-1Z-v4x" id="wUo-eZ-G1q"/>
                         <outlet property="imgCadets2Both" destination="mXy-bj-MCX" id="3NL-NK-GxT"/>
+                        <outlet property="imgCadets2Splash" destination="e3V-w4-AYr" id="dz4-wn-DLK"/>
                         <outlet property="imgCadetsBoth" destination="JsR-Rk-F9X" id="Ocl-0I-Z6E"/>
+                        <outlet property="imgCadetsSplash" destination="J53-r2-Qjg" id="Cj3-Uh-OeA"/>
                         <outlet property="imgDotBattery" destination="WH6-Kq-NCH" id="ypi-mI-kai"/>
                         <outlet property="imgDotBrass" destination="CXd-Zt-C8k" id="s78-Ns-T5A"/>
                         <outlet property="imgDotColorGuard" destination="GwN-3T-J3r" id="9C1-mC-738"/>
                         <outlet property="imgDotDrumMajor" destination="UcW-t9-v5B" id="JTZ-cv-m6L"/>
                         <outlet property="imgDotFrontEnsemble" destination="NZc-Q6-Z2g" id="aYf-HJ-PMd"/>
+                        <outlet property="lblAlert" destination="Tay-3X-NcX" id="MzH-XV-uhJ"/>
                         <outlet property="lblFilterGroup" destination="M9x-9M-45E" id="wEu-7j-ehE"/>
                         <outlet property="lblMusic" destination="oFn-cA-hHA" id="Hr3-AG-itg"/>
                         <outlet property="lblPlus" destination="hGk-jI-GU2" id="urf-u4-BVl"/>
                         <outlet property="lblResults" destination="85K-gN-lkJ" id="7t9-hE-OI4"/>
+                        <outlet property="lblSignUpName" destination="PiH-oB-g6s" id="Bvj-nb-S3f"/>
+                        <outlet property="lblSignUpPassword" destination="zhD-6b-3pf" id="gjM-Um-lVx"/>
+                        <outlet property="lblSignUpUsername" destination="VeI-hR-gBL" id="dxJ-oY-R3A"/>
+                        <outlet property="lblSignupTitle" destination="6JH-4t-oTF" id="fUH-Th-TRz"/>
                         <outlet property="lblUserName" destination="UUF-6F-elz" id="WJt-B4-1Yi"/>
                         <outlet property="lblUserPosition" destination="IUS-hP-YhZ" id="82S-3A-uOq"/>
                         <outlet property="lblVisual" destination="atS-Xh-bde" id="5Vq-Of-yrZ"/>
+                        <outlet property="progressSignIn" destination="iqK-nO-AlH" id="ZY6-KW-8C6"/>
                         <outlet property="switchCorps" destination="jkO-Hw-r7i" id="HzY-zi-2Zs"/>
+                        <outlet property="tabSignIn" destination="tSl-9p-fA2" id="iE6-ji-LLs"/>
                         <outlet property="tableMembers" destination="QLX-QD-0y0" id="9jq-OW-bgC"/>
+                        <outlet property="txtEmail" destination="jmB-Im-KTn" id="RYJ-rL-4kt"/>
+                        <outlet property="txtPassword" destination="hXF-X9-IB2" id="6Nx-Kt-gfg"/>
                         <outlet property="txtSearch" destination="GCN-bo-NOh" id="kaJ-mK-6gD"/>
-                        <outlet property="viewBattery" destination="0sQ-cL-tvq" id="UQ0-Gv-chY"/>
-                        <outlet property="viewBrass" destination="jUF-0V-DAs" id="NBx-ow-dbS"/>
-                        <outlet property="viewColorGuard" destination="RiL-x8-EDw" id="I5h-MF-o9M"/>
-                        <outlet property="viewDrumMajor" destination="34F-rc-Dtz" id="Q0Z-Xh-h6J"/>
-                        <outlet property="viewFrontEnsemble" destination="B07-fK-cmb" id="P19-B9-64S"/>
-                        <outlet property="viewRating" destination="Eaz-oT-8m8" id="JtX-jd-nhK"/>
+                        <outlet property="viewMain" destination="PnG-9I-2Oz" id="BoH-tA-Lnd"/>
                         <outlet property="viewSearch" destination="uGj-Vc-dTp" id="Vl3-in-mqS"/>
                         <outlet property="viewSideBar" destination="UHR-gs-Ahb" id="SgG-ei-MQN"/>
+                        <outlet property="viewSplash" destination="q8v-fg-nDi" id="odK-bL-UVa"/>
                         <segue destination="d0k-n9-vqa" kind="popover" identifier="profile" popoverBehavior="t" preferredEdge="maxY" id="xTs-Ca-9ri"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="629" y="891"/>
+            <point key="canvasLocation" x="586" y="953"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="tpp-MC-jr1">

@@ -11,7 +11,7 @@ import Parse
 import CSVImporter
 import AVFoundation
 
-class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate {
+class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate, NSTabViewDelegate {
 
     let Server = ParseServer.sharedInstance
     var buttonClicked = 0
@@ -37,6 +37,26 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     var searchColorGuard = false
     var searchDrumMajor = false
     
+    
+    @IBOutlet weak var viewMain: NSView!
+    @IBOutlet weak var viewSplash: NSImageView!
+    @IBOutlet weak var imgCadetsSplash: NSImageView!
+    @IBOutlet weak var imgCadets2Splash: NSImageView!
+    
+    
+    
+    @IBOutlet weak var txtPassword: NSTextField!
+    @IBOutlet weak var txtEmail: NSTextField!
+    @IBOutlet weak var btnSignIn: NSButton!
+    @IBOutlet weak var lblAlert: NSTextField!
+    @IBOutlet weak var progressSignIn: NSProgressIndicator!
+    @IBOutlet weak var tabSignIn: NSTabView!
+    
+    @IBOutlet weak var lblSignUpName: NSTextField!
+    @IBOutlet weak var lblSignupTitle: NSTextField!
+    @IBOutlet weak var lblSignUpUsername: NSTextField!
+    @IBOutlet weak var lblSignUpPassword: NSSecureTextField!
+    
     @IBOutlet weak var tableMembers: NSTableView!
     
     @IBOutlet weak var checkAllMembers: NSButton!
@@ -51,12 +71,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
 
     //Search checkboxes
-    @IBOutlet weak var checkAllBrass: NSButton!
     @IBOutlet weak var checkTrumpet: NSButton!
     @IBOutlet weak var checkMellophone: NSButton!
     @IBOutlet weak var checkBaritone: NSButton!
     @IBOutlet weak var checkTuba: NSButton!
-    @IBOutlet weak var checkAllPercussion: NSButton!
     @IBOutlet weak var checkSnare: NSButton!
     @IBOutlet weak var checkTenor: NSButton!
     @IBOutlet weak var checkBass: NSButton!
@@ -106,12 +124,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     //Filter Groups
     
     @IBOutlet weak var lblFilterGroup: NSTextField!
-    @IBOutlet weak var viewBrass: NSView!
-    @IBOutlet weak var viewBattery: NSView!
-    @IBOutlet weak var viewColorGuard: NSView!
-    @IBOutlet weak var viewDrumMajor: NSView!
     @IBOutlet weak var viewRating: NSView!
-    @IBOutlet weak var viewFrontEnsemble: NSView!
     @IBOutlet weak var lblMusic: NSTextField!
     @IBOutlet weak var lblVisual: NSTextField!
     
@@ -128,12 +141,23 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewMain.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        
         addButtonsToArray()
         
         tableMembers.delegate = self
         tableMembers.dataSource = self
         txtSearch.delegate = self
-
+        tabSignIn.delegate = self
+        
+        lblAlert.isHidden = true
+        progressSignIn.isHidden = true
+        
+        let pstyle = NSMutableParagraphStyle()
+        pstyle.alignment = .center
+        
+        btnSignIn.attributedTitle = NSAttributedString(string: "Sign In", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+        
         imgDotBrass.isHidden = true
         imgDotBattery.isHidden = true
         imgDotFrontEnsemble.isHidden = true
@@ -146,6 +170,235 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         loadSideBar()
         loadFilterBar()
         self.view.layer?.backgroundColor = NSColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1).cgColor
+        
+        viewSplash.addSubview(tabSignIn)
+        
+        //move checkboxes to spots
+        checkSnare.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkSnare.frame.origin.y, width: checkSnare.frame.size.width, height: checkSnare.frame.size.height)
+        
+        checkTenor.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkTenor.frame.origin.y, width: checkTenor.frame.size.width, height: checkTenor.frame.size.height)
+        
+        checkBass.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkBass.frame.origin.y, width: checkBass.frame.size.width, height: checkBass.frame.size.height)
+        
+        checkFrontEnsemble.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkTrumpet.frame.origin.y, width: checkFrontEnsemble.frame.size.width, height: checkFrontEnsemble.frame.size.height)
+        checkAllColorguard.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkTrumpet.frame.origin.y, width: checkAllColorguard.frame.size.width, height: checkAllColorguard.frame.size.height)
+        checkAllDrumMajors.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkTrumpet.frame.origin.y, width: checkAllDrumMajors.frame.size.width, height: checkAllDrumMajors.frame.size.height)
+        
+        btnSection_click(btnBrass)
+        
+        txtEmail.becomeFirstResponder()
+    }
+    
+    func signIn() {
+        
+        // Validate the text fields
+        if txtEmail.stringValue.characters.count < 1 {
+            lblAlert.stringValue = "Invalid Email"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+            return
+        } else if txtPassword.stringValue.characters.count < 1 {
+            lblAlert.stringValue = "Invalid Password"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+            return
+        }
+        
+        progressSignIn.isHidden = false
+        progressSignIn.startAnimation(nil)
+        
+        PFUser.logInWithUsername(inBackground: txtEmail.stringValue, password: txtPassword.stringValue) {(user, error) in
+            if let err = error {
+                // error handling
+                self.lblAlert.stringValue = "\(err.localizedDescription)"
+                self.lblAlert.isHidden = false
+                self.progressSignIn.stopAnimation(nil)
+                self.progressSignIn.isHidden = true
+            } else if let user = user {
+                let authorized = user["auditionAccess"] as? Bool
+                if authorized != true {
+                    //no access
+                    self.lblAlert.stringValue = "Your account is pending authorization."
+                    self.lblAlert.isHidden = false
+                    PFUser.logOutInBackground()
+                } else {
+                    self.loggedIn()
+                }
+                self.progressSignIn.stopAnimation(nil)
+                self.progressSignIn.isHidden = true
+                
+                self.txtEmail.stringValue = ""
+                self.txtPassword.stringValue = ""
+            }
+        }
+    }
+    
+    func signUp() {
+        // Validate the text fields
+        if lblSignUpName.stringValue.characters.count < 1 {
+            lblAlert.stringValue = "Invalid Name"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+            return
+        }
+        
+        if lblSignupTitle.stringValue.characters.count < 1 {
+            lblAlert.stringValue = "Invalid Title"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+            return
+        }
+        
+        if lblSignUpUsername.stringValue.characters.count < 1 {
+            lblAlert.stringValue = "Invalid Username"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+            return
+        }
+        
+        if lblSignUpPassword.stringValue.characters.count < 1 {
+            lblAlert.stringValue = "Invalid Password"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+            return
+        }
+        
+        progressSignIn.isHidden = false
+        progressSignIn.startAnimation(nil)
+        
+        let user = PFUser()
+        user.username = lblSignUpUsername.stringValue
+        user.password = lblSignUpPassword.stringValue
+        user["title"] = lblSignupTitle.stringValue
+        user["fullname"] = lblSignUpName.stringValue
+        
+        user.signUpInBackground { (done: Bool, err: Error?) in
+            if err != nil {
+                // error handling
+                self.lblAlert.stringValue = "There was a problem creating your account."
+                self.lblAlert.isHidden = false
+            } else {
+                self.lblAlert.stringValue = "Your account is pending authorization."
+                self.lblAlert.isHidden = false
+                PFUser.logOutInBackground()
+                self.lblSignUpName.stringValue = ""
+                self.lblSignupTitle.stringValue = ""
+                self.lblSignUpUsername.stringValue = ""
+                self.lblSignUpPassword.stringValue = ""
+            }
+            self.progressSignIn.stopAnimation(nil)
+            self.progressSignIn.isHidden = true
+        }
+    }
+
+    func loggedIn() {
+        
+        if let user = PFUser.current() {
+            lblUserName.stringValue = user["fullname"] as? String ?? ""
+            lblUserPosition.stringValue = user["title"] as? String ?? ""
+        }
+        
+        NSAnimationContext.runAnimationGroup({ (context) -> Void in
+            
+            context.duration = 1
+            self.imgCadetsSplash.animator().alphaValue = 0
+            self.imgCadets2Splash.animator().alphaValue = 0
+            self.btnSignIn.animator().alphaValue = 0
+            self.progressSignIn.animator().alphaValue = 0
+            self.lblAlert.animator().alphaValue = 0
+            self.tabSignIn.animator().alphaValue = 0
+            
+        }, completionHandler: { () -> Void in
+            
+            self.imgCadetsSplash.isHidden = true
+            self.imgCadets2Splash.isHidden = true
+            self.btnSignIn.isHidden = true
+            self.progressSignIn.isHidden = true
+            self.lblAlert.isHidden = true
+            self.tabSignIn.isHidden = true
+            
+            NSAnimationContext.runAnimationGroup({ (context) -> Void in
+                
+                context.duration = 1.3
+                self.viewMain.animator().frame = CGRect(x: 0, y: 0, width: 0, height: self.viewMain.frame.size.height)
+                
+            }, completionHandler: { () -> Void in
+                
+                self.viewMain.isHidden = true
+            })
+        })
+    }
+    
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        if let id = tabViewItem?.identifier as? String {
+            if id == "1" {
+                let pstyle = NSMutableParagraphStyle()
+                pstyle.alignment = .center
+                
+                btnSignIn.attributedTitle = NSAttributedString(string: "Sign In", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+            } else if id == "2" {
+                let pstyle = NSMutableParagraphStyle()
+                pstyle.alignment = .center
+                
+                btnSignIn.attributedTitle = NSAttributedString(string: "Sign Up", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+            }
+        }
+    }
+    
+    
+    
+    @IBAction func loginAction(sender: NSButton) {
+        
+        lblAlert.isHidden = true
+        
+        let id = tabSignIn.selectedTabViewItem?.identifier as! String
+        if id == "1" {
+            signIn()
+        } else if id == "2" {
+            signUp()
+        }
+    }
+    
+    func continueLogin(username: String) {
+    
+        let password = txtPassword.stringValue
+        
+        // Validate the text fields
+        if username.characters.count < 1 {
+            lblAlert.stringValue = "Could not validate your account"
+            lblAlert.isHidden = false
+            progressSignIn.stopAnimation(nil)
+            progressSignIn.isHidden = true
+        } else {
+            lblAlert.isHidden = false
+            
+            // Run a spinner to show a task in progress
+            progressSignIn.isHidden = false
+            progressSignIn.startAnimation(nil)
+            
+            // Send a request to login
+            PFUser.logInWithUsername(inBackground: username, password: password, block: { (user: PFUser?, err: Error?) in
+                
+                self.progressSignIn.stopAnimation(nil)
+                self.progressSignIn.isHidden = true
+                
+                if user != nil {
+                    //signed in
+                } else {
+                    // error
+                    self.lblAlert.stringValue = "\(err?.localizedDescription)"
+                    self.lblAlert.isHidden = false
+                    self.progressSignIn.stopAnimation(nil)
+                    self.progressSignIn.isHidden = true
+                }
+            })
+        }
     }
     
     func addButtonsToArray() {
@@ -273,6 +526,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             pstyle.alignment = .center
             
             btnAssigned.attributedTitle = NSAttributedString(string: btnAssigned.title, attributes: [ NSForegroundColorAttributeName : gray, NSParagraphStyleAttributeName : pstyle ])
+            
+            checkCadetsBoth.isEnabled = true
+            imgCadetsBoth.isEnabled = true
+            imgCadets2Both.isEnabled = true
         } else if sender.tag == 1 {
             setCheckBoxColors(button: btnAssigned)
             
@@ -280,6 +537,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             pstyle.alignment = .center
             
             btnAudition.attributedTitle = NSAttributedString(string: btnAudition.title, attributes: [ NSForegroundColorAttributeName : gray, NSParagraphStyleAttributeName : pstyle ])
+            
+            checkCadetsBoth.isEnabled = false
+            imgCadetsBoth.isEnabled = false
+            imgCadets2Both.isEnabled = false
+            
+            if searchCorps == 3 {
+                checkAllMembers.state = NSOnState
+                checkCorps_click(checkAllMembers)
+            }
         }
         
         switchCorps.doubleValue = Double(sender.tag)
@@ -446,12 +712,12 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         setCheckBoxColors(button: checkVisual_3)
         setCheckBoxColors(button: checkVisual_NoRating)
         
-        viewBattery.frame = viewBrass.frame
-        viewFrontEnsemble.frame = viewBrass.frame
-        viewColorGuard.frame = viewBrass.frame
-        viewDrumMajor.frame = viewBrass.frame
+        showOrHideBrass(show: true)
+        showOrHideBattery(show: false)
+        showOrHideFrontEnsemble(show: false)
+        showOrHideColorGuard(show: false)
+        showOrHideDrumMajor(show: false)
         
-        btnSection_click(btnBrass)
         btnAuditionAssigned_Click(btnAudition)
         
     }
@@ -514,43 +780,43 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     func updateFilterBoxes() {
         switch buttonClicked {
         case 1:
-            viewBattery.isHidden = true
-            viewFrontEnsemble.isHidden = true
-            viewColorGuard.isHidden = true
-            viewDrumMajor.isHidden = true
-            viewBrass.isHidden = false
+            showOrHideBattery(show: false)
+            showOrHideDrumMajor(show: false)
+            showOrHideColorGuard(show: false)
+            showOrHideFrontEnsemble(show: false)
+            showOrHideBrass(show: true)
             lblFilterGroup.stringValue = "BRASS"
             break;
         case 2:
-            viewBrass.isHidden = true
-            viewFrontEnsemble.isHidden = true
-            viewColorGuard.isHidden = true
-            viewDrumMajor.isHidden = true
-            viewBattery.isHidden = false
+            showOrHideDrumMajor(show: false)
+            showOrHideColorGuard(show: false)
+            showOrHideFrontEnsemble(show: false)
+            showOrHideBrass(show: false)
+            showOrHideBattery(show: true)
             lblFilterGroup.stringValue = "BATTERY"
             break;
         case 3:
-            viewBrass.isHidden = true
-            viewBattery.isHidden = true
-            viewColorGuard.isHidden = true
-            viewDrumMajor.isHidden = true
-            viewFrontEnsemble.isHidden = false
+            showOrHideBattery(show: false)
+            showOrHideDrumMajor(show: false)
+            showOrHideColorGuard(show: false)
+            showOrHideBrass(show: false)
+            showOrHideFrontEnsemble(show: true)
             lblFilterGroup.stringValue = "FRONT ENSEMBLE"
             break;
         case 4:
-            viewBrass.isHidden = true
-            viewBattery.isHidden = true
-            viewFrontEnsemble.isHidden = true
-            viewDrumMajor.isHidden = true
-            viewColorGuard.isHidden = false
+            showOrHideBattery(show: false)
+            showOrHideDrumMajor(show: false)
+            showOrHideFrontEnsemble(show: false)
+            showOrHideBrass(show: false)
+            showOrHideColorGuard(show: true)
             lblFilterGroup.stringValue = "COLOR GUARD"
             break;
         case 5:
-            viewBrass.isHidden = true
-            viewBattery.isHidden = true
-            viewFrontEnsemble.isHidden = true
-            viewColorGuard.isHidden = true
-            viewDrumMajor.isHidden = false
+            showOrHideBattery(show: false)
+            showOrHideColorGuard(show: false)
+            showOrHideFrontEnsemble(show: false)
+            showOrHideBrass(show: false)
+            showOrHideDrumMajor(show: true)
             lblFilterGroup.stringValue = "DRUM MAJOR"
             break;
         case 6:
@@ -558,6 +824,31 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         default:
             break;
         }
+    }
+    
+    func showOrHideBrass(show: Bool) {
+        checkTrumpet.isHidden = !show
+        checkMellophone.isHidden = !show
+        checkBaritone.isHidden = !show
+        checkTuba.isHidden = !show
+    }
+    
+    func showOrHideBattery(show: Bool) {
+        checkSnare.isHidden = !show
+        checkTenor.isHidden = !show
+        checkBass.isHidden = !show
+    }
+    
+    func showOrHideFrontEnsemble(show: Bool) {
+        checkFrontEnsemble.isHidden = !show
+    }
+    
+    func showOrHideColorGuard(show: Bool) {
+        checkAllColorguard.isHidden = !show
+    }
+    
+    func showOrHideDrumMajor(show: Bool) {
+        checkAllDrumMajors.isHidden = !show
     }
     
     func setCheckBoxColors(button: NSButton) {
@@ -917,6 +1208,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     // END CHECK FILTERS
     
     func searchMembers() {
+        
+        memberToOpen = nil
+        
         arrayOfFilteredMembers?.removeAll()
         lblResults.stringValue = ""
         
