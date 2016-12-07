@@ -11,7 +11,7 @@ import Parse
 import CSVImporter
 import AVFoundation
 
-class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate, NSTabViewDelegate {
+class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSPopoverDelegate {
 
     let Server = ParseServer.sharedInstance
     var buttonClicked = 0
@@ -23,6 +23,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     var arrayOfMusicRatingsToFilter = [Int]()
     var memberToOpen: PFObject? = nil
     var arrayOfButtons = [NSButton]()
+    var arrayOfLeaderPositions:[PFObject]? = nil
+    var arrayOfSectionPositions:[PFObject]? = nil
     
     //Search variables
     var searchCorps = 0
@@ -41,16 +43,20 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var viewMain: NSView!
     @IBOutlet weak var viewSplash: NSImageView!
     @IBOutlet weak var imgCadetsSplash: NSImageView!
-    @IBOutlet weak var imgCadets2Splash: NSImageView!
-    
-    
+    @IBOutlet weak var btnRegister: NSButton!
+    @IBOutlet weak var btnCreateAnAccount: NSButton!
+    @IBOutlet weak var btnLoginToAccount: NSButton!
     
     @IBOutlet weak var txtPassword: NSTextField!
     @IBOutlet weak var txtEmail: NSTextField!
     @IBOutlet weak var btnSignIn: NSButton!
-    @IBOutlet weak var lblAlert: NSTextField!
-    @IBOutlet weak var progressSignIn: NSProgressIndicator!
-    @IBOutlet weak var tabSignIn: NSTabView!
+    @IBOutlet weak var viewLogin: NSView!
+    @IBOutlet weak var viewCreateAccount: NSView!
+    
+    @IBOutlet weak var lblAlertSignIn: NSTextField!
+    @IBOutlet weak var lblAlertCreateAccount: NSTextField!
+    @IBOutlet weak var progressLogIn: NSProgressIndicator!
+    @IBOutlet weak var progressCreateAccount: NSProgressIndicator!
     
     @IBOutlet weak var lblSignUpName: NSTextField!
     @IBOutlet weak var lblSignupTitle: NSTextField!
@@ -124,7 +130,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     //Filter Groups
     
     @IBOutlet weak var lblFilterGroup: NSTextField!
-    @IBOutlet weak var viewRating: NSView!
     @IBOutlet weak var lblMusic: NSTextField!
     @IBOutlet weak var lblVisual: NSTextField!
     
@@ -148,15 +153,22 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         tableMembers.delegate = self
         tableMembers.dataSource = self
         txtSearch.delegate = self
-        tabSignIn.delegate = self
         
-        lblAlert.isHidden = true
-        progressSignIn.isHidden = true
+        lblAlertSignIn.isHidden = true
+        lblAlertCreateAccount.isHidden = true
+        progressLogIn.isHidden = true
+        progressCreateAccount.isHidden = true
         
         let pstyle = NSMutableParagraphStyle()
         pstyle.alignment = .center
         
-        btnSignIn.attributedTitle = NSAttributedString(string: "Sign In", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+        btnSignIn.attributedTitle = NSAttributedString(string: "LOGIN", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+        btnRegister.attributedTitle = NSAttributedString(string: "REGISTER", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+        btnCreateAnAccount.attributedTitle = NSAttributedString(string: "Create an Account", attributes: [ NSForegroundColorAttributeName : NSColor.blue, NSParagraphStyleAttributeName : pstyle ])
+        btnLoginToAccount.attributedTitle = NSAttributedString(string: "Login", attributes: [ NSForegroundColorAttributeName : NSColor.blue, NSParagraphStyleAttributeName : pstyle ])
+        
+        btnSignIn.layer?.cornerRadius = 6
+        btnRegister.layer?.cornerRadius = 6
         
         imgDotBrass.isHidden = true
         imgDotBattery.isHidden = true
@@ -164,14 +176,14 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         imgDotColorGuard.isHidden = true
         imgDotDrumMajor.isHidden = true
         
+        getLeaderPositions()
+        getSectionPositions()
         refreshServer()
-        //load()
         
         loadSideBar()
         loadFilterBar()
         self.view.layer?.backgroundColor = NSColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1).cgColor
-        
-        viewSplash.addSubview(tabSignIn)
+
         
         //move checkboxes to spots
         checkSnare.frame = CGRect(x: checkTrumpet.frame.origin.x, y: checkSnare.frame.origin.y, width: checkSnare.frame.size.width, height: checkSnare.frame.size.height)
@@ -186,48 +198,81 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         
         btnSection_click(btnBrass)
         
+        txtEmail.isBezeled = false
+        txtEmail.drawsBackground = false
+        txtPassword.isBezeled = false
+        txtPassword.drawsBackground = false
+        lblSignUpName.isBezeled = false
+        lblSignUpName.drawsBackground = false
+        lblSignupTitle.isBezeled = false
+        lblSignupTitle.drawsBackground = false
+        lblSignUpUsername.isBezeled = false
+        lblSignUpUsername.drawsBackground = false
+        lblSignUpPassword.isBezeled = false
+        lblSignUpPassword.drawsBackground = false
+        
+        viewCreateAccount.isHidden = true
+        
         txtEmail.becomeFirstResponder()
+    }
+    
+    func getLeaderPositions() {
+        let q = PFQuery(className: "MemberPositions")
+        q.whereKey("Section", equalTo: "Leader")
+        q.order(byAscending: "order")
+        q.findObjectsInBackground { (results: [PFObject]?, err: Error?) in
+            self.arrayOfLeaderPositions = results
+        }
+    }
+    
+    func getSectionPositions() {
+        let q = PFQuery(className: "MemberPositions")
+        q.whereKey("Section", notEqualTo: "Leader")
+        q.order(byAscending: "order")
+        q.findObjectsInBackground { (results: [PFObject]?, err: Error?) in
+            self.arrayOfSectionPositions = results
+        }
     }
     
     func signIn() {
         
         // Validate the text fields
         if txtEmail.stringValue.characters.count < 1 {
-            lblAlert.stringValue = "Invalid Email"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertSignIn.stringValue = "Invalid Email"
+            lblAlertSignIn.isHidden = false
+            progressLogIn.stopAnimation(nil)
+            progressLogIn.isHidden = true
             return
         } else if txtPassword.stringValue.characters.count < 1 {
-            lblAlert.stringValue = "Invalid Password"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertSignIn.stringValue = "Invalid Password"
+            lblAlertSignIn.isHidden = false
+            progressLogIn.stopAnimation(nil)
+            progressLogIn.isHidden = true
             return
         }
         
-        progressSignIn.isHidden = false
-        progressSignIn.startAnimation(nil)
+        progressLogIn.isHidden = false
+        progressLogIn.startAnimation(nil)
         
-        PFUser.logInWithUsername(inBackground: txtEmail.stringValue, password: txtPassword.stringValue) {(user, error) in
+        PFUser.logInWithUsername(inBackground: txtEmail.stringValue.lowercased(), password: txtPassword.stringValue) {(user, error) in
             if let err = error {
                 // error handling
-                self.lblAlert.stringValue = "\(err.localizedDescription)"
-                self.lblAlert.isHidden = false
-                self.progressSignIn.stopAnimation(nil)
-                self.progressSignIn.isHidden = true
+                self.lblAlertSignIn.stringValue = "\(err.localizedDescription)"
+                self.lblAlertSignIn.isHidden = false
+                self.progressLogIn.stopAnimation(nil)
+                self.progressLogIn.isHidden = true
             } else if let user = user {
                 let authorized = user["auditionAccess"] as? Bool
                 if authorized != true {
                     //no access
-                    self.lblAlert.stringValue = "Your account is pending authorization."
-                    self.lblAlert.isHidden = false
+                    self.lblAlertSignIn.stringValue = "Your account is pending authorization."
+                    self.lblAlertSignIn.isHidden = false
                     PFUser.logOutInBackground()
                 } else {
                     self.loggedIn()
                 }
-                self.progressSignIn.stopAnimation(nil)
-                self.progressSignIn.isHidden = true
+                self.progressLogIn.stopAnimation(nil)
+                self.progressLogIn.isHidden = true
                 
                 self.txtEmail.stringValue = ""
                 self.txtPassword.stringValue = ""
@@ -235,45 +280,66 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         }
     }
     
+    @IBAction func btnCreateAnAccount_click(_ sender: AnyObject) {
+        
+        lblAlertCreateAccount.isHidden = true
+        
+        txtEmail.stringValue = ""
+        txtPassword.stringValue = ""
+        lblSignUpName.stringValue = ""
+        lblSignupTitle.stringValue = ""
+        lblSignUpUsername.stringValue = ""
+        lblSignUpPassword.stringValue = ""
+        
+        viewLogin.isHidden = !viewLogin.isHidden
+        viewCreateAccount.isHidden = !viewLogin.isHidden
+        
+        if viewLogin.isHidden {
+            lblSignUpName.becomeFirstResponder()
+        } else {
+            txtEmail.becomeFirstResponder()
+        }
+    }
+    
     func signUp() {
         // Validate the text fields
         if lblSignUpName.stringValue.characters.count < 1 {
-            lblAlert.stringValue = "Invalid Name"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertCreateAccount.stringValue = "Invalid Name"
+            lblAlertCreateAccount.isHidden = false
+            progressCreateAccount.stopAnimation(nil)
+            progressCreateAccount.isHidden = true
             return
         }
         
         if lblSignupTitle.stringValue.characters.count < 1 {
-            lblAlert.stringValue = "Invalid Title"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertCreateAccount.stringValue = "Invalid Title"
+            lblAlertCreateAccount.isHidden = false
+            progressCreateAccount.stopAnimation(nil)
+            progressCreateAccount.isHidden = true
             return
         }
         
         if lblSignUpUsername.stringValue.characters.count < 1 {
-            lblAlert.stringValue = "Invalid Username"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertCreateAccount.stringValue = "Invalid Username"
+            lblAlertCreateAccount.isHidden = false
+            progressCreateAccount.stopAnimation(nil)
+            progressCreateAccount.isHidden = true
             return
         }
         
         if lblSignUpPassword.stringValue.characters.count < 1 {
-            lblAlert.stringValue = "Invalid Password"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertCreateAccount.stringValue = "Invalid Password"
+            lblAlertCreateAccount.isHidden = false
+            progressCreateAccount.stopAnimation(nil)
+            progressCreateAccount.isHidden = true
             return
         }
         
-        progressSignIn.isHidden = false
-        progressSignIn.startAnimation(nil)
+        progressCreateAccount.isHidden = false
+        progressCreateAccount.startAnimation(nil)
         
         let user = PFUser()
-        user.username = lblSignUpUsername.stringValue
+        user.username = lblSignUpUsername.stringValue.lowercased()
         user.password = lblSignUpPassword.stringValue
         user["title"] = lblSignupTitle.stringValue
         user["fullname"] = lblSignUpName.stringValue
@@ -281,19 +347,19 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         user.signUpInBackground { (done: Bool, err: Error?) in
             if err != nil {
                 // error handling
-                self.lblAlert.stringValue = "There was a problem creating your account."
-                self.lblAlert.isHidden = false
+                self.lblAlertCreateAccount.stringValue = "There was a problem creating your account."
+                self.lblAlertCreateAccount.isHidden = false
             } else {
-                self.lblAlert.stringValue = "Your account is pending authorization."
-                self.lblAlert.isHidden = false
+                self.lblAlertCreateAccount.stringValue = "Your account is pending authorization."
+                self.lblAlertCreateAccount.isHidden = false
                 PFUser.logOutInBackground()
                 self.lblSignUpName.stringValue = ""
                 self.lblSignupTitle.stringValue = ""
                 self.lblSignUpUsername.stringValue = ""
                 self.lblSignUpPassword.stringValue = ""
             }
-            self.progressSignIn.stopAnimation(nil)
-            self.progressSignIn.isHidden = true
+            self.progressCreateAccount.stopAnimation(nil)
+            self.progressCreateAccount.isHidden = true
         }
     }
 
@@ -306,26 +372,24 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         
         NSAnimationContext.runAnimationGroup({ (context) -> Void in
             
-            context.duration = 1
+            context.duration = 0.5
             self.imgCadetsSplash.animator().alphaValue = 0
-            self.imgCadets2Splash.animator().alphaValue = 0
             self.btnSignIn.animator().alphaValue = 0
-            self.progressSignIn.animator().alphaValue = 0
-            self.lblAlert.animator().alphaValue = 0
-            self.tabSignIn.animator().alphaValue = 0
+            self.progressLogIn.animator().alphaValue = 0
+            self.lblAlertSignIn.animator().alphaValue = 0
+            self.viewLogin.animator().alphaValue = 0
             
         }, completionHandler: { () -> Void in
             
             self.imgCadetsSplash.isHidden = true
-            self.imgCadets2Splash.isHidden = true
             self.btnSignIn.isHidden = true
-            self.progressSignIn.isHidden = true
-            self.lblAlert.isHidden = true
-            self.tabSignIn.isHidden = true
+            self.progressLogIn.isHidden = true
+            self.lblAlertSignIn.isHidden = true
+            self.viewLogin.isHidden = true
             
             NSAnimationContext.runAnimationGroup({ (context) -> Void in
                 
-                context.duration = 1.3
+                context.duration = 0.8
                 self.viewMain.animator().frame = CGRect(x: 0, y: 0, width: 0, height: self.viewMain.frame.size.height)
                 
             }, completionHandler: { () -> Void in
@@ -341,26 +405,26 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 let pstyle = NSMutableParagraphStyle()
                 pstyle.alignment = .center
                 
-                btnSignIn.attributedTitle = NSAttributedString(string: "Sign In", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+                btnSignIn.attributedTitle = NSAttributedString(string: "LOGIN", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
             } else if id == "2" {
                 let pstyle = NSMutableParagraphStyle()
                 pstyle.alignment = .center
                 
-                btnSignIn.attributedTitle = NSAttributedString(string: "Sign Up", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
+                btnRegister.attributedTitle = NSAttributedString(string: "REGISTER", attributes: [ NSForegroundColorAttributeName : NSColor.white, NSParagraphStyleAttributeName : pstyle ])
             }
         }
     }
     
-    
-    
-    @IBAction func loginAction(sender: NSButton) {
+    @IBAction func loginAction(sender: AnyObject) {
         
-        lblAlert.isHidden = true
+        txtPassword.resignFirstResponder()
+        lblSignUpPassword.resignFirstResponder()
         
-        let id = tabSignIn.selectedTabViewItem?.identifier as! String
-        if id == "1" {
+        lblAlertSignIn.isHidden = true
+        lblAlertCreateAccount.isHidden = true
+        if sender.tag == 1 {
             signIn()
-        } else if id == "2" {
+        } else if sender.tag == 2 {
             signUp()
         }
     }
@@ -371,31 +435,31 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         
         // Validate the text fields
         if username.characters.count < 1 {
-            lblAlert.stringValue = "Could not validate your account"
-            lblAlert.isHidden = false
-            progressSignIn.stopAnimation(nil)
-            progressSignIn.isHidden = true
+            lblAlertSignIn.stringValue = "Could not validate your account"
+            lblAlertSignIn.isHidden = false
+            progressLogIn.stopAnimation(nil)
+            progressLogIn.isHidden = true
         } else {
-            lblAlert.isHidden = false
+            lblAlertSignIn.isHidden = false
             
             // Run a spinner to show a task in progress
-            progressSignIn.isHidden = false
-            progressSignIn.startAnimation(nil)
+            progressLogIn.isHidden = false
+            progressLogIn.startAnimation(nil)
             
             // Send a request to login
             PFUser.logInWithUsername(inBackground: username, password: password, block: { (user: PFUser?, err: Error?) in
                 
-                self.progressSignIn.stopAnimation(nil)
-                self.progressSignIn.isHidden = true
+                self.progressLogIn.stopAnimation(nil)
+                self.progressLogIn.isHidden = true
                 
                 if user != nil {
                     //signed in
                 } else {
                     // error
-                    self.lblAlert.stringValue = "\(err?.localizedDescription)"
-                    self.lblAlert.isHidden = false
-                    self.progressSignIn.stopAnimation(nil)
-                    self.progressSignIn.isHidden = true
+                    self.lblAlertSignIn.stringValue = "\(err?.localizedDescription)"
+                    self.lblAlertSignIn.isHidden = false
+                    self.progressLogIn.stopAnimation(nil)
+                    self.progressLogIn.isHidden = true
                 }
             })
         }
@@ -1671,6 +1735,8 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 vc.member = memberToOpen
                 vc.arrayOfFilteredMembers = arrayOfFilteredMembers
                 vc.tableParent = tableMembers
+                vc.arrayOfLeaderPositions = arrayOfLeaderPositions
+                vc.arrayOfSectionPositions = arrayOfSectionPositions
             }
         }
     }

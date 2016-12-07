@@ -10,12 +10,14 @@ import Cocoa
 import Parse
 import AVFoundation
 
-class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSPopoverDelegate {
+class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSPopoverDelegate, NSComboBoxDelegate {
     
     var arrayOfFilteredMembers: [PFObject]?
     var arrayOfNotes: [PFObject]?
     var member: PFObject? = nil
     var tableParent: NSTableView? = nil
+    var arrayOfLeaderPositions: [PFObject]?
+    var arrayOfSectionPositions: [PFObject]?
     
     let session = AVCaptureSession()
     let video_connection = AVCaptureConnection()
@@ -28,7 +30,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblSections: NSTextField!
     @IBOutlet weak var imgCorps: NSImageView!
     @IBOutlet weak var lblName: NSTextField!
-    @IBOutlet weak var lblNumber: NSTextField!
+    @IBOutlet weak var btnNumber: NSButton!
     @IBOutlet weak var tableNotes: NSTableView!
     @IBOutlet weak var lblPhone: NSTextField!
     @IBOutlet weak var lblSchool: NSTextField!
@@ -47,6 +49,10 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblFinancialPlan: NSTextField!
     @IBOutlet weak var lblMedical: NSTextField!
     @IBOutlet weak var lblGoals: NSTextField!
+    
+    @IBOutlet weak var checkLeader: NSButton!
+    @IBOutlet weak var comboLeader: NSComboBox!
+    @IBOutlet weak var comboPosition: NSComboBox!
     
     @IBOutlet weak var lblMultiple: NSTextField!
     
@@ -73,10 +79,22 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         viewNote.isHidden = true
+        comboLeader.delegate = self
+        comboLeader.isEditable = false
         tableNotes.delegate = self
         tableNotes.dataSource = self
         imgPicture.image = nil
         loadProfile()
+        
+        comboLeader.removeAllItems()
+        for pos in arrayOfLeaderPositions! {
+            comboLeader.addItem(withObjectValue: pos["Position"])
+        }
+        
+        comboPosition.removeAllItems()
+        for pos in arrayOfSectionPositions! {
+            comboPosition.addItem(withObjectValue: "\(pos["Section"]!) - \(pos["Position"]!)")
+        }
     }
 
     @IBAction func btnRecommendCorps(_ sender: NSButton) {
@@ -105,6 +123,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
                 member?.saveEventually()
             } else {
                 member?["cadetsVet"] = false
+                member?.saveEventually()
             }
         } else if sender.tag == 2 {
             if sender.state == NSOnState {
@@ -112,6 +131,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
                 member?.saveEventually()
             } else {
                 member?["cadets2Vet"] = false
+                member?.saveEventually()
             }
         }
     }
@@ -216,9 +236,9 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         
         //number
         if let number = member?["number"] as? Int {
-            lblNumber.stringValue = "\(number)"
+            btnNumber.title = "\(number)"
         } else {
-            lblNumber.stringValue = "No #"
+            btnNumber.title = "No #"
         }
         
         //age
@@ -397,6 +417,24 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             lblGoals.stringValue = goals
         } else {
             lblGoals.stringValue = "Did not answer"
+        }
+        
+        if let leaderPos = member?["leaderPosition"] as? String {
+            comboLeader.stringValue = leaderPos
+        }
+        
+        if let leader = member?["leader"] as? Bool {
+            if leader {
+                checkLeader.state = NSOnState
+                comboLeader.isEnabled = true
+            } else {
+                checkLeader.state = NSOffState
+                comboLeader.isEnabled = false
+                comboLeader.stringValue = ""
+            }
+        } else {
+            checkLeader.state = NSOffState
+            comboLeader.isEnabled = false
         }
         
         //set tooltips
@@ -603,15 +641,35 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         btnCancelNote_clicked(self)
     }
     
-    @IBAction func btnNumber_click(_ sender: Any) {
-        if txtSetNumber.isHidden {
-            txtSetNumber.isHidden = false
-            btnSaveNumber.isHidden = false
-            txtSetNumber.becomeFirstResponder()
+    @IBAction func btnNumber_click(_ sender: NSButton) {
+//        if txtSetNumber.isHidden {
+//            txtSetNumber.isHidden = false
+//            btnSaveNumber.isHidden = false
+//            txtSetNumber.becomeFirstResponder()
+//        } else {
+//            txtSetNumber.isHidden = true
+//            btnSaveNumber.isHidden = true
+//            txtSetNumber.resignFirstResponder()
+//        }
+        
+        let msg = NSAlert()
+        msg.addButton(withTitle: "OK")      // 1st button
+        msg.addButton(withTitle: "Cancel")  // 2nd button
+        msg.messageText = "\(member?["name"])"
+        msg.informativeText = "Enter new audition number:)"
+        
+        let txt = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+        txt.stringValue = ""
+        
+        msg.accessoryView = txt
+        let response: NSModalResponse = msg.runModal()
+        
+        if (response == NSAlertFirstButtonReturn) {
+            member?["number"] = Int(txt.stringValue)
+            member?.saveEventually()
+            btnNumber.title = txt.stringValue
         } else {
-            txtSetNumber.isHidden = true
-            btnSaveNumber.isHidden = true
-            txtSetNumber.resignFirstResponder()
+            return
         }
     }
     
@@ -623,10 +681,11 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         txtSetNumber.isHidden = true
         btnSaveNumber.isHidden = true
         member?["number"] = Int(txtSetNumber.stringValue)
-        lblNumber.stringValue = txtSetNumber.stringValue
+        btnNumber.title = txtSetNumber.stringValue
         member?.saveEventually()
         txtSetNumber.stringValue = ""
     }
+
     
     var selectedNote: PFObject?
     @IBAction func doubleClick(_ sender: Any) {
@@ -643,8 +702,25 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBAction func saveNumber(_ sender: NSTextField) {
         saveNumber()
     }
+
+    @IBAction func checkLeader_changed(_ sender: NSButton) {
+        if sender.state == NSOnState {
+            comboLeader.isEnabled = true
+        } else {
+            comboLeader.stringValue = ""
+            comboLeader.isEnabled = false
+            member?.remove(forKey: "leader")
+            member?.remove(forKey: "leaderPosition")
+            member?.saveEventually()
+        }
+    }
     
- 
+    func comboBoxSelectionDidChange(_ notification: Notification) {
+        let pos = comboLeader.objectValueOfSelectedItem as! String
+        member?["leaderPosition"] = pos
+        member?["leader"] = true
+        member?.saveEventually()
+    }
 }
 
 
