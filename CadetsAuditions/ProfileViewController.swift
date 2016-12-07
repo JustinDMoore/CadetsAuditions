@@ -202,6 +202,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         arrayOfNotes?.removeAll()
         let query = PFQuery(className: "MemberNotes")
         query.limit = 1000
+        query.includeKey("staff")
         query.whereKey("member", equalTo: member!)
         query.findObjectsInBackground { (notes: [PFObject]?, err: Error?) in
             if notes != nil {
@@ -615,7 +616,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             return nil
         }
         
-        if tableColumn == tableView.tableColumns[1] { // DATE
+        if tableColumn == tableView.tableColumns[2] { // DATE
             let date = note.createdAt! as Date
             let dateFormatter = DateFormatter()
             dateFormatter.amSymbol = "AM"
@@ -624,6 +625,17 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             text = dateFormatter.string(from: date)
             cellIdentifier = "cellDate"
         }
+
+        
+        if tableColumn == tableView.tableColumns[1] { // STAFF
+            if let staff = note["staff"] as? PFObject {
+                text = staff["fullname"] as? String ?? ""
+            } else {
+                text = "Unknown"
+            }
+            cellIdentifier = "cellStaff"
+        }
+        
         
         if tableColumn == tableView.tableColumns[0] { // NOTE
             text = note["note"] as? String ?? ""

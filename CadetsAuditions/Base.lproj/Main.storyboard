@@ -2305,7 +2305,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="cellNote" width="795.5" minWidth="40" maxWidth="1000" id="brt-fq-0yk">
+                                                <tableColumn identifier="cellNote" width="732.5" minWidth="40" maxWidth="1000" id="brt-fq-0yk">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Note">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -2319,13 +2319,13 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="M30-8t-RTo">
-                                                            <rect key="frame" x="1" y="1" width="796" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="733" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="w07-q4-45A">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="796" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="733" height="17"/>
                                                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This is where you add notes about the audition, or any other relevant information" id="CxJ-zs-fNv">
-                                                                        <font key="font" metaFont="system"/>
+                                                                        <font key="font" size="13" name="PTSans-Regular"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" red="0.98823529409999999" green="0.73725490199999999" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                     </textFieldCell>
@@ -2343,7 +2343,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="cellStaff" width="92" minWidth="40" maxWidth="1000" id="QNh-8P-fQG" userLabel="Staff">
+                                                <tableColumn identifier="cellStaff" width="153" minWidth="40" maxWidth="1000" id="QNh-8P-fQG" userLabel="Staff">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Staff">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -2357,14 +2357,14 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="YEL-ib-CFw">
-                                                            <rect key="frame" x="800" y="1" width="92" height="17"/>
+                                                            <rect key="frame" x="737" y="1" width="153" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ccr-U4-hU3">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="92" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="153" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="11/18/16" id="kHA-Tw-uL4">
-                                                                        <font key="font" metaFont="system"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Drew Shanefield" id="kHA-Tw-uL4">
+                                                                        <font key="font" size="13" name="PTSans-Regular"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
@@ -2376,7 +2376,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="cellDate" width="129.5" minWidth="40" maxWidth="1000" id="m9e-1E-3IT">
+                                                <tableColumn identifier="cellDate" width="131.5" minWidth="40" maxWidth="1000" id="m9e-1E-3IT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Date">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -2390,14 +2390,14 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="QFg-dm-guC">
-                                                            <rect key="frame" x="895" y="1" width="130" height="17"/>
+                                                            <rect key="frame" x="893" y="1" width="132" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fpo-Es-Ppf">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="130" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="132" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="11/18/16" id="gzs-If-B3x">
-                                                                        <font key="font" metaFont="system"/>
+                                                                        <font key="font" metaFont="system" size="12"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>

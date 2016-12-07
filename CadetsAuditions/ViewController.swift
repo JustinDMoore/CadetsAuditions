@@ -1033,6 +1033,30 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         return myPopup.runModal() == NSAlertFirstButtonReturn
     }
     
+    
+//    
+//    
+//    
+//    for mem in self.arrayOfAllMembers! {
+//    if let visRating = mem["visualRating"] as? Int {
+//    let note = PFObject(className: "note")
+//    note["note"] = "NOVEMBER VISUAL RATING CHANGED TO: \(visRating)"
+//    note.saveInBackground()
+//    }
+//    
+//    if let musRating = mem["musicRating"] as? Int {
+//    let note = PFObject(className: "note")
+//    note["note"] = "NOVEMBER MUSIC RATING CHANGED TO: \(musRating)"
+//    note.saveInBackground()
+//    }
+//    }
+//    
+//    
+    
+    
+    
+    
+    
     func refreshServer() {
         getLeaderPositions()
         getSectionPositions()
@@ -1045,6 +1069,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         //searchQuery.order(byAscending: "name")
         searchQuery.order(byAscending: "lastUpdated")
         searchQuery.findObjectsInBackground { (members: [PFObject]?, err: Error?) in
+            
             if members != nil {
                 self.arrayOfAllMembers = members!
                 self.arrayOfFilteredMembers = members!
