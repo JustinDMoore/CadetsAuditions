@@ -18,6 +18,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     var tableParent: NSTableView? = nil
     var arrayOfLeaderPositions: [PFObject]?
     var arrayOfSectionPositions: [PFObject]?
+    var initialMemberIndex: Int?
     
     let session = AVCaptureSession()
     let video_connection = AVCaptureConnection()
@@ -25,6 +26,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     
     @IBOutlet weak var imgPicture: NSImageView!
 
+    @IBOutlet weak var lblMemberCount: NSTextField!
     @IBOutlet weak var lblAge: NSTextField!
     @IBOutlet weak var btnEmail: NSButton!
     @IBOutlet weak var lblSections: NSTextField!
@@ -32,6 +34,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblName: NSTextField!
     @IBOutlet weak var btnNumber: NSButton!
     @IBOutlet weak var tableNotes: NSTableView!
+    @IBOutlet weak var tableFilteredMembers: NSTableView!
     @IBOutlet weak var lblPhone: NSTextField!
     @IBOutlet weak var lblSchool: NSTextField!
     @IBOutlet weak var lblDecember: NSTextField!
@@ -49,6 +52,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var lblFinancialPlan: NSTextField!
     @IBOutlet weak var lblMedical: NSTextField!
     @IBOutlet weak var lblGoals: NSTextField!
+    @IBOutlet weak var checkContract: NSButton!
     
     @IBOutlet weak var checkLeader: NSButton!
     @IBOutlet weak var comboLeader: NSComboBox!
@@ -62,13 +66,8 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     @IBOutlet weak var imgRatingVisual: NSImageView!
     @IBOutlet weak var imgRatingMusic: NSImageView!
 
-    @IBOutlet weak var viewNote: NSBox!
     @IBOutlet weak var txtNote: NSTextField!
-    @IBOutlet weak var btnCancelNote: NSButton!
-    @IBOutlet weak var btnSaveNote: NSButton!
-    
-    @IBOutlet weak var txtSetNumber: NSTextField!
-    @IBOutlet weak var btnSaveNumber: NSButton!
+
     @IBOutlet weak var progressWheel: NSProgressIndicator!
     
     @IBOutlet weak var imgRecommended: NSImageView!
@@ -78,23 +77,37 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewNote.isHidden = true
         comboLeader.delegate = self
         comboLeader.isEditable = false
+        comboPosition.delegate = self
+        comboPosition.isEditable = false
+        
         tableNotes.delegate = self
         tableNotes.dataSource = self
+        tableFilteredMembers.delegate = self
+        tableFilteredMembers.dataSource = self
         imgPicture.image = nil
         loadProfile()
+        let indexSet = NSIndexSet(index: initialMemberIndex!)
+        tableFilteredMembers.selectRowIndexes(indexSet as IndexSet, byExtendingSelection: false)
         
         comboLeader.removeAllItems()
-        for pos in arrayOfLeaderPositions! {
-            comboLeader.addItem(withObjectValue: pos["Position"])
+        if arrayOfLeaderPositions != nil {
+            for pos in arrayOfLeaderPositions! {
+                comboLeader.addItem(withObjectValue: pos["Position"])
+            }
         }
         
         comboPosition.removeAllItems()
-        for pos in arrayOfSectionPositions! {
-            comboPosition.addItem(withObjectValue: "\(pos["Section"]!) - \(pos["Position"]!)")
+        if arrayOfSectionPositions != nil {
+            for pos in arrayOfSectionPositions! {
+                comboPosition.addItem(withObjectValue: "\(pos["Section"]!) - \(pos["Position"]!)")
+            }
         }
+        
+        txtNote.drawsBackground = false
+        txtNote.isBezeled = false
+        lblMemberCount.stringValue = "\(arrayOfFilteredMembers!.count) members"
     }
 
     @IBAction func btnRecommendCorps(_ sender: NSButton) {
@@ -154,21 +167,36 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         }
     }
     
-    @IBAction func deleteNOte(_ sender: Any) {
-        selectedNote?.deleteInBackground(block: { (done: Bool, err: Error?) in
-            self.btnCancelNote_clicked(self)
-            self.tableNotes.reloadData()
-        })
+    @IBAction func deleteNOte(_ sender: NSButton) {
+        if selectedNote == nil {
+            let msg = NSAlert()
+            msg.addButton(withTitle: "OK")      // 1st button
+            msg.messageText = "Delete Note"
+            msg.informativeText = "Select a note to delete."
+
+            msg.runModal()
+
+        } else {
+            let msg = NSAlert()
+            msg.addButton(withTitle: "Yes")      // 1st button
+            msg.addButton(withTitle: "Cancel")  // 2nd button
+            msg.messageText = "Delete Note"
+            msg.informativeText = "Are you sure you want to delete this note?"
+   
+            let response: NSModalResponse = msg.runModal()
+            
+            if (response == NSAlertFirstButtonReturn) {
+
+                selectedNote?.deleteInBackground(block: { (done: Bool, err: Error?) in
+                    self.arrayOfNotes?.remove(at: self.tableNotes.selectedRow)
+                    self.tableNotes.reloadData()
+                })
+                
+            } else {
+                return
+            }
+        }
     }
-    
-    @IBAction func updateNote(_ sender: Any) {
-        selectedNote?["note"] = txtNote.stringValue
-        selectedNote?.saveEventually({ (done: Bool, err: Error?) in
-            self.btnCancelNote_clicked(self)
-            self.tableNotes.reloadData()
-        })
-    }
-    
     
     func loadNotes() {
         arrayOfNotes?.removeAll()
@@ -423,6 +451,10 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             comboLeader.stringValue = leaderPos
         }
         
+        if let position = member?["position"] as? String {
+            comboPosition.stringValue = position
+        }
+        
         if let leader = member?["leader"] as? Bool {
             if leader {
                 checkLeader.state = NSOnState
@@ -435,6 +467,17 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         } else {
             checkLeader.state = NSOffState
             comboLeader.isEnabled = false
+        }
+        
+        if let contract = member?["contract"] as? Bool {
+            if contract {
+                checkContract.state = NSOnState
+            } else {
+                checkContract.state = NSOffState
+            }
+        } else {
+            checkContract.state = NSOffState
+            checkContract.isEnabled = false
         }
         
         //set tooltips
@@ -513,8 +556,18 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     //MARK:-
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        if arrayOfNotes?.count != nil {
-            return arrayOfNotes!.count
+        if tableView == tableNotes {
+            if arrayOfNotes?.count != nil {
+                return arrayOfNotes!.count
+            } else {
+                return 0
+            }
+        } else if tableView == tableFilteredMembers {
+            if arrayOfFilteredMembers?.count != nil {
+                return arrayOfFilteredMembers!.count
+            } else {
+                return 0
+            }
         } else {
             return 0
         }
@@ -522,7 +575,39 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        var image:NSImage?
+        if tableView == tableNotes {
+            return noteView(tableView, viewFor: tableColumn, row: row)
+        } else if tableView == tableFilteredMembers {
+            return memberView(tableView, viewFor: tableColumn, row: row)
+        } else {
+            return nil
+        }
+    }
+
+    func memberView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        var text:String = ""
+        var cellIdentifier: String = ""
+        
+        guard let member = arrayOfFilteredMembers?[row] else {
+            return nil
+        }
+        
+        if tableColumn == tableView.tableColumns[0] { // MEMBER
+            let str = "\(member["number"] ?? "") - \(member["name"] ?? "")"
+            text = str
+            cellIdentifier = "cellMember"
+        }
+        
+        if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
+            cell.textField?.stringValue = text
+            return cell
+        } else {
+            print("no \(cellIdentifier)")
+        }
+        return nil
+    }
+    
+    func noteView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         var text:String = ""
         var cellIdentifier: String = ""
         
@@ -548,41 +633,74 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         // 3
         if let cell = tableView.make(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
             cell.textField?.stringValue = text
-            cell.imageView?.image = image ?? nil
             return cell
         } else {
             print("no \(cellIdentifier)")
         }
         return nil
-        
     }
     
     func tableView(_ tableView: NSTableView, shouldShowCellExpansionFor tableColumn: NSTableColumn?, row: Int) -> Bool {
         return true
     }
     
-    func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
-        return "test"
-    }
-
     func tableView(_ tableView: NSTableView, shouldTrackCell cell: NSCell, for tableColumn: NSTableColumn?, row: Int) -> Bool {
         return true
     }
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
-        print("display")
+        
+        if tableView.selectedRowIndexes.contains(row) {
+            if let c = cell as? NSCell {
+                c.controlView?.layer?.backgroundColor = NSColor.red.cgColor
+            }
+        }
     }
     
-    @IBAction func btnNext(_ sender: Any) {
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+        
+        if tableView == tableNotes {
+            if let note = arrayOfNotes?[row] {
+                
+                let string = note["note"] as! String
+                
+                let someWidth: CGFloat = tableView.frame.size.width
+                let stringAttributes = [NSFontAttributeName: NSFont.systemFont(ofSize: 12)] //change to font/size u are using
+                let attrString: NSAttributedString = NSAttributedString(string: string, attributes: stringAttributes)
+                let frame: NSRect = NSMakeRect(0, 0, someWidth, CGFloat.greatestFiniteMagnitude)
+                let tv: NSTextView = NSTextView(frame: frame)
+                tv.textStorage?.setAttributedString(attrString)
+                tv.isHorizontallyResizable = false
+                tv.sizeToFit()
+                let height: CGFloat = tv.frame.size.height + 20 // + other objects...
+                
+                return height
+                
+            }
+        }
+        
+        return 22 //Fail
+    }
+    
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        let myCustomView = CustomRow()
+        return myCustomView
+    }
+    
+    @IBAction func btnNext(_ sender: NSButton) {
         let index = getInexOfMember() + 1
         member = arrayOfFilteredMembers?[index]
         loadProfile()
+        let indexSet = NSIndexSet(index: index)
+        tableFilteredMembers.selectRowIndexes(indexSet as IndexSet, byExtendingSelection: false)
     }
     
-    @IBAction func btnPrevious(_ sender: Any) {
+    @IBAction func btnPrevious(_ sender: NSButton) {
         let index = getInexOfMember() - 1
         member = arrayOfFilteredMembers?[index]
         loadProfile()
+        let indexSet = NSIndexSet(index: index)
+        tableFilteredMembers.selectRowIndexes(indexSet as IndexSet, byExtendingSelection: false)
     }
     
     func checkIndexForButtons() {
@@ -608,8 +726,8 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         }
     }
     
-    @IBAction func btnClose_clicked(_ sender: Any) {
-        self.dismiss(nil)
+    @IBAction func btnClose_clicked(_ sender: NSButton) {
+        self.view.window?.close()
         tableParent?.reloadData()
     }
     
@@ -617,29 +735,20 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         tableParent?.reloadData()
     }
     
-    @IBAction func btnNote_click(_ sender: Any) {
-        viewNote.isHidden = false
-        btnSaveNote.isHidden = false
-        txtNote.becomeFirstResponder()
-    }
-    
-    @IBAction func btnCancelNote_clicked(_ sender: Any) {
-        txtNote.stringValue = ""
-        viewNote.isHidden = true
-    }
-    
-    @IBAction func btnSave_clicked(_ sender: Any) {
+    @IBAction func saveNote(_ sender: NSTextField) {
         let newNote = PFObject(className: "MemberNotes")
         newNote["note"] = txtNote.stringValue
         newNote.setObject(member!, forKey: "member")
+        newNote.setObject(PFUser.current()!, forKey: "staff")
         newNote.saveEventually { (done: Bool, err: Error?) in
             if done {
+                self.txtNote.stringValue = ""
                 self.arrayOfNotes?.append(newNote)
                 self.tableNotes.reloadData()
             }
         }
-        btnCancelNote_clicked(self)
     }
+    
     
     @IBAction func btnNumber_click(_ sender: NSButton) {
 //        if txtSetNumber.isHidden {
@@ -656,7 +765,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         msg.addButton(withTitle: "OK")      // 1st button
         msg.addButton(withTitle: "Cancel")  // 2nd button
         msg.messageText = "\(member?["name"])"
-        msg.informativeText = "Enter new audition number:)"
+        msg.informativeText = "Enter new audition number:"
         
         let txt = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
         txt.stringValue = ""
@@ -673,34 +782,17 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         }
     }
     
-    @IBAction func btnSaveNumber_clicked(_ sender: Any) {
-        saveNumber()
-    }
-    
-    func saveNumber() {
-        txtSetNumber.isHidden = true
-        btnSaveNumber.isHidden = true
-        member?["number"] = Int(txtSetNumber.stringValue)
-        btnNumber.title = txtSetNumber.stringValue
-        member?.saveEventually()
-        txtSetNumber.stringValue = ""
-    }
-
-    
     var selectedNote: PFObject?
-    @IBAction func doubleClick(_ sender: Any) {
-        // 1
-        guard tableNotes.selectedRow >= 0 , let note = arrayOfNotes?[tableNotes.selectedRow] else {
-            return
-        }
-        btnNote_click(self)
-        btnSaveNote.isHidden = true
-        txtNote.stringValue = note["note"] as! String
-        selectedNote = note
-    }
     
-    @IBAction func saveNumber(_ sender: NSTextField) {
-        saveNumber()
+    @IBAction func doubleClick(_ sender: Any) {
+//        // 1
+//        guard tableNotes.selectedRow >= 0 , let note = arrayOfNotes?[tableNotes.selectedRow] else {
+//            return
+//        }
+//        btnNote_click(self)
+//        btnSaveNote.isHidden = true
+//        txtNote.stringValue = note["note"] as! String
+//        selectedNote = note
     }
 
     @IBAction func checkLeader_changed(_ sender: NSButton) {
@@ -715,12 +807,72 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         }
     }
     
+    
+    @IBAction func checkContract_changed(_ sender: NSButton) {
+        if sender.state == NSOnState {
+            member?["contract"] = true
+            member?.saveEventually()
+        } else {
+            member?.remove(forKey: "contract")
+            member?.saveEventually()
+        }
+    }
+    
     func comboBoxSelectionDidChange(_ notification: Notification) {
-        let pos = comboLeader.objectValueOfSelectedItem as! String
-        member?["leaderPosition"] = pos
-        member?["leader"] = true
+        let combo = notification.object as! NSComboBox
+        if combo == comboLeader {
+            let pos = comboLeader.objectValueOfSelectedItem as! String
+            member?["leaderPosition"] = pos
+            member?["leader"] = true
+            member?.saveEventually()
+        } else if combo == comboPosition {
+            let pos = comboPosition.objectValueOfSelectedItem as! String
+            member?["position"] = pos
+            member?.saveEventually()
+        }
+    }
+    
+    @IBAction func click(_ sender: NSTableView) {
+        // 1
+        guard tableNotes.selectedRow >= 0 , let note = arrayOfNotes?[tableNotes.selectedRow] else {
+            return
+        }
+        selectedNote = note
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        let table = notification.object as! NSTableView
+        if table == tableFilteredMembers {
+            clickMember(tableFilteredMembers)
+        } else if table == tableNotes {
+            click(tableNotes)
+        }
+    }
+    
+    @IBAction func clickMember(_ sender: NSTableView) {
+        // 1
+        guard tableFilteredMembers.selectedRow >= 0 , let member = arrayOfFilteredMembers?[tableFilteredMembers.selectedRow] else {
+            return
+        }
+        self.member = member
+        loadProfile()
+    }
+    
+    @IBAction func deletePosition(_ sender: NSButton) {
+        comboPosition.stringValue = ""
+        member?.remove(forKey: "position")
         member?.saveEventually()
     }
+    
+    @IBAction func deleteLeader(_ sender: NSButton) {
+        comboLeader.stringValue = ""
+        checkLeader.state = NSOffState
+        comboLeader.isEnabled = false
+        member?.remove(forKey: "leader")
+        member?.remove(forKey: "leaderPosition")
+        member?.saveEventually()
+    }
+    
 }
 
 

@@ -101,6 +101,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     @IBOutlet weak var checkVets: NSButton!
     @IBOutlet weak var checkContract: NSButton!
+    @IBOutlet weak var checkLeaders: NSButton!
 
     @IBOutlet weak var lblUserName: NSTextField!
     @IBOutlet weak var barSelect: NSImageView!
@@ -142,9 +143,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     @IBOutlet weak var imgDotDrumMajor: NSImageView!
     @IBOutlet weak var imgDotColorGuard: NSImageView!
     @IBOutlet weak var imgDotFrontEnsemble: NSImageView!
+    @IBOutlet weak var lblVersion: NSTextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //app version
+        let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        lblVersion.stringValue = appVersionString
         
         viewMain.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         
@@ -176,8 +183,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         imgDotColorGuard.isHidden = true
         imgDotDrumMajor.isHidden = true
         
-        getLeaderPositions()
-        getSectionPositions()
         refreshServer()
         
         loadSideBar()
@@ -217,6 +222,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func getLeaderPositions() {
+        arrayOfLeaderPositions?.removeAll()
         let q = PFQuery(className: "MemberPositions")
         q.whereKey("Section", equalTo: "Leader")
         q.order(byAscending: "order")
@@ -226,6 +232,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func getSectionPositions() {
+        arrayOfSectionPositions?.removeAll()
         let q = PFQuery(className: "MemberPositions")
         q.whereKey("Section", notEqualTo: "Leader")
         q.order(byAscending: "order")
@@ -236,18 +243,22 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     
     func signIn() {
         
+        btnSignIn.isEnabled = false
+        
         // Validate the text fields
         if txtEmail.stringValue.characters.count < 1 {
             lblAlertSignIn.stringValue = "Invalid Email"
             lblAlertSignIn.isHidden = false
             progressLogIn.stopAnimation(nil)
             progressLogIn.isHidden = true
+            btnSignIn.isEnabled = true
             return
         } else if txtPassword.stringValue.characters.count < 1 {
             lblAlertSignIn.stringValue = "Invalid Password"
             lblAlertSignIn.isHidden = false
             progressLogIn.stopAnimation(nil)
             progressLogIn.isHidden = true
+            btnSignIn.isEnabled = true
             return
         }
         
@@ -268,6 +279,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                     self.lblAlertSignIn.stringValue = "Your account is pending authorization."
                     self.lblAlertSignIn.isHidden = false
                     PFUser.logOutInBackground()
+                    self.btnSignIn.isEnabled = true
                 } else {
                     self.loggedIn()
                 }
@@ -302,12 +314,16 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func signUp() {
+        
+        btnCreateAnAccount.isEnabled = false
+        
         // Validate the text fields
         if lblSignUpName.stringValue.characters.count < 1 {
             lblAlertCreateAccount.stringValue = "Invalid Name"
             lblAlertCreateAccount.isHidden = false
             progressCreateAccount.stopAnimation(nil)
             progressCreateAccount.isHidden = true
+            btnCreateAnAccount.isEnabled = true
             return
         }
         
@@ -316,6 +332,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             lblAlertCreateAccount.isHidden = false
             progressCreateAccount.stopAnimation(nil)
             progressCreateAccount.isHidden = true
+            btnCreateAnAccount.isEnabled = true
             return
         }
         
@@ -324,6 +341,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             lblAlertCreateAccount.isHidden = false
             progressCreateAccount.stopAnimation(nil)
             progressCreateAccount.isHidden = true
+            btnCreateAnAccount.isEnabled = true
             return
         }
         
@@ -332,6 +350,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             lblAlertCreateAccount.isHidden = false
             progressCreateAccount.stopAnimation(nil)
             progressCreateAccount.isHidden = true
+            btnCreateAnAccount.isEnabled = true
             return
         }
         
@@ -349,6 +368,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 // error handling
                 self.lblAlertCreateAccount.stringValue = "There was a problem creating your account."
                 self.lblAlertCreateAccount.isHidden = false
+                self.btnCreateAnAccount.isEnabled = true
             } else {
                 self.lblAlertCreateAccount.stringValue = "Your account is pending authorization."
                 self.lblAlertCreateAccount.isHidden = false
@@ -368,6 +388,13 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         if let user = PFUser.current() {
             lblUserName.stringValue = user["fullname"] as? String ?? ""
             lblUserPosition.stringValue = user["title"] as? String ?? ""
+            let admin = user["auditionAdmin"] as? Bool ?? nil
+            if admin != true {
+                btnDelete.isEnabled = false
+                btnCopy.isEnabled = false
+                btnVideo.isEnabled = false
+                btnUpload.isEnabled = false
+            }
         }
         
         NSAnimationContext.runAnimationGroup({ (context) -> Void in
@@ -492,7 +519,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         arrayOfButtons.append(checkVisual_3)
         
         arrayOfButtons.append(checkVets)
-        
+        arrayOfButtons.append(checkLeaders)
         arrayOfButtons.append(checkContract)
         
         arrayOfButtons.append(checkAllMembers)
@@ -751,6 +778,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         
         setCheckBoxColors(button: checkVets)
         setCheckBoxColors(button: checkContract)
+        setCheckBoxColors(button: checkLeaders)
         setCheckBoxColors(button: checkAllMembers)
         
         setCheckBoxColors(button: checkTrumpet)
@@ -1006,6 +1034,9 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func refreshServer() {
+        getLeaderPositions()
+        getSectionPositions()
+        
         lblResults.stringValue = "Refreshing..."
         searchQuery.cancel()
         arrayOfAllMembers?.removeAll()
@@ -1193,43 +1224,6 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 addMemberToFilteredArray(member: member)
             }
         }
-        
-        
-//        //VISUAL
-//        if !arrayOfVisualRatingsToFilter.isEmpty {
-//            if let memberVisualRating = member["visualRating"] as? Int {
-//                for rating in arrayOfVisualRatingsToFilter {
-//                    print("checking for rating of visual \(rating)")
-//                    if memberVisualRating == rating {
-//                        print("match visual \(rating) - \(memberVisualRating)")
-//                        addMemberToFilteredArray(member: member)
-//                    }
-//                }
-//            } else { // member does not have a rating, are we searching for No ratings?
-//                if arrayOfVisualRatingsToFilter.contains(0) {
-//                    addMemberToFilteredArray(member: member)
-//                }
-//            }
-//        } else {
-//            addMemberToFilteredArray(member: member)
-//        }
-//        
-//        //MUSIC
-//        if !arrayOfMusicRatingsToFilter.isEmpty {
-//            if let memberMusicRating = member["musicRating"] as? Int {
-//                for rating in arrayOfMusicRatingsToFilter {
-//                    if memberMusicRating == rating {
-//                        addMemberToFilteredArray(member: member)
-//                    }
-//                }
-//            } else { // member does not have a rating, are we searching for No ratings?
-//                if arrayOfMusicRatingsToFilter.contains(0) {
-//                    addMemberToFilteredArray(member: member)
-//                }
-//            }
-//        } else {
-//            addMemberToFilteredArray(member: member)
-//        }
     }
     
     func addMemberToFilteredArray(member: PFObject) {
@@ -1240,14 +1234,14 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             let c2Vet = member["cadets2Vet"] as? Bool ?? nil
             
             if cVet == true || c2Vet == true {
-                //vet
+                //vet, continue
             } else {
                 //no vet
                 return
             }
         }
         
-        checkContractThenAdd(member: member)
+        checkLeadersThenAdd(member: member)
     }
     
     func checkContractThenAdd(member: PFObject) {
@@ -1256,7 +1250,11 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         if checkContract.state == NSOnState {
             let contract = member["contract"] as? Bool ?? nil
             if contract == true {
-                
+                //make sure they don't exist in filtered array, then add
+                if !(arrayOfFilteredMembers?.contains(member))! {
+                    arrayOfFilteredMembers?.append(member)
+                }
+                tableMembers.reloadData()
             } else {
                 return
             }
@@ -1267,6 +1265,21 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             arrayOfFilteredMembers?.append(member)
         }
         tableMembers.reloadData()
+    }
+    
+    func checkLeadersThenAdd(member: PFObject) {
+        
+        //check if leaders are filtered, then add
+        if checkLeaders.state == NSOnState {
+            let leader = member["leader"] as? Bool ?? nil
+            if leader == true {
+                //leader, continue
+            } else {
+                return
+            }
+        }
+        
+        checkContractThenAdd(member: member)
     }
     
     // END CHECK FILTERS
@@ -1508,6 +1521,11 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         }
     }
     
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        let myCustomView = CustomRow()
+        return myCustomView
+    }
+    
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         var image:NSImage?
@@ -1648,7 +1666,19 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
             cellIdentifier = "cellPosition"
         }
         
-        if tableColumn == tableView.tableColumns[13] { // CONTRACT
+        if tableColumn == tableView.tableColumns[13] { // VET
+            let leader = member["leader"] as? Bool ?? nil
+            
+            if leader == true {
+                image = NSImage(named: "Check")
+            } else {
+                image = nil
+            }
+            
+            cellIdentifier = "cellLeader"
+        }
+        
+        if tableColumn == tableView.tableColumns[14] { // CONTRACT
             let contract = member["contract"] as? Bool ?? nil
             
             if contract == true {
@@ -1737,6 +1767,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
                 vc.tableParent = tableMembers
                 vc.arrayOfLeaderPositions = arrayOfLeaderPositions
                 vc.arrayOfSectionPositions = arrayOfSectionPositions
+                vc.initialMemberIndex = tableMembers.selectedRowIndexes.first
             }
         }
     }
