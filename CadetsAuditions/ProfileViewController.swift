@@ -208,6 +208,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             if notes != nil {
                 self.arrayOfNotes = notes!
                 self.tableNotes.reloadData()
+                self.scrollToEnd()
             }
         }
     }
@@ -478,7 +479,6 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             }
         } else {
             checkContract.state = NSOffState
-            checkContract.isEnabled = false
         }
         
         //set tooltips
@@ -503,9 +503,72 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             member?.remove(forKey: "visualRating")
             member?.saveEventually()
             imgRatingVisual.image = NSImage(named: "DeleteRating")
+            
+            let note = PFObject(className: "MemberNotes")
+            note.setObject(member!, forKey: "member")
+            note.setObject(PFUser.current()!, forKey: "staff")
+
+            let calendar = Calendar.autoupdatingCurrent
+            let components = calendar.dateComponents([.hour, .month], from: Date())
+            let month = components.month
+            var monthStr = ""
+            
+            switch month! {
+            case 11: monthStr = "NOVEMBER"
+                break
+            case 12: monthStr = "DECEMBER"
+                break
+            case 1: monthStr = "JANUARY"
+                break
+            case 2: monthStr = "FEBRUARY"
+                break
+            default: monthStr = "[UNKNOWN CAMP]"
+                break
+            }
+            
+            note["note"] = "\(monthStr) VISUAL RATING REMOVED"
+            note.saveInBackground(block: { (done: Bool, err: Error?) in
+                if done {
+                    self.arrayOfNotes?.append(note)
+                    self.tableNotes.reloadData()
+                    self.scrollToEnd()
+                }
+            })
+            
         } else {
             member?.setObject(sender.tag, forKey: "visualRating")
             member?.saveEventually()
+            
+            let note = PFObject(className: "MemberNotes")
+            note.setObject(member!, forKey: "member")
+            note.setObject(PFUser.current()!, forKey: "staff")
+            
+            let calendar = Calendar.autoupdatingCurrent
+            let components = calendar.dateComponents([.hour, .month], from: Date())
+            let month = components.month
+            var monthStr = ""
+            
+            switch month! {
+            case 11: monthStr = "NOVEMBER"
+                break
+            case 12: monthStr = "DECEMBER"
+                break
+            case 1: monthStr = "JANUARY"
+                break
+            case 2: monthStr = "FEBRUARY"
+                break
+            default: monthStr = "[UNKNOWN CAMP]"
+                break
+            }
+            
+            note["note"] = "\(monthStr) VISUAL RATING CHANGED TO: \(sender.tag)"
+            note.saveInBackground(block: { (done: Bool, err: Error?) in
+                if done {
+                    self.arrayOfNotes?.append(note)
+                    self.tableNotes.reloadData()
+                    self.scrollToEnd()
+                }
+            })
         }
         loadRating()
     }
@@ -515,9 +578,71 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
             member?.remove(forKey: "musicRating")
             member?.saveEventually()
             imgRatingMusic.image = NSImage(named: "DeleteRating")
+            
+            let note = PFObject(className: "MemberNotes")
+            note.setObject(member!, forKey: "member")
+            note.setObject(PFUser.current()!, forKey: "staff")
+            
+            let calendar = Calendar.autoupdatingCurrent
+            let components = calendar.dateComponents([.hour, .month], from: Date())
+            let month = components.month
+            var monthStr = ""
+            
+            switch month! {
+            case 11: monthStr = "NOVEMBER"
+                break
+            case 12: monthStr = "DECEMBER"
+                break
+            case 1: monthStr = "JANUARY"
+                break
+            case 2: monthStr = "FEBRUARY"
+                break
+            default: monthStr = "[UNKNOWN CAMP]"
+                break
+            }
+            
+            note["note"] = "\(monthStr) MUSIC RATING REMOVED"
+            note.saveInBackground(block: { (done: Bool, err: Error?) in
+                if done {
+                    self.arrayOfNotes?.append(note)
+                    self.tableNotes.reloadData()
+                    self.scrollToEnd()
+                }
+            })
         } else {
             member?.setObject(sender.tag, forKey: "musicRating")
             member?.saveEventually()
+            
+            let note = PFObject(className: "MemberNotes")
+            note.setObject(member!, forKey: "member")
+            note.setObject(PFUser.current()!, forKey: "staff")
+            
+            let calendar = Calendar.autoupdatingCurrent
+            let components = calendar.dateComponents([.hour, .month], from: Date())
+            let month = components.month
+            var monthStr = ""
+            
+            switch month! {
+            case 11: monthStr = "NOVEMBER"
+                break
+            case 12: monthStr = "DECEMBER"
+                break
+            case 1: monthStr = "JANUARY"
+                break
+            case 2: monthStr = "FEBRUARY"
+                break
+            default: monthStr = "[UNKNOWN CAMP]"
+                break
+            }
+            
+            note["note"] = "\(monthStr) MUSIC RATING CHANGED TO: \(sender.tag)"
+            note.saveInBackground(block: { (done: Bool, err: Error?) in
+                if done {
+                    self.arrayOfNotes?.append(note)
+                    self.tableNotes.reloadData()
+                    self.scrollToEnd()
+                }
+            })
         }
         loadRating()
     }
@@ -757,6 +882,7 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
                 self.txtNote.stringValue = ""
                 self.arrayOfNotes?.append(newNote)
                 self.tableNotes.reloadData()
+                self.scrollToEnd()
             }
         }
     }
@@ -885,6 +1011,32 @@ class ProfileViewController: NSViewController, NSTableViewDelegate, NSTableViewD
         member?.saveEventually()
     }
     
+    func scrollToEnd() {
+        let numberOfRows = tableNotes.numberOfRows
+        if numberOfRows > 0 {
+            tableNotes.scrollRowToVisible(numberOfRows - 1)
+        }
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        
+    }
+    
+//    var picFrame: CGRect?
+//    @IBAction func image_Click(_ sender: NSImageView) {
+//        if sender.tag == 0 {
+//            picFrame = sender.frame
+//            sender.frame = CGRect(x: sender.frame.origin.x, y: sender.frame.origin.y, width: sender.frame.size.width + 200, height: sender.frame.size.height + 200)
+//            sender.tag = 1
+//        } else {
+//            sender.tag = 0
+//            sender.frame = picFrame!
+//        }
+//    }
 }
 
 

@@ -219,6 +219,7 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         viewCreateAccount.isHidden = true
         
         txtEmail.becomeFirstResponder()
+    
     }
     
     func getLeaderPositions() {
@@ -1034,24 +1035,10 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     
-//    
-//    
-//    
-//    for mem in self.arrayOfAllMembers! {
-//    if let visRating = mem["visualRating"] as? Int {
-//    let note = PFObject(className: "note")
-//    note["note"] = "NOVEMBER VISUAL RATING CHANGED TO: \(visRating)"
-//    note.saveInBackground()
-//    }
-//    
-//    if let musRating = mem["musicRating"] as? Int {
-//    let note = PFObject(className: "note")
-//    note["note"] = "NOVEMBER MUSIC RATING CHANGED TO: \(musRating)"
-//    note.saveInBackground()
-//    }
-//    }
-//    
-//    
+    
+
+    
+    
     
     
     
